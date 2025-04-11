@@ -1,6 +1,6 @@
 const pool = require('../configdb/db');
 const bcrypt = require('bcrypt');
-
+   
 const createUser = async (req, res) => {
   const { emp_name, email, password } = req.body;
   const join_date = new Date().toLocaleDateString();
