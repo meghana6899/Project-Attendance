@@ -1,13 +1,13 @@
 const pool = require('../configdb/db');
 const bcrypt = require('bcrypt');
-   
+
 const createUser = async (req, res) => {
-  const { emp_name, email, password } = req.body;
-  const join_date = new Date().toLocaleDateString();
+  const {firstName,lastName, email, password,table} = req.body;
+  const currentDate = new Date().toISOString().split('T')[0];
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    const [rows] = await pool.execute('SELECT password FROM employees WHERE email = ?', [email]);
+    const [rows] = await pool.execute(`SELECT password FROM ${table} WHERE email = ?`, [email]);
 
     if (!rows.length) {
       return res.status(404).json({
@@ -22,10 +22,10 @@ const createUser = async (req, res) => {
         message: "User already signed up. Please log in.",
       });
     }
-
+    console.log('strattttt')
     const [result] = await pool.execute(
-      `UPDATE employees SET emp_name = ?, password = ?, join_date = ? WHERE email = ?`,
-      [emp_name, hashedPassword, join_date, email]
+      `UPDATE ${table} SET firstName = ?, lastName=?,password = ?, join_date = ?  WHERE email = ?`,
+      [firstName,lastName, hashedPassword, currentDate, email]
     );
 
     res.status(200).json({
