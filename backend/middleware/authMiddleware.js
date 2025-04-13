@@ -14,9 +14,15 @@ const authMid = (req, res, next) => {
         token = authHeader
     }
  
-    if(!token) return res.status(401).json({msg : 'Token missing'});
+    if(!token) return res.status(401).json({
+        success: false,
+        msg : 'Token missing'
+    });
     jwt.verify(token, secret, (err, decoded) => {
-        if(err) return res.status(403).json({msg : 'Token ivalid', error:err.message});
+        if(err) return res.status(403).json({
+            success: false,
+            msg : 'Token ivalid', 
+            error:err.message});
         req.user = decoded;
         //req.user.Role = req.headers.user
         console.log("Token verified")
@@ -24,5 +30,6 @@ const authMid = (req, res, next) => {
         next();
 
     })
+    
 }
 module.exports = {authMid}

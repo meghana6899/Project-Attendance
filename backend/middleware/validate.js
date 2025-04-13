@@ -14,9 +14,9 @@ const DataFilled=async(req,res,next)=>{
 const DataPresent=async(req,res,next)=>{
     const {email}=req.body;
     try{
-        const data=await pool.execute('select email from employees where email=?',[email]);
+        const data =await pool.execute('select email from employees where email=?',[email]);
         const data1=await pool.execute('select email from students where email=?',[email]); 
-
+        
         if(req.body.email===data[0][0].email){
             req.body.table='employees';
             console.log("ruhtwik");
@@ -30,6 +30,7 @@ const DataPresent=async(req,res,next)=>{
     }catch(err){
         console.log(err);
         res.json({message:"No data is found as user"})
+        next();
     }
 }
 
