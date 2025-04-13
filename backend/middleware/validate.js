@@ -4,8 +4,8 @@ const DataFilled=async(req,res,next)=>{
         return res.status(400).json({message:"no data is present"})
         
     }
-    const {firstName,lastName,email,password,confirmpassword}=req.body;
-    if(!firstName ||!lastName || !email || !password || !confirmpassword){
+    const {first_name,last_name,email,password,confirmpassword}=req.body;
+    if(!first_name ||!last_name || !email || !password || !confirmpassword){
         return res.status(400).json({message:'All fields must filled'})
     }
     next();

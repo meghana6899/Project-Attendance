@@ -2,7 +2,7 @@ const pool = require('../configdb/db');
 const bcrypt = require('bcrypt');
 
 const createUser = async (req, res) => {
-  const {firstName,lastName, email, password,table} = req.body;
+  const {first_name,last_name, email, password,table} = req.body;
   const currentDate = new Date().toISOString().split('T')[0];
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -24,8 +24,8 @@ const createUser = async (req, res) => {
     }
     console.log('strattttt')
     const [result] = await pool.execute(
-      `UPDATE ${table} SET firstName = ?, lastName=?,password = ?, join_date = ?  WHERE email = ?`,
-      [firstName,lastName, hashedPassword, currentDate, email]
+      `UPDATE ${table} SET first_name = ?, last_name=?,password = ?, join_date = ?  WHERE email = ?`,
+      [first_name,last_name, hashedPassword, currentDate, email]
     );
 
     res.status(200).json({
