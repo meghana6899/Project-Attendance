@@ -1,4 +1,4 @@
-const pool = require('../configdb/db'); // your MySQL config
+const pool = require('../configdb/db'); //  MySQL config
 
 const createTables = async () => {
   try {
