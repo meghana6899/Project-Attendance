@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { NavLink,Link } from 'react-router';
 import { useNavigate } from 'react-router';
 
+
+import axios from 'axios';
+
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' ,role:''});
   const [errors, setErrors] = useState({});
@@ -41,27 +44,34 @@ function Login() {
 
     try {
       // Simulated API call
-      const fakeResponse = {
-        status: 200,
-        data: {
-          token: 'abc123',
-          user: { name: 'John Doe', email: formData.email },
-        },
-      };
+      console.log({email:formData.email,password:formData.password,role:formData.role});
+      const response=await axios.post('http://localhost:3000/api/auth/login',
+        {email:formData.email,
+          password:formData.password,
+          role:formData.role}
+      );
+     if(response.data.success){
+      localStorage.setItem('token',response.data.token);
+      navigate('/signup')
 
-      if (fakeResponse.status === 200) {
-        setMessage('Login successful!');
-        console.log('Token:', fakeResponse.data.token);
-        navigate(`/${formData.role}/dashboard`)
-        
+     }
+
+    
+    } catch (error) {
+      if (error.response && !error.response.data.success) {
+        setErrors(error.response.data.message);
+      } else {
+        setErrors("Server ERROR");
       }
-    } catch (err) {
-      setMessage('Login failed. Try again.',err);
+      setMessage('Login failed. Try again.',error);
+      
     }
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
+    <>
+    
+    <div className="container d-flex justify-content-center align-items-center vh-70 m-5">
       <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
         <h3 className="text-center mb-4">Login</h3>
         <form onSubmit={handleSubmit}>
@@ -99,9 +109,8 @@ function Login() {
           onChange={handleChange}
         >
           <option value="">Select role</option>
-          <option value="admin">Admin</option>
-          <option value="employees">Employee</option>
-          <option value="students">Student</option>
+          <option value="employee">Employee</option>
+          <option value="student">Student</option>
         </select>
         {errors.role && <div className="text-danger">{errors.role}</div>}
       </div>
@@ -110,11 +119,12 @@ function Login() {
           <button type="submit" className="btn btn-primary w-100">Login</button>
         </form>
         {message && <p className="text-center mt-3">{message}</p>}
-        <div className="text-center mb-4"> Create account ?  <NavLink to='/signup'>Signup</NavLink> </div>
+        <div className="text-center mb-4"> Create account ?  <Link to='/signup'>Signup</Link> </div>
         
 
       </div>
     </div>
+    </>
   );
 }
 

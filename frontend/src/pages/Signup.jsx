@@ -3,6 +3,7 @@ import axios from 'axios';
 import { NavLink,Link } from 'react-router';  
 import { useNavigate } from 'react-router';
 
+
 function Signup() {
   const [formData, setFormData] = useState({
     first_name: '',
@@ -85,7 +86,8 @@ function Signup() {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
+    <>
+    <div className="container d-flex justify-content-center align-items-center vh-70">
       <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '380px'  }}>
         <h3 className="text-center mb-3">Signup</h3>
         <form onSubmit={handleSubmit}>
@@ -153,9 +155,11 @@ function Signup() {
         </form>
         
         {message && <p className="text-center text-warning mt-3">{message}</p>}
-        <div className="text-center mb-4"> Already have an account?  <NavLink to='/login'>Login</NavLink> </div>
+        <div className="text-center mb-4"> Already have an account?  <Link to='/login'>Login</Link> </div>
       </div>
     </div>
+    </>
+   
   );
 }
 

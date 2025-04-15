@@ -1,19 +1,32 @@
-import { BrowserRouter as Router , Routes, Route } from "react-router";
+import { createBrowserRouter,RouterProvider } from "react-router";
 import Login from "./pages/login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 
 
+
 function App() {
+  const router=createBrowserRouter([
+    {path:'/login',
+      element:<Login />,
+      children:{
+        
+      }
+    },
+    {
+      path:'/signup',
+      element:<Signup />,
+    },
+    {
+      path:'*',
+      element:< Login />
+    },
+  ])
   return (<>
-  <Router>
-    <Routes>
-      <Route path="/login" element={<Login />}></Route>
-      <Route path="/" element={<Login />}></Route>
-      <Route path="/signup" element={<Signup />}></Route>
-      <Route path="/:role/dashboard" element={<Dashboard />}></Route>
-    </Routes>
-  </Router>
+ 
+
+  <RouterProvider router={router}/>
+ 
   </>);
 }
 
