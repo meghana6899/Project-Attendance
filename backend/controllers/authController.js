@@ -7,11 +7,12 @@ const {secret, expiresIn} = require('../configdb/jwtConfig.js');
 
 const login = async(req,res) => {
     const {email, password, role} = req.body;
-    console.log(email)
+    console.log(email);
    
     
 
     userModel.findUser(email,role, async(err, user) => {
+        // console.log(user);
         if(err) return res.status(500).json({
             success: false,
             msg: 'DB error'
@@ -23,10 +24,12 @@ const login = async(req,res) => {
         });
        //console.log(user)
         const isMatch = await bcrypt.compare(password, user.password);
+        console.log(isMatch);
         
         if(!isMatch) return res.status(401).json({
             success: false,
-            msg: 'Invalid password'
+            msg: 'Invalid password',
+
         });
 
         console.log(user.role)

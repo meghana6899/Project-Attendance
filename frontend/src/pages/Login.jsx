@@ -54,7 +54,8 @@ function Login() {
      if(response.data.success){
       localStorage.setItem('token',response.data.token);
       localStorage.setItem('loggedIn',true);
-      navigate('/signup')
+      localStorage.setItem('role',response.data.role)
+      navigate('/')
 
      }
 
