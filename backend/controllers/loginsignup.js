@@ -17,8 +17,9 @@ const createUser = async (req, res) => {
     }
 
     if (rows[0].password) {
+      
       return res.status(409).json({
-        success: false,
+        status:409,
         message: "User already signed up. Please log in.",
       });
     }
@@ -27,6 +28,7 @@ const createUser = async (req, res) => {
       `UPDATE ${table} SET first_name = ?, last_name=?,password = ?, join_date = ?  WHERE email = ?`,
       [first_name,last_name, hashedPassword, currentDate, email]
     );
+    
 
     res.status(200).json({
       success: true,
