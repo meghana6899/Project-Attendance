@@ -50,8 +50,10 @@ function Login() {
           password:formData.password,
           role:formData.role}
       );
+      
      if(response.data.success){
       localStorage.setItem('token',response.data.token);
+      localStorage.setItem('loggedIn',true);
       navigate('/signup')
 
      }
