@@ -1,10 +1,12 @@
 const pool = require('../configdb/db');
-const {totalWorkingHoursForOneDay,
-    totalActiveHoursOnOneDay,
-    upDateTotalWorkingHours,
-    upDateTotalActiveWorkingHours, 
-    totalBreakHoursOnOneDay,upDateTotalBreakHours}=require('./workingHours.js');
+// const {totalWorkingHoursForOneDay,
+//     totalActiveHoursOnOneDay,
+//     upDateTotalWorkingHours,
+//     upDateTotalActiveWorkingHours, 
+//     totalBreakHoursOnOneDay,upDateTotalBreakHours}=require('./workingHours.js');
 
+const {totalActiveHoursOnOneDay, totalWorkingHoursForOneDay, totalBreakHoursOnOneDay} = require('../models/HoursPerDay');
+const {upDateTotalActiveWorkingHours, upDateTotalBreakHours, upDateTotalWorkingHours} = require('../models/updateHoursModel')
 const checkin = async (req, res) => {
     const currentTime = new Date().toTimeString().split(' ')[0]; // HH:MM:SS
     const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD

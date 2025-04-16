@@ -29,23 +29,23 @@ function App() {
           children: [
             ...(role === "admin"
               ? [
-                  {
-                    path: "admin-dashboard",
-                    element: <AdminHome />,
-                  },
-                  {
-                    path:"students-report" , // if needed change this 
-                    element:<StudentDashboard />
-                  },
-                  {
-                    path: "*",
-                    element: <Navigate to="/admin-dashboard" />,
-                  },
-                ]
+                {
+                  path: "/admin-dashboard",
+                  element: <AdminHome />,
+                },
+                {
+                  path: "/students-report", // if needed change this 
+                  element: <StudentDashboard />
+                },
+                {
+                  path: "*",
+                  element: <Navigate to="/admin-dashboard" />,
+                },
+              ]
               : role === "student"
-              ? [
+                ? [
                   {
-                    path: "student-dashboard",
+                    path: "/student-dashboard",
                     element: <StudentDashboard />,
                   },
                   {
@@ -53,23 +53,24 @@ function App() {
                     element: <Navigate to="/student-dashboard" />,
                   },
                 ]
-              : role === "employee"
-              ? [
-                  {
-                    path: "employee-dashboard",
-                    element: <EmployeeDashboard />,
-                  },
-                  {
-                    path: "*",
-                    element: <Navigate to="/employee-dashboard" />,
-                  },
-                ]
-              : [
-                  {
-                    path: "*",
-                    element: <Navigate to="/login" />,
-                  },
-                ]),
+                : role === "employee"
+                  ? [
+                    {
+                      path: "/employee-dashboard",
+                      element: <EmployeeDashboard />
+                    },
+                    {
+                      path: "*",
+                      element: <Navigate to="/employee-dashboard" />,
+                    },
+                  ]
+                  : [
+                    {
+                      path: "*",
+                      element: <Navigate to="/login" />,
+                    },
+
+                  ]),
           ],
         },
       ],
