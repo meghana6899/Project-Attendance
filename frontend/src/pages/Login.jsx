@@ -49,14 +49,17 @@ function Login() {
         {
           email: formData.email,
           password: formData.password,
-          role: formData.role
+          role: formData.role,
+          // id: formData.id
         }
       );
 
       if (response.data.success) {
+        console.log(response.data)
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('loggedIn', true);
         localStorage.setItem('role', response.data.role)
+        localStorage.setItem('id', response.data.id)
         console.log(response.data.role)
         navigate(`/${response.data.role}-dashboard`)
 

@@ -1,6 +1,7 @@
 const pool = require('../configdb/db')
 
 const totalWorkingHoursForOneDay = async (table, date, user_id,column) => {
+  console.log(column, user_id)
   const query = `
     SELECT ${column}, date, TIMEDIFF(MAX(checkout), MIN(checkin)) AS total_hours
     FROM ${table}
@@ -9,7 +10,7 @@ const totalWorkingHoursForOneDay = async (table, date, user_id,column) => {
   `;
   const [rows] = await pool.execute(query, [date, user_id]);
 
-  return rows.active_hours;
+  return rows;
 };
 
 //TOTAL ACTIVE HOURS OF ONE DAY
@@ -30,7 +31,7 @@ const totalActiveHoursOnOneDay = async (table, column, date, user_id) => {
 
 // TOTAL BREAK HOURS OF ONE DAY
 
-const totalBreakHoursOnOneDay = async (table, column, date, user_id) => {
+const totalBreakHoursOnOneDay = async (table, date, user_id, column) => {
   console.log('Start calculating break time...');
 
   const [working_hours] = await totalWorkingHoursForOneDay(table, date, user_id, column);
@@ -56,7 +57,14 @@ const totalBreakHoursOnOneDay = async (table, column, date, user_id) => {
 
 
 const allInfo = async(table, column, date, user_id) => {
-  const [rows] = await pool.execute(`SELECT checkin, checkout, date FROM ${table} where date = ? AND emp_id = ?`, [date, user_id])
+  const [rows] = await pool.execute(`SELECT checkin, checkout, date FROM ${table} where date = ? AND ${column} = ?`, [date, user_id])
+  console.log(rows)
+  return rows
+}
+
+const getHoursperDay = async(table, column, user_id, date) => {
+  console.log(table, column, user_id, date)
+  const [rows] = await pool.execute(`SELECT active_hours, break_hours, total_hours from ${table} where ${column} = ? AND date = ? `, [user_id, date])
   return rows
 }
 
@@ -64,5 +72,6 @@ module.exports = {
   totalActiveHoursOnOneDay,
   totalBreakHoursOnOneDay,
   totalWorkingHoursForOneDay,
-  allInfo
+  allInfo,
+  getHoursperDay
 }

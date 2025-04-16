@@ -59,7 +59,7 @@ const checkin = async (req, res) => {
                 await upDateTotalWorkingHours('emp_hours', user_id, 'emp_id',currentDate, d.total_hours);
                 const [x]=await totalActiveHoursOnOneDay('attendance_emp','emp_id', currentDate, user_id);
                 await upDateTotalActiveWorkingHours('emp_hours',user_id,'emp_id',currentDate,x.active_hours);
-                const [breakData] = await totalBreakHoursOnOneDay('attendance_emp', 'emp_id', currentDate, user_id);
+                const [breakData] = await totalBreakHoursOnOneDay('attendance_emp', currentDate, user_id, "emp_id");
                 await upDateTotalBreakHours('emp_hours',user_id,'emp_id',currentDate,breakData.break_hours);
 
             //     console.log(d);

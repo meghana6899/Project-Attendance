@@ -31,14 +31,14 @@ const login = async(req,res) => {
             msg: 'Invalid password',
 
         });
-
-        console.log(user.role)
+        const id = user.emp_id || user.std_id;
+        console.log(user.role, user.id)
         if(!user.role){
             user.role = "student"
         }
         const token = jwt.sign({userId : user.id, role: user.role}, secret, {expiresIn});
         console.log('Now: ', token)
-        res.json({ success: true, token, role: user.role});
+        res.json({ success: true, token, role: user.role, id});
     })
 }
 
