@@ -1,8 +1,14 @@
-import React from 'react'
+import React from 'react';
+import CheckInDetails from '../components/CheckInTable';
+import Calendar from '../components/Calendar';
 
 const EmployeeDashboard = () => {
   return (
-    <div>EmployeeDashboard</div>
+    <>
+      <Calendar />
+      <CheckInDetails />
+    </>
+
   )
 }
 

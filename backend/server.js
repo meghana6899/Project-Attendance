@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 // const router=require('./router/route');
-
+const employeeRoute = require('./routes/employeeDetailsRoute')
 const signUpUser=require('./routes/loginsignup');
 const authRoutes = require('./routes/authRoutes.js');
 const authMiddleware = require('./middleware/authMiddleware.js');
@@ -21,6 +21,7 @@ const adminRoutes = require('./routes/adminCRUDRoutes')
 const cors = require('cors');
 
 app.use(cors());
+
 
 app.use(express.json());
 
@@ -34,6 +35,8 @@ app.use('/api/protected', authMiddleware.authMid, (req, res) => {
 app.use('/api/users', userRoutes )
 
 app.use('/api/admin', adminRoutes )
+
+app.use('/api/details', employeeRoute )
 
 pool.query('SELECT 1').then(() => {
     console.log("MySQL connected");
