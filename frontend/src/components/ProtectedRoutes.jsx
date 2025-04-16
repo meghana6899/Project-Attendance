@@ -1,17 +1,14 @@
-import React from 'react'
-import { Navigate, Outlet } from 'react-router';
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAdmin } from '../context/AuthContext';
 
 const ProtectedRoutes = () => {
-  const isLoggedin = localStorage.getItem('loggedIn');
-  const role = localStorage.getItem('role')
+  const { user } = useAdmin();
 
+  // Optional: show loading screen or skeleton if needed
+  if (!user) return null;
 
-  return (
+  return user.isLoggedIn ? <Outlet /> : <Navigate to="/login" />;
+};
 
-    isLoggedin === 'true' ? <Outlet /> : <Navigate to='/login' />
-    // isLoggedin === 'true' ? <Navigate to={`/${role}-dashboard`} /> : <Navigate to='/login' />
-
-  )
-}
-
-export default ProtectedRoutes
+export default ProtectedRoutes;

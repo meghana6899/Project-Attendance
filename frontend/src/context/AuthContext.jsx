@@ -2,7 +2,7 @@ import { createContext, useState, useEffect,useContext,useCallback } from "react
 
 // Create context with default values to prevent null
 const defaultContextValue = {
-  user: { role: '', isLoggedIn: false, id },
+  user: { role: '', isLoggedIn: false, id:'' },
   setUser: () => {},
   login: () => {},
   logout: () => {},
@@ -12,7 +12,7 @@ const defaultContextValue = {
 export const AdminContext = createContext(defaultContextValue);
 
 export const AdminProvider = ({ children }) => {
-  const [user, setUser] = useState({ role: '', isLoggedIn: false });
+  const [user, setUser] = useState({ role: '', isLoggedIn: false,id:'' });
 
   // Check for existing user data in localStorage on initial load
   useEffect(() => {
@@ -49,4 +49,11 @@ export const AdminProvider = ({ children }) => {
     </AdminContext.Provider>
   );
 };
+
+
+
+
+
+
+
 export const useAdmin = () => useContext(AdminContext);

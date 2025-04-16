@@ -2,8 +2,9 @@ const express = require('express');
 const employeeRoute = express.Router();
 const verifyToken = require('../middleware/authMiddleware');
 const roleAuthorize = require('../middleware/roleMiddleware');
-const calculateAvgHours = require('../controllers/workingHours')
+const calculateAvgHours = require('../controllers/workingHours');
+const {AllEmployees,AllStudents}=require('../controllers/personalDetails');
 
-employeeRoute.get('/:user/:id', calculateAvgHours )
+employeeRoute.get('/employee/:id', calculateAvgHours )
 
 module.exports = employeeRoute
