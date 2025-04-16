@@ -16,7 +16,8 @@ const signUpUser=require('./routes/loginsignup');
 const authRoutes = require('./routes/authRoutes.js');
 const authMiddleware = require('./middleware/authMiddleware.js');
 const userRoutes = require('./routes/userRoutes.js');
-const adminRoutes = require('./routes/adminCRUDRoutes')
+const adminRoutes = require('./routes/adminCRUDRoutes');
+const workingHoursRoute = require('./routes/workingHoursperDayRoute.js')
 
 const cors = require('cors');
 
@@ -37,7 +38,7 @@ app.use('/api/users', userRoutes )
 app.use('/api/admin', adminRoutes )
 
 app.use('/api/details', employeeRoute )
-
+app.use('/api/hours', workingHoursRoute)
 pool.query('SELECT 1').then(() => {
     console.log("MySQL connected");
     app.listen(3000, () => {

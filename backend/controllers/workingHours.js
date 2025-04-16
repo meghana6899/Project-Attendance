@@ -151,17 +151,25 @@ const {totalActiveHoursOnOneDay: activeHours, totlaBreakHoursOnOndeDay: breakHou
 
 
 
-
 const calculateAvgHours = async(req, res) => {
   console.log("entered Controller")
+  console.log(req.params)
   const user_id = req.params.id
+  const role = req.params.user
+  let table;
+  if(role === "admin" || role === "employee"){
+    table = "attendance_emp"
+  }else{
+    table = "attendance_stu"
+  }
   const column = user_id.startsWith('E')? "emp_id" : "std_id";
-  const table = user_id.startsWith('E')? "attendance_emp" : "attendance_stu"
+  console.log(table, column, user_id)
+  // const table = user_id.startsWith('E')? "attendance_emp" : "attendance_stu"
   const date = new Date().toISOString().split('T')[0];
-  console.log(date)
   const activity = await allInfo(table, column, date, user_id) 
   //const activeHours = await activeHours(table, column, date, user_id);
   //const totalHours = await breakHours()
+  console.log(activity)
   res.send(activity)
 }
 module.exports = calculateAvgHours;

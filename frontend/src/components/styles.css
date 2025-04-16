@@ -8,8 +8,9 @@
 }
 
 .body {
-    max-height: 100vh;
-    margin: 10vh;
+    width: 50vw;
+    height: 50vh;
+    margin: 10vh auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,7 +18,7 @@
 }
 
 .calendar {
-    width: 380px;
+    width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -32,6 +33,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+}
+
+.monthYear {
+    text-align: center;
+    font-weight: 600px;
+    width: 150px;
 }
 
 .header button {
@@ -50,7 +57,6 @@
 .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-
 }
 
 .day {
@@ -58,4 +64,40 @@
     padding: 5px;
     color: #999FA9;
     font-weight: 50;
+}
+
+.dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    margin: auto;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    transition: 0.2s;
+}
+
+.date:hover,
+.date.active {
+    background-color: #ff5869;
+    color: #fff;
+}
+
+
+.date.inactive {
+    color: #d2d2d2;
+}
+
+.date.inactive:hover {
+    color: #fff;
 }

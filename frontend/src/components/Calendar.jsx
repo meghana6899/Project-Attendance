@@ -1,88 +1,144 @@
-import React from 'react';
-import './styles.css'
-import { useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import './styles.css';
+import workHours from '../api/queries/workHours';
 
 function Calendar() {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [calendarDays, setCalendarDays] = useState([]);
 
-  const monthYearElement = useRef(null)
-  const datesElement = useRef(null)
-  const prevBtn = useRef(null)
+  useEffect(() => {
+    generateCalendar();
+  }, [currentDate]);
 
-  let currentDate = new Date();
+  const generateCalendar = () => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
 
-  const updateCalendar = () => {
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth();
-    const firstDay = new Date(currentYear, currentMonth, 0)
-    const lastDay = new Date(currentYear, currentMonth + 1, 0)
-    const totalDays = lastDay.getDate();
-    const firstDayIndex = firstDay.getDay();
-    const lastDayIndex = lastDay.getDate();
+    const firstDay = new Date(year, month, 1).getDay(); // 0 (Sun) - 6 (Sat)
+    const lastDate = new Date(year, month + 1, 0).getDate();
+    const prevLastDate = new Date(year, month, 0).getDate();
 
-    const monthYearString = currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })
-    monthYearElement.textContent = monthYearString;
+    let days = [];
 
-    let datesHTML = '';
-    for (let i = firstDayIndex; i > 0; i--) {
-      const prevDate = new Date(currentYear, currentMonth, 0 - i + 1)
-      datesHTML = `<div className="date inactive" >${prevDate.getDate()}</div>`
+    // Padding from previous month
+    const startDay = firstDay === 0 ? 6 : firstDay - 1;
+    for (let i = startDay; i > 0; i--) {
+      days.push({
+        date: prevLastDate - i + 1,
+        currentMonth: false,
+      });
     }
 
-    for (let i = 1; i <= totalDays; i++) {
-      const date = new Date(currentYear, currentMonth, i)
-      const activeClass = date.toDateString() === new Date().toDateString() ? 'active' : '';
-      datesHTML = `<div className="date ${activeClass}" >${i}</div>`
+    // Current month days
+    for (let i = 1; i <= lastDate; i++) {
+      days.push({
+        date: i,
+        currentMonth: true,
+        isToday:
+          i === new Date().getDate() &&
+          month === new Date().getMonth() &&
+          year === new Date().getFullYear(),
+      });
     }
 
-    for (let i = 1; i <= 7 - lastDayIndex; i++) {
-      const nextDate = new Date(currentYear, currentMonth + 1, i)
-      datesHTML = `<div className="date inactive" >${nextDate.getDate()}</div>`
+    // Padding for next month
+    const nextDays = 42 - days.length;
+    for (let i = 1; i <= nextDays; i++) {
+      days.push({
+        date: i,
+        currentMonth: false,
+      });
     }
 
-    datesElement.innerHTML = datesHTML
+    setCalendarDays(days);
+  };
+
+  const handlePrev = () => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(currentDate.getMonth() - 1);
+    setCurrentDate(newDate);
+  };
+
+  const handleNext = () => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(currentDate.getMonth() + 1);
+    setCurrentDate(newDate);
+  };
+
+  const handleDateClick = async (day) => {
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    let selectedDate;
+
+    if (day.currentMonth) {
+      selectedDate = new Date(year, month, day.date);
+    } else {
+      // If day is not in current month, determine if it's from previous or next
+      if (day.date > 15) {
+        // likely from previous month
+        selectedDate = new Date(year, month - 1, day.date);
+      } else {
+        // likely from next month
+        selectedDate = new Date(year, month + 1, day.date);
+      }
+    }
+
+    const yyyy = selectedDate.getFullYear();
+    const mm = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const dd = String(selectedDate.getDate()).padStart(2, '0');
+
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    console.log("Clicked Date:", formattedDate);
+    await workHours(formattedDate)
+
+  };
 
 
-  }
-
-  const handleprevClick = () => {
-    currentDate.setMonth(currentDate.getMonth() - 1)
-    updateCalendar()
-  }
-
-  const handleNextClick = () => {
-    currentDate.setMonth(currentDate.getMonth() + 1)
-    updateCalendar()
-  }
-  updateCalendar()
+  const monthYearString = currentDate.toLocaleString('default', {
+    month: 'long',
+    year: 'numeric',
+  });
 
   return (
     <div className="body">
-      <div className='calendar'>
+      <div className="calendar">
         <div className="header">
-          <button id='prevBtn' onClick={handleprevClick}>
-            <i className='fa-solid fa-chevron-left'></i>
+          <button onClick={handlePrev}>
+            <i className="fa-solid fa-chevron-left"></i>
           </button>
-          <div className="monthYear" ref={monthYearElement} id="monthYear"></div>
-          <button id="next" onClick={handleNextClick}>
-            <i className='fa-solid fa-chevron-right'></i>
+          <div className="monthYear">{monthYearString}</div>
+          <button onClick={handleNext}>
+            <i className="fa-solid fa-chevron-right"></i>
           </button>
         </div>
-        <div className="days">
-          <div className="day">Mon</div>
-          <div className="day">Tue</div>
-          <div className="day">Wed</div>
-          <div className="day">Thu</div>
-          <div className="day">Fri</div>
-          <div className="day">Sat</div>
-          <div className="day">Sun</div>
-        </div>
-        <div className="dates" ref={datesElement} id="dates"></div>
 
+        <div className="days">
+          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
+            <div className="day" key={day}>
+              {day}
+            </div>
+          ))}
+        </div>
+
+        <div className="dates">
+          {calendarDays.map((day, index) => (
+            <div
+              onClick={() => {
+                handleDateClick(day)
+              }}
+              key={index}
+              className={`date ${day.currentMonth ? '' : 'inactive'
+                } ${day.isToday ? 'active' : ''}`}
+            >
+              {day.date}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Calendar
-
-
+export default Calendar;
