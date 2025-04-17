@@ -1,11 +1,18 @@
-import { createContext, useState, useEffect,useContext,useCallback } from "react";
+import { createContext, useState, useEffect, useContext, useCallback } from "react";
 
 // Create context with default values to prevent null
 const defaultContextValue = {
-  user: { role: '', isLoggedIn: false, id },
-  setUser: () => {},
-  login: () => {},
-  logout: () => {},
+  user: { role: '', isLoggedIn: false, id: '' },
+  setUser: () => { },
+  login: () => { },
+  logout: () => { },
+
+  date: '',
+  setDate: () => { },
+  checkIn: '',
+  setCheckIn: () => { },
+  checkOut: '',
+  setCheckOut: () => { }
 
 };
 
@@ -13,6 +20,10 @@ export const AdminContext = createContext(defaultContextValue);
 
 export const AdminProvider = ({ children }) => {
   const [user, setUser] = useState({ role: '', isLoggedIn: false });
+  const [date, setDate] = useState('');
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');
+
 
   // Check for existing user data in localStorage on initial load
   useEffect(() => {
@@ -35,7 +46,7 @@ export const AdminProvider = ({ children }) => {
   const login = useCallback((userData) => {
     setUser({ ...userData, isLoggedIn: true });
   }, []);
-  
+
 
   const logout = () => {
     setUser({ role: '', isLoggedIn: false });
@@ -44,7 +55,7 @@ export const AdminProvider = ({ children }) => {
   };
 
   return (
-    <AdminContext.Provider value={{ user, setUser, login, logout }}>
+    <AdminContext.Provider value={{ user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut }}>
       {children}
     </AdminContext.Provider>
   );

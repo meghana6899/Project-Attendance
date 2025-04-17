@@ -41,7 +41,7 @@ const CheckingUserPresentOrNot=async(req,res,next)=>{
             if(data[0].emp_id===user_id){
                 console.log('eneter into if block');
                 req.body.column='emp_id';
-                console.log(req.body)
+                console.log("RE body", req.body)
                 next();
             }else{
                 console.log('emp not found')

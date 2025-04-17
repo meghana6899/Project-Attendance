@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 
 function CheckInTable() {
   const [data, setData] = useState([])
+
   var response;
   useEffect(() => {
     const fetchdetails = async () => {
-      console.log('Fetch')
+      //console.log('Fetch')
       try {
         response = await CheckInDetails();
-        console.log(response)
+        //console.log(response)
         if (Array.isArray(response)) {
           setData(response)
         } else if (typeof response === 'object') {
@@ -25,11 +26,12 @@ function CheckInTable() {
     }
     fetchdetails()
   }, [])
-  console.log(data)
+  //console.log(data)
 
 
   //console.log(response)
   const renderedData = data.map(({ checkin, checkout, date }, index) => {
+
     return (
       <tr key={index} className='px-5 py-5'>
         <td className='py-3 px-5'>{date.split('T')[0]}</td>

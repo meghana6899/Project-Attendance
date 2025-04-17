@@ -8,7 +8,8 @@ async function workHours(date) {
     const response = await axios.post(`http://localhost:3000/api/hours/${user}/${id}`, {
         date
     })
-    console.log(response.data)
+    console.log("response", response.data)
+    return response.data;
 }
 
 export default workHours

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
-import workHours from '../api/queries/workHours';
+import workHours from '../api/queries/workHours.jsx';
+import { useAdmin } from '../context/AuthContext'
 
 function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState([]);
+  const { date, setDate } = useAdmin();
 
   useEffect(() => {
     generateCalendar();
@@ -90,7 +92,10 @@ function Calendar() {
     const dd = String(selectedDate.getDate()).padStart(2, '0');
 
     const formattedDate = `${yyyy}-${mm}-${dd}`;
-    console.log("Clicked Date:", formattedDate);
+    console.log(typeof formattedDate, formattedDate)
+
+    setDate(formattedDate)
+
     await workHours(formattedDate)
 
   };
@@ -108,7 +113,7 @@ function Calendar() {
           <button onClick={handlePrev}>
             <i className="fa-solid fa-chevron-left"></i>
           </button>
-          <div className="monthYear">{monthYearString}</div>
+          <div className="monthYear">{monthYearString}Date{date}</div>
           <button onClick={handleNext}>
             <i className="fa-solid fa-chevron-right"></i>
           </button>
