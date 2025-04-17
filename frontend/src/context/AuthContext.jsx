@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useContext, useCallback } from "rea
 
 // Create context with default values to prevent null
 const defaultContextValue = {
-  user: { role: '', isLoggedIn: false, id },
+  user: { role: '', isLoggedIn: false, id: '' },
   setUser: () => { },
   login: () => { },
   logout: () => { },

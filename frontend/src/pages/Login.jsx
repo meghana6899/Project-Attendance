@@ -65,7 +65,7 @@ function Login() {
     if (!validate()) return;
 
     try {
-<<<<<<< Updated upstream
+
       // Simulated API call
       console.log({ email: formData.email, password: formData.password, role: formData.role });
       const response = await axios.post('http://localhost:3000/api/auth/login',
@@ -85,26 +85,27 @@ function Login() {
         localStorage.setItem('id', response.data.id)
         console.log(response.data.role)
         navigate(`/${response.data.role}-dashboard`)
-=======
-      const response = await axios.post("http://localhost:3000/api/auth/login", {
-        email: formData.email,
-        password: formData.password,
-        role: formData.role,
-      });
 
-      if (response.data.success) {
-        const userData = {
-          role: response.data.role,
-          isLoggedIn: true,
-          id:response.data.id,
-        };
->>>>>>> Stashed changes
+        const response = await axios.post("http://localhost:3000/api/auth/login", {
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+        });
 
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(userData));
+        if (response.data.success) {
+          const userData = {
+            role: response.data.role,
+            isLoggedIn: true,
+            id: response.data.id,
+          };
 
-        login(userData);
-        redirectBasedOnRole(response.data.role);
+
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", JSON.stringify(userData));
+
+          login(userData);
+          redirectBasedOnRole(response.data.role);
+        }
       }
     } catch (error) {
       if (error.response && !error.response.data.success) {
