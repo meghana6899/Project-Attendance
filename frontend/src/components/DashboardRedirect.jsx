@@ -18,7 +18,7 @@ const DashboardRedirect = () => {
     } else {
       navigate("/login");
     }
-  }, [user, navigate]);
+  }, [user,navigate]);
 
   return null;
   

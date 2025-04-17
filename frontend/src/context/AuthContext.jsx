@@ -2,11 +2,10 @@ import { createContext, useState, useEffect, useContext, useCallback } from "rea
 
 // Create context with default values to prevent null
 const defaultContextValue = {
-  user: { role: '', isLoggedIn: false, id: '' },
+  user: { role: '', isLoggedIn: false, id },
   setUser: () => { },
   login: () => { },
   logout: () => { },
-
   date: '',
   setDate: () => { },
   checkIn: '',
@@ -23,7 +22,6 @@ export const AdminProvider = ({ children }) => {
   const [date, setDate] = useState('');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
-
 
   // Check for existing user data in localStorage on initial load
   useEffect(() => {
@@ -60,4 +58,11 @@ export const AdminProvider = ({ children }) => {
     </AdminContext.Provider>
   );
 };
+
+
+
+
+
+
+
 export const useAdmin = () => useContext(AdminContext);

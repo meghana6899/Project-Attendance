@@ -172,4 +172,19 @@ const calculateAvgHours = async(req, res) => {
   console.log(activity)
   res.send(activity)
 }
-module.exports = calculateAvgHours;
+
+const calculateWeekAvgHours = async(req, res) => {
+  console.log("entered Controller")
+  const user_id = req.params.id
+  const column = user_id.startsWith('E')? "emp_id" : "std_id";
+  const table = user_id.startsWith('E')? "attendance_emp" : "attendance_stu"
+  const date = new Date().toISOString().split('T')[0];
+  console.log(date)
+ 
+  //const activeHours = await activeHours(table, column, date, user_id);
+  //const totalHours = await breakHours()
+  res.send(activity)
+}
+module.exports =
+  calculateAvgHours;
+  
