@@ -6,7 +6,7 @@ import { useAdmin } from '../context/AuthContext'
 function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState([]);
-  const { date, setDate } = useAdmin();
+  const { date, setDate, setEndDate, setStartDate } = useAdmin();
 
   useEffect(() => {
     generateCalendar();
@@ -15,7 +15,7 @@ function Calendar() {
   const generateCalendar = () => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
-
+    setDate(currentDate.getFullYear() + "-" + String(currentDate.getMonth() + 1).padStart(2, '0') + "-" + String(currentDate.getDate()).padStart(2, '0'))
     const firstDay = new Date(year, month, 1).getDay(); // 0 (Sun) - 6 (Sat)
     const lastDate = new Date(year, month + 1, 0).getDate();
     const prevLastDate = new Date(year, month, 0).getDate();
@@ -94,10 +94,12 @@ function Calendar() {
     const formattedDate = `${yyyy}-${mm}-${dd}`;
     console.log(typeof formattedDate, formattedDate)
 
-    setDate(formattedDate)
+
 
     await workHours(formattedDate)
-
+    setDate(formattedDate)
+    setStartDate(null)
+    setEndDate(null)
   };
 
 
@@ -113,7 +115,7 @@ function Calendar() {
           <button onClick={handlePrev}>
             <i className="fa-solid fa-chevron-left"></i>
           </button>
-          <div className="monthYear">{monthYearString}Date{date}</div>
+          <div className="monthYear">{monthYearString}</div>
           <button onClick={handleNext}>
             <i className="fa-solid fa-chevron-right"></i>
           </button>

@@ -57,7 +57,8 @@ const totalBreakHoursOnOneDay = async (table, date, user_id, column) => {
 
 
 const allInfo = async(table, column, date, user_id) => {
-  const [rows] = await pool.execute(`SELECT checkin, checkout, date FROM ${table} where date = ? AND ${column} = ?`, [date, user_id])
+  console.log(column)
+  const [rows] = await pool.execute(`SELECT checkin, checkout, date FROM ${table} where date = ? AND \`${column}\` = ?`, [date, user_id])
   console.log(rows)
   return rows
 }

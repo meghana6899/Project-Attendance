@@ -6,7 +6,8 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import AdminHome from "./pages/AdminHome";
 import StudentDashboard from "./pages/StudentDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
-import DashboardRedirect from "./components/DashboardRedirect"; 
+import DashboardRedirect from "./components/DashboardRedirect";
+import CheckIncheckOut from "./pages/checkIncheckOut";
 
 
 const router = createBrowserRouter([
@@ -19,15 +20,23 @@ const router = createBrowserRouter([
       {
         element: <ProtectedRoutes />,
         children: [
-          { path: "/dashboard", element: <DashboardRedirect /> }, 
+          { path: "/dashboard", element: <DashboardRedirect /> },
           { path: "/admin-dashboard", element: <AdminHome /> },
           { path: "/employee-dashboard", element: <EmployeeDashboard /> },
-          { path: "/student-dashboard", element: <StudentDashboard /> },
-          
+          { path: "/student-dashboard", element: <EmployeeDashboard /> },
+
         ],
       },
+
+
     ],
+
   },
+  {
+    path: "/checkIn",
+    element: <CheckIncheckOut />
+  }
+
 ]);
 
 function App() {
