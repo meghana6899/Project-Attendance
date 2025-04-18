@@ -157,12 +157,15 @@ const calculateAvgHours = async(req, res) => {
   const user_id = req.params.id
   const role = req.params.user
   let table;
+  let column;
   if(role === "admin" || role === "employee"){
     table = "attendance_emp"
+    column = "emp_id"
   }else{
     table = "attendance_stu"
+    column="stu_id"
   }
-  const column = user_id.startsWith('E')? "emp_id" : "std_id";
+  
   console.log(table, column, user_id)
   // const table = user_id.startsWith('E')? "attendance_emp" : "attendance_stu"
   const date = new Date().toISOString().split('T')[0];

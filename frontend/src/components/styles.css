@@ -10,7 +10,7 @@
 .body {
     width: 50vw;
     height: 50vh;
-    margin: 10vh auto;
+    margin: 0vh auto;
     display: flex;
     align-items: center;
     justify-content: center;

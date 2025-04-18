@@ -1,9 +1,18 @@
 import React from 'react';
 import CheckInDetails from '../api/queries/CheckInDetails';
 import { useEffect, useState } from 'react';
+import { useAdmin } from '../context/AuthContext';
+
+
+
+
+
+
 
 function CheckInTable() {
+  const { checkIn, checkOut, setCheckIn, setCheckOut, isCheckedIn } = useAdmin();
   const [data, setData] = useState([])
+
 
   var response;
   useEffect(() => {
@@ -11,7 +20,7 @@ function CheckInTable() {
       //console.log('Fetch')
       try {
         response = await CheckInDetails();
-        //console.log(response)
+        console.log(response)
         if (Array.isArray(response)) {
           setData(response)
         } else if (typeof response === 'object') {
@@ -25,13 +34,14 @@ function CheckInTable() {
       }
     }
     fetchdetails()
-  }, [])
+  }, [checkIn, checkOut, isCheckedIn])
   //console.log(data)
 
 
   //console.log(response)
   const renderedData = data.map(({ checkin, checkout, date }, index) => {
-
+    // setCheckIn(checkin)
+    // setCheckOut(checkout)
     return (
       <tr key={index} className='px-5 py-5'>
         <td className='py-3 px-5'>{date.split('T')[0]}</td>
@@ -42,7 +52,7 @@ function CheckInTable() {
     )
   })
   return (
-    <table className='table text-center w-auto mx-auto'>
+    <table className='table text-center w-auto mx-auto my-5 bg-info'>
       <thead className='table-light' >
         <tr  >
           <th className='py-3 px-5'>Date</th>
@@ -57,5 +67,7 @@ function CheckInTable() {
     </table>
   )
 }
+
+
 
 export default CheckInTable

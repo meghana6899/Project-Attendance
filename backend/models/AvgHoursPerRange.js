@@ -10,8 +10,9 @@ const totalWorkingHoursForRange = async (table, startDate,endDate, user_id,colum
 
     //Average BREAK/active/total hours of an employee/student
   const getAvgBreakHoursOnRange = async (table, user_id, startDate,column, endDate,tablecolumn) => {
+    console.log("Entered model")
       const query = `
-        SELECT ${column}, SEC_TO_TIME(AVG(TIME_TO_SEC(${tablecolumn}))) AS avg_break_hours
+        SELECT ${column}, SEC_TO_TIME(AVG(TIME_TO_SEC(${tablecolumn}))) AS avg_${tablecolumn}
         FROM ${table}
         WHERE ${column} = ? AND date BETWEEN ? AND ?
         GROUP BY ${column}
