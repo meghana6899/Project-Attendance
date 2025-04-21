@@ -94,7 +94,7 @@ function DashboardEmployee() {
         plugins: {
             title: {
                 display: true,
-                text: `${date}`,
+                text: isCustomRange ? "Average Working Hours" : `${date}`,
                 font: {
                     size: 15,
                     weight: 'bold'

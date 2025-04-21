@@ -11,22 +11,22 @@ import axios from 'axios';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-function DashboardEmployee() {
+function DashboardAdmin() {
     const {
         date,
-        
+
         startDate,
         endDate,
-        activeHours,
-        breakHours,
-        totalHours,
+        avgactiveHours,
+        avgbreakHours,
+        avgtotalHours,
         employee
     } = useAdmin();
 
     console.log(date)
     const [hourData, setHourData] = useState({});
     const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
-      const userValue = employee?.[user_id];
+    const userValue = employee?.[user_id];
     const isCustomRange = startDate !== null && endDate !== null;
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function DashboardEmployee() {
             if (!isCustomRange) {
                 try {
                     setHourData({});
-                    const response = await axios.post( `http://localhost:3000/api/hours/info/${userValue}`,{date},{
+                    const response = await axios.post(`http://localhost:3000/api/hours/info/${userValue}`, { date }, {
                         headers: {
                             'Content-Type': 'application/json',
                             authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -50,7 +50,7 @@ function DashboardEmployee() {
             }
         };
         fetchHours();
-    }, [date, isCustomRange,userValue]);
+    }, [date, isCustomRange, userValue]);
 
     const formatTimeLabel = (decimalHour = 0) => {
         const hours = Math.floor(decimalHour);
@@ -61,26 +61,26 @@ function DashboardEmployee() {
     const timeToDecimal = (timeStr = '00:00:00') => {
         if (typeof timeStr !== 'string') return 0;
         const [h, m, s] = timeStr.split(':').map(Number);
+        console.log(h, m, s)
         return h + m / 60 + s / 3600;
     };
-    
+
 
     const chartData = useMemo(() => ({
         labels: ['Active Hours', 'Break Hours', 'Total'],
         datasets: [
             {
-                data: isCustomRange
-                    ? [
-                        typeof activeHours === 'string' ? timeToDecimal(activeHours) : 0,
-                        typeof breakHours === 'string' ? timeToDecimal(breakHours) : 0,
-                        typeof totalHours === 'string' ? timeToDecimal(totalHours) : 0,
-                    ]
+                data: [
+                    typeof avgactiveHours === 'string' ? timeToDecimal(avgactiveHours) : 0,
+                    typeof avgbreakHours === 'string' ? timeToDecimal(avgbreakHours) : 0,
+                    typeof avgtotalHours === 'string' ? timeToDecimal(avgtotalHours) : 0,
+                ],
 
-                    : [
-                        timeToDecimal(hourData.active_hours),
-                        timeToDecimal(hourData.break_hours),
-                        timeToDecimal(hourData.total_hours),
-                    ],
+                // : [
+                //     timeToDecimal(hourData.active_hours),
+                //     timeToDecimal(hourData.break_hours),
+                //     timeToDecimal(hourData.total_hours),
+                // ],
                 backgroundColor: [
                     'rgba(43, 63, 229, 0.8)',
                     'rgba(250, 192, 19, 0.8)',
@@ -90,16 +90,13 @@ function DashboardEmployee() {
                 borderWidth: 2,
             },
         ],
-    }), [activeHours, breakHours, totalHours, hourData, isCustomRange, date, employee]);
+    }), [avgactiveHours, avgbreakHours, avgtotalHours, hourData, isCustomRange, date, employee]);
 
 
     const tooltipLabels = useMemo(() => (
-        isCustomRange
-            ? [activeHours, breakHours, totalHours].map(hour => formatTimeLabel(timeToDecimal(hour)))
-            : [hourData.active_hours, hourData.break_hours, hourData.total_hours].map(timeStr =>
-                timeStr ? formatTimeLabel(timeToDecimal(timeStr)) : '0h 0min'
-            )
-    ), [activeHours, breakHours, totalHours, hourData, isCustomRange, date]);
+        [avgactiveHours, avgbreakHours, avgtotalHours].map(hour => formatTimeLabel(timeToDecimal(hour)))
+
+    ), [avgactiveHours, avgbreakHours, avgtotalHours, hourData, isCustomRange, date]);
 
 
     const chartOptions = {
@@ -141,6 +138,6 @@ function DashboardEmployee() {
     );
 }
 
-export default DashboardEmployee;
+export default DashboardAdmin;
 
 

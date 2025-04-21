@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAdmin } from '../context/AuthContext'
-import axios from 'axios';  
+import axios from 'axios';
 
 function CustomizeDates() {
-    const { setStartDate, setEndDate, startDate, setDate, date, endDate, activeHours, setActiveHours, breakHours, setBreakHours, totalHours, setTotalHours ,employee,setShowcard} = useAdmin();
+    const { setStartDate, setEndDate, startDate, setDate, date, endDate, activeHours, setAvgActiveHours, breakHours, setAvgBreakHours, totalHours, setAvgTotalHours, employee, setShowcard } = useAdmin();
     const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
-      const userValue = employee?.[user_id];
-
+    const userValue = employee?.[user_id];
+    const [tempStartDate, setTempStartDate] = useState(startDate);
+    const [tempEndDate, setTempEndDate] = useState(endDate);
 
     // useEffect(() => {
     //     const fetchDetails = async () => {
@@ -23,61 +24,79 @@ function CustomizeDates() {
     //     fetchDetails()
     // }, [endDate])
 
-    useEffect(() => {
-        if (startDate && endDate) {
-            const fetchDetails = async () => {
-                try {
-                    const response = await axios.post(`http://localhost:3000/api/details/avgHours/${userValue}`, {
-                        startDate,
-                        endDate
-                    },{
-                        headers: {
-                            'Content-Type': 'application/json',
-                            authorization: `Bearer ${localStorage.getItem('token')}`,
-                        }
-                    });
-                    setActiveHours(response.data.activehours);
-                    setBreakHours(response.data.breakhours);
-                    setTotalHours(response.data.totalhours);
-                } catch (error) {
-                    console.log(error);
-                }
-            };
-            fetchDetails();
-        }
-    }, [startDate, endDate,employee]); // wait for both
+    // useEffect(() => {
+    //     if (startDate && endDate) {
+    //         const fetchDetails = async () => {
+    //             try {
+    //                 const response = await axios.post(`http://localhost:3000/api/details/avgHours/${userValue}`, {
+    //                     startDate,
+    //                     endDate
+    //                 }, {
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         authorization: `Bearer ${localStorage.getItem('token')}`,
+    //                     }
+    //                 });
+    //                 setAvgActiveHours(response.data.activehours);
+    //                 setAvgBreakHours(response.data.breakhours);
+    //                 setAvgTotalHours(response.data.totalhours);
+    //                 console.log(response)
+    //             } catch (error) {
+    //                 console.log(error);
+    //             }
+    //         };
+    //         fetchDetails();
+    //     }
+    // }, [endDate, employee]); // wait for both
+    console.log(userValue)
 
-    const handleResetClick = () => {
-        setStartDate(null)
-        setEndDate(null)
-        setDate(`${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`)
-        console.log(date)
-        console.log(startDate)
-        console.log(endDate)
+    const handleResetClick = async () => {
+        setStartDate(tempStartDate);
+        setEndDate(tempEndDate);
+        try {
+            const response = await axios.post(`http://localhost:3000/api/details/avgHours/${userValue}`, {
+                startDate,
+                endDate
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                }
+            });
+            setAvgActiveHours(response.data.activehours);
+            setAvgBreakHours(response.data.breakhours);
+            setAvgTotalHours(response.data.totalhours);
+            console.log(response)
+        } catch (error) {
+            console.log(error);
+        }
     }
 
+    /*     ------------Start-------- */
+
     const handleStartChange = (event) => {
+        setTempStartDate(event.target.value)
         setStartDate(event.target.value)
     }
 
     const handleEndChange = (event) => {
+        setTempEndDate(event.target.value)
         setEndDate(event.target.value)
         console.log("enddate", endDate)
     }
 
     return (
-        <div className='d-flex justify-content-center align-items-center gap-3'>   
-        <div className='d-flex  justify-content-center align-items-center gap-4 mx-3'>
-        <input className='mx-3 border rounded text-secondary p-3' type='date' value={startDate} onChange={handleStartChange} style={{'width': '200px','height': '36px' }}/>
-        <input type='date' className='border rounded text-secondary p-3' value={endDate} onChange={handleEndChange} style={{'width': '200px','height': '36px' }}    />
-            </div>   
-            <div className='d-flex justify-content-center align-items-center gap-4 mx-3'>
-            <input type='button' value="Reset"  className='btn btn-outline-secondary' 
-            onClick={handleResetClick} />
-
+        <div className='d-flex justify-content-center align-items-center gap-3'>
+            <div className='d-flex  justify-content-center align-items-center gap-4 mx-3'>
+                <input className='mx-3 border rounded text-secondary p-3' type='date' value={startDate} onChange={handleStartChange} style={{ 'width': '200px', 'height': '36px' }} />
+                <input type='date' className='border rounded text-secondary p-3' value={endDate} onChange={handleEndChange} style={{ 'width': '200px', 'height': '36px' }} />
             </div>
-          
-           
+            <div className='d-flex justify-content-center align-items-center gap-4 mx-3'>
+                <input type='button' value="Apply" className='btn btn-outline-secondary'
+                    onClick={handleResetClick} />
+            </div>
+
+
             {/* <p>Average Active Hours: {activeHours} </p>
             <p>Average Break Hours: {breakHours}</p>
             <p>Average Total Hours: {totalHours}</p> */}

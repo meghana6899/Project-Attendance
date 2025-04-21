@@ -33,10 +33,12 @@ function CustomInput() {
 
     const handleStartChange = (event) => {
         setTempStartDate(event.target.value)
+        setStartDate(event.target.value)
     }
 
     const handleEndChange = (event) => {
         setTempEndDate(event.target.value)
+        setEndDate(event.target.value)
         console.log("enddate", endDate)
     }
 
