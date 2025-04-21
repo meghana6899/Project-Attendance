@@ -42,9 +42,11 @@ function CheckInTable() {
   const renderedData = data.map(({ checkin, checkout, date }, index) => {
     // setCheckIn(checkin)
     // setCheckOut(checkout)
+    const zdate = new Date(date);
+    const newDate = zdate.toLocaleString("en-GB", { timeZone: "Asia/Kolkata" })
     return (
       <tr key={index} className='px-5 py-5'>
-        <td className='py-3 px-5'>{date.split('T')[0]}</td>
+        <td className='py-3 px-5'>{newDate.split(',')[0]}</td>
         <td className='py-3 px-5'>{checkin}</td>
         <td className='py-3 px-5'>{checkout}</td>
       </tr>
