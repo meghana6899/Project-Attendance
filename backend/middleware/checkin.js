@@ -53,7 +53,8 @@ const CheckingUserPresentOrNot=async(req,res,next)=>{
         catch(err){
             console.log(err);
             
-            res.send({message:"User_id is not in the DB or the invalid credentials"});
+            res.status(500).send({success: "false",
+            message:"User_id is not in the DB or the invalid credentials"});
             
             console.log("data is not found")
             
@@ -88,13 +89,14 @@ const validatePassword=async(req,res,next)=>{
     const [pswrd]=await pool.execute(`select password from ${authtable} where ${column}=?`,[user_id])
     if(column==='emp_id'){
 
-        bcrypt.compare(password,pswrd[0].password,(err,res)=>{
-            if(res){
+        bcrypt.compare(password,pswrd[0].password,(err,data)=>{
+            if(data){
                 console.log('password is validated');
                 next();
 
             }else{
-                console.log(err)
+                return res.status(401).send({success: false, msg: "Incorrect Password"})
+                console.log("Incorrect Pasword")
             }
 
         })
@@ -107,7 +109,8 @@ const validatePassword=async(req,res,next)=>{
                 next();
 
             }else{
-                console.log(err)
+                return res.status(401).send({success: false, msg: "Incorrect Password"})
+                console.log("Incorrect Password")
             }
 
         })

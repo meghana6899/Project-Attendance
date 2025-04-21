@@ -8,7 +8,7 @@ const {secret, expiresIn} = require('../configdb/jwtConfig.js');
 const login = async(req,res) => {
     const {email, password, role} = req.body;
     console.log(email);
-   
+    
     
 
     userModel.findUser(email,role, async(err, user) => {
