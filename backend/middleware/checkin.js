@@ -13,7 +13,7 @@ const DataCheck=async(req,res,next)=>{
     next();
 }
 const validatetable=(req,res,next)=>{
-    const user_id=req.body.user_id;
+    const user_id=req.body.user_id; 
     if(user_id.charAt(0)==='E'){
         req.body.table='attendance_emp';
         req.body.authtable='employees';
@@ -34,7 +34,7 @@ const CheckingUserPresentOrNot=async(req,res,next)=>{
     if(user_id.charAt(0)==='E'){
         try{
             const [data ]=await pool.execute(`select emp_id from ${authtable} where emp_id = ?`,[user_id]);
-            // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!');
             
             
 
@@ -63,6 +63,7 @@ const CheckingUserPresentOrNot=async(req,res,next)=>{
     }else if(user_id.charAt(0)==='S'){
         try{
             const [data ]=await pool.execute(`select stu_id from ${authtable} where stu_id = ?`,[user_id]);
+         
             console.log(data)
             if(data[0].stu_id===user_id){
                 req.body.column='stu_id';
@@ -86,11 +87,15 @@ catch(err){
 const validatePassword=async(req,res,next)=>{
     
     const {password,authtable,column,user_id}=req.body;
-    const [pswrd]=await pool.execute(`select password from ${authtable} where ${column}=?`,[user_id])
-    if(column==='emp_id'){
+    
+    const [pswrd]=await pool.execute(`select password from ${authtable} where ${column}=?`,[user_id]);
+    console.log('heri here');
 
-        bcrypt.compare(password,pswrd[0].password,(err,data)=>{
-            if(data){
+    if(column==='emp_id'){
+        console.log(pswrd);
+
+        const isMatched=await bcrypt.compare(password,pswrd[0].password)
+            if(isMatched){
                 console.log('password is validated');
                 next();
 
@@ -99,10 +104,10 @@ const validatePassword=async(req,res,next)=>{
                 console.log("Incorrect Pasword")
             }
 
-        })
+        }
 
 
-    }else if(column==='stu_id'){
+    else if(column==='stu_id'){
         bcrypt.compare(password,pswrd[0].password,(err,res)=>{
             if(res){
                 console.log('password is validated');

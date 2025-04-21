@@ -46,6 +46,7 @@ function Login() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: "" });
+    setMessage("");
   };
 
   const validate = () => {
@@ -76,11 +77,34 @@ function Login() {
     if (!validate()) return;
 
     try {
+
+// <<<<<<< Updated upstream
+//       // Simulated API call
+//       console.log({ email: formData.email, password: formData.password, role: formData.role });
+//       const response = await axios.post('http://localhost:3000/api/auth/login',
+//         {
+//           email: formData.email,
+//           password: formData.password,
+//           role: formData.role,
+//           // id: formData.id
+//         }
+//       );
+
+//       if (response.data.success) {
+//         console.log(response.data)
+//         localStorage.setItem('token', response.data.token);
+//         localStorage.setItem('loggedIn', true);
+//         localStorage.setItem('role', response.data.role)
+//         localStorage.setItem('id', response.data.id)
+//         console.log(response.data.role)
+//         navigate(`/${response.data.role}-dashboard`)
+// =======
       const response = await axios.post("http://localhost:3000/api/auth/login", {
         email: formData.email,
         password: formData.password,
         role: formData.role,
       });
+      console.log(response,'reponse is here');
 
       // console.log(response)
 
@@ -98,19 +122,25 @@ function Login() {
         login(userData);
         redirectBasedOnRole(response.data.role);
       }
+
     }
-    catch (error) {
+    
+     
+     catch (error) {
+
       if (error.response && !error.response.data.success) {
-        setMessage(error.response.data.message);
+        // setMessage(error.response.data.message);
+        console.log(error);
       } else {
-        setMessage("Server ERROR");
+        setMessage("User with  this email and password not found  ");
       }
-      console.error("Login failed:", error);
+      setMessage(`${error.response.data.msg}` );
     }
   };
+  console.log(formData,'here is form data')
 
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-70 m-5">
+    <div className="container d-flex justify-content-center align-items-center vh-70 vw-100 my-5">
       <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "400px" }}>
         <h3 className="text-center mb-4">Login</h3>
         <form onSubmit={handleSubmit}>

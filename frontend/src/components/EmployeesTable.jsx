@@ -1,15 +1,23 @@
 import React from 'react';
 import AllEmployees from '../api/queries/AllEmployees';
 import { useEffect, useState } from 'react';
+import { useAdmin } from '../context/AuthContext';
+import Card from './Card';
+import AddCard from './AddCard';
 
 function EmployeesTable() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+
+  const { setEmployee,employee,setShowcard,showcard,add,setAdd } = useAdmin();
+
+
   var response;
   useEffect(() => {
     const fetchdetails = async () => {
       console.log('Fetch')
       try {
         response = await AllEmployees();
+        
         console.log(response);
         if (Array.isArray(response)) {
           setData(response)
@@ -24,21 +32,20 @@ function EmployeesTable() {
       }
     }
     fetchdetails()
-  }, [])
+  }, [employee,add])
   console.log(data);
   console.log('here is the event target');
   const handleClick=(e)=>{
     const row=e.target.closest('tr');
+    if (!row || row.rowIndex === 0) return;
     console.log(row);
     console.log(row.rowIndex-1);
-
-        const rowIndex = row.rowIndex - 1;
-        <Card value={data[rowIndex]}/>
-
-
-    
-    
+    const rowIndex = row.rowIndex - 1;
+    console.log(data[rowIndex])
+    setEmployee(data[rowIndex]);
+    setShowcard(true)
   }; 
+
 
 
 
@@ -46,46 +53,141 @@ function EmployeesTable() {
     return (
       <tr key={index} className='px-5 py-5'>
         
-        <td className='py-3 px-3'><input type="text" value={emp_id} disabled/></td>
-        <td className='py-3 px-3'><input type="text" value={first_name} disabled/></td>
-        <td className='py-3 px-3'><input type="text" value={last_name} disabled /></td>
-        <td className='py-3 px-3'><input type="text" value={email} disabled /></td>
-        <td className='py-3 px-3'><input type="text" value={role}  disabled/></td>
-        <td className='py-3 px-3'><input type="text" value={join_date.split('T')[0]} disabled/></td>
-        <td className='py-3 px-3 d-flex justify-content-center '><div><input type="button"  value='delete'/>
-        <input type="button" value='edit ' />
-        </div></td>
+        <td className='py-3 px-3'>{emp_id}</td>
+        <td className='py-3 px-3'>{first_name}</td>
+        <td className='py-3 px-3'>{last_name}</td>
+        <td className='py-3 px-3'>{email}</td>
+        <td className='py-3 px-3'>{role}  </td>
+        <td className='py-3 px-3'>{join_date ? join_date.split('T')[0] : ""}</td>
+
+        
       </tr>
 
     )
   });
-  return (
-    <table className='table text-center w-auto mx-auto' onClick={handleClick}>
-      <thead className='table-light' >
-        <tr  >
-          <th className='py-3 px-3' scope='col' >emp_id</th>
-          <th className='py-3 px-3' scope='col' >first_name</th>
-          <th className='py-3 px-3' scope='col'>Last_name</th>
-          
-          <th className='py-3 px-3' scope='col' >email</th>
-          <th className='py-3 px-3' scope='col'>role</th>
-          <th className='py-3 px-3'>JoinedDate</th>
-          <th className='py-3 px-3'> Edit/Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-      {renderedData.length > 0 ? (
-        renderedData
-      ) : (
-        <tr>
-          <td colSpan="6" className="py-3 px-5 text-center">
-            Loading...
-          </td>
-        </tr>
-      )}
-      </tbody>
 
-    </table>
+  const handleAdd=()=>{
+    if (add){
+      setAdd(false);
+    }else{
+      setAdd(true);
+    }
+
+  }
+
+
+  return (<><div className="text-end  mx-5">
+    <input
+      type="button"
+      value="ADD"
+      onClick={handleAdd}
+      className="btn btn-outline-primary fw-semibold px-5 py-2 rounded-3"
+      style={{ fontSize: "1.1rem" }}
+    />
+  </div>
+
+  {/* AddCard Popup */}
+  {add && (
+    <div
+      className="modal-overlay"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        zIndex: 1050,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div
+        // className="bg-white p-4 rounded-4 shadow"
+        // style={{
+        //   width: "50%",
+        //   maxWidth: "600px",
+        //   minWidth: "300px",
+        // }}
+      >
+        <AddCard closecard={() => setAdd(false)} />
+
+      </div>
+    </div>
+  )}
+     <div className="container d-flex justify-content-center my-5">
+      <div className="table-responsive" style={{ width: "100%" }}>
+        <table
+          className="table table-borderless table-hover text-center align-middle shadow-sm"
+          onClick={handleClick}
+          style={{
+            borderRadius: "1rem",
+            overflow: "hidden",
+            backgroundColor: "#f9f9f9",
+          }}
+        >
+          <thead
+            style={{
+              backgroundColor: "#343a40",
+              color: "white",
+              fontSize: "1rem",
+            }}
+          >
+            <tr>
+              <th>Emp ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Joined Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {renderedData.length > 0 ? (
+              renderedData
+            ) : (
+              <tr>
+                <td colSpan="6" className="py-3 px-5 text-muted">
+                  Loading...
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+  
+        {/* Card Popup */}
+        {showcard && (
+          <div
+            className="modal-overlay"
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              zIndex: 1050,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div
+              className="p-4 rounded-4 "
+              style={{
+                width: "50%",
+                maxWidth: "600px",
+                minWidth: "300px",
+              }}
+            >
+              <Card />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+    </>
   )
 }
 

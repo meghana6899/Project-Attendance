@@ -34,7 +34,12 @@ function DashboardEmployee() {
             if (!isCustomRange) {
                 try {
                     setHourData({});
-                    const response = await axios.post( `http://localhost:3000/api/hours/info/${userValue}`,{date});
+                    const response = await axios.post( `http://localhost:3000/api/hours/info/${userValue}`,{date},{
+                        headers: {
+                            'Content-Type': 'application/json',
+                            authorization: `Bearer ${localStorage.getItem('token')}`,
+                        }
+                    });
                     console.log("response", response.data)
                     setHourData(response.data); // <- Use the actual data from API
 
@@ -126,7 +131,7 @@ function DashboardEmployee() {
 
     return (
 
-        <div className="border w-60 rounded p-3 shadow-sm" style={{ height: '380px' }}>
+        <div className="border w-100 rounded p-3 shadow-sm" style={{ height: '420px' }}>
 
             <Doughnut key={isCustomRange ? `${startDate} - ${endDate}` : date} data={chartData} options={chartOptions} />
 

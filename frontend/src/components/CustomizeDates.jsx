@@ -30,6 +30,11 @@ function CustomizeDates() {
                     const response = await axios.post(`http://localhost:3000/api/details/avgHours/${userValue}`, {
                         startDate,
                         endDate
+                    },{
+                        headers: {
+                            'Content-Type': 'application/json',
+                            authorization: `Bearer ${localStorage.getItem('token')}`,
+                        }
                     });
                     setActiveHours(response.data.activehours);
                     setBreakHours(response.data.breakhours);
@@ -45,7 +50,7 @@ function CustomizeDates() {
     const handleResetClick = () => {
         setStartDate(null)
         setEndDate(null)
-        setDate(`${new Date().getFullYear}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`)
+        setDate(`${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`)
         console.log(date)
         console.log(startDate)
         console.log(endDate)
@@ -61,11 +66,18 @@ function CustomizeDates() {
     }
 
     return (
-        <div>
-            <span>Custom</span>
-            <input className='mx-3 border rounded text-secondary' type='date' value={startDate} onChange={handleStartChange} />
-            <input type='date' className='border rounded text-secondary' value={endDate} onChange={handleEndChange} />
-            <input type='button' value="Reset" onClick={handleResetClick} />
+        <div className='d-flex justify-content-center align-items-center gap-3'>   
+        <div className='d-flex  justify-content-center align-items-center gap-4 mx-3'>
+        <input className='mx-3 border rounded text-secondary p-3' type='date' value={startDate} onChange={handleStartChange} style={{'width': '200px','height': '36px' }}/>
+        <input type='date' className='border rounded text-secondary p-3' value={endDate} onChange={handleEndChange} style={{'width': '200px','height': '36px' }}    />
+            </div>   
+            <div className='d-flex justify-content-center align-items-center gap-4 mx-3'>
+            <input type='button' value="Reset"  className='btn btn-outline-secondary' 
+            onClick={handleResetClick} />
+
+            </div>
+          
+           
             {/* <p>Average Active Hours: {activeHours} </p>
             <p>Average Break Hours: {breakHours}</p>
             <p>Average Total Hours: {totalHours}</p> */}

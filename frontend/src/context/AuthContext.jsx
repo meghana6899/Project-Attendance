@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useContext, useCallback } from "rea
 
 // Create context with default values to prevent null
 const defaultContextValue = {
+
   user: { role: '', isLoggedIn: false, id: '' },
   setUser: () => { },
   login: () => { },
@@ -22,6 +23,12 @@ const defaultContextValue = {
   setBreakHours: () => { },
   totalHours: '',
   setTotalHours: () => { },
+  employee:{},
+  setEmployee:()=>{},
+  showcard:{},
+  setShowcard:()=>{},
+
+
 
 };
 
@@ -31,6 +38,7 @@ const monthInput = new Date().getMonth() + 1;
 const yearInput = new Date().getFullYear()
 
 export const AdminProvider = ({ children }) => {
+
   const [isCheckedIn, setIsCheckedIn] = useState(true)
   const [user, setUser] = useState({ role: '', isLoggedIn: false });
   const [date, setDate] = useState(
@@ -44,7 +52,14 @@ export const AdminProvider = ({ children }) => {
   const [endDate, setEndDate] = useState(null);
   const [avgactiveHours, setAvgActiveHours] = useState("");
   const [avgbreakHours, setAvgBreakHours] = useState('')
-  const [avgtotalHours, setAvgTotalHours] = useState('')
+  const [avgtotalHours, setAvgTotalHours] = useState('');
+  const [activeHours, setActiveHours] = useState("");
+  const [breakHours, setBreakHours] = useState('')
+  const [totalHours, setTotalHours] = useState('');
+  const [employee,setEmployee]=useState();
+    const [showcard,setShowcard]=useState(false);
+    const [add,setAdd]=useState(false);
+
 
   // Check for existing user data in localStorage on initial load
   useEffect(() => {
@@ -76,7 +91,12 @@ export const AdminProvider = ({ children }) => {
   };
 
   return (
-    <AdminContext.Provider value={{ user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate, setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours, isCheckedIn, setIsCheckedIn }}>
+
+    <AdminContext.Provider value={{ user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate,
+     setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
+      isCheckedIn, setIsCheckedIn ,employee,setEmployee ,showcard,setShowcard,add,setAdd,activeHours, setActiveHours, breakHours, setBreakHours,
+       totalHours, setTotalHours }}>
+
       {children}
     </AdminContext.Provider>
   );

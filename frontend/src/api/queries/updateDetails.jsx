@@ -6,9 +6,17 @@ const updateDetails=async(id,{user_id,first_name,last_name,role,email})=>{
          last_name,
          role,
          email,
+     },
+     {
+         headers: {
+             'Content-Type': 'application/json',
+             authorization: `Bearer ${localStorage.getItem('token')}`,
+         }
      })
-     console.log('repsonse is captured')
-     return response;
+      console.log('repsonse is updated')
+      console.log(response.data)
+      return response.data;
+     
  }
 
  export default updateDetails;

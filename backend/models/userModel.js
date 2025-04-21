@@ -17,5 +17,13 @@ const findUser = async(username,role,  callback) => {
     
 }
 
+const findUserById=async(table,user_id,id)=>{
 
-module.exports = {findUser};
+    const query=`select * from ${table} where ${user_id}=?`;
+    const [row]=pool.execute(query,[id])
+}
+
+  
+
+
+module.exports = {findUser,findUserById};

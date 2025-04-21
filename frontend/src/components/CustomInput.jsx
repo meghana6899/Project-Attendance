@@ -3,7 +3,7 @@ import { useAdmin } from '../context/AuthContext'
 import avgWorkHours from '../api/queries/avgWorkHours';
 
 function CustomInput() {
-    const { setStartDate, setEndDate, startDate, setDate, date, endDate, avgactiveHours, setAvgActiveHours, avgbreakHours, setAvgBreakHours, avgtotalHours, setAvgTotalHours } = useAdmin();
+    const { setStartDate, setEndDate, startDate, setDate, date, endDate, activeHours, setActiveHours, breakHours, setBreakHours, totalHours, setTotalHours } = useAdmin();
 
 
     useEffect(() => {
@@ -11,9 +11,9 @@ function CustomInput() {
             const fetchDetails = async () => {
                 try {
                     const response = await avgWorkHours(startDate, endDate);
-                    setAvgActiveHours(response.activehours);
-                    setAvgBreakHours(response.breakhours);
-                    setAvgTotalHours(response.totalhours);
+                    setActiveHours(response.activehours);
+                    setBreakHours(response.breakhours);
+                    setTotalHours(response.totalhours);
                 } catch (error) {
                     console.log(error);
                 }

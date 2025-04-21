@@ -1,5 +1,6 @@
 import React from 'react';
-import axios from 'axios'
+import axios from 'axios';
+// import { useAdmin } from "../../context/AuthContext";
 
 async function CheckInDetails() {
     const user = JSON.parse(localStorage.getItem('user'))
