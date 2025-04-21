@@ -1,0 +1,19 @@
+.toast-message {
+    opacity: 0;
+    transform: translateY(0px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    position: fixed;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    max-width: 80%;
+    text-align: center;
+}
+
+.toast-message.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

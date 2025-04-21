@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useAdmin } from '../context/AuthContext'
 import axios from 'axios';
 import CheckInTable from '../components/CheckInTable';
+import '../CSS/toaster.css'
 
 function checkIncheckOut() {
 
@@ -11,7 +12,7 @@ function checkIncheckOut() {
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState("");
     const [toaster, setToaster] = useState(false);
-    let toast;
+    const [toast, setToast] = useState("")
 
     const handleChange = (e) => {
         console.log(e.target.value)
@@ -52,37 +53,34 @@ function checkIncheckOut() {
                 password: formData.password
             })
             if (response) {
-                toast = `<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-              <img src="..." class="rounded mr-2" alt="...">
-              <strong class="mr-auto">Bootstrap</strong>
-              <small>11 mins ago</small>
-              <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="toast-body">
-              Hello, world! This is a toast message.
-            </div>
-          </div>`
+                setToast("Submitted Successfully")
                 setToaster(true)
+                setTimeout(() => {
+                    setToaster(false)
+                }, 1000)
             }
             console.log("Response", response)
 
 
         } catch (error) {
+            if (response.data)
 
-            console.log("Catch", error.response?.data || error.message)
+                console.log("Catch", error.response?.data || error.message)
             setMessage(error?.response?.data?.msg)
             setFormData({ ...formData, password: "" })
 
         }
 
     };
+    console.log(toast, toaster)
 
     return (
         <>
-            {toaster && <div>{toast}</div>}
+            <div className={`toast-message bg-success text-white ${toaster ? 'show' : ''}`}>
+                {toast}
+            </div>
+
+
 
             <div div className="d-flex justify-content-center vh-90 m-5" >
                 <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "400px" }}>

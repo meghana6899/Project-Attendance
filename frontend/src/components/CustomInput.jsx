@@ -3,40 +3,40 @@ import { useAdmin } from '../context/AuthContext'
 import avgWorkHours from '../api/queries/avgWorkHours';
 
 function CustomInput() {
-    const { setStartDate, setEndDate, startDate, setDate, date, endDate, activeHours, setActiveHours, breakHours, setBreakHours, totalHours, setTotalHours } = useAdmin();
+    const {
+        setStartDate,
+        setEndDate,
+        setAvgActiveHours,
+        setAvgBreakHours,
+        setAvgTotalHours,
+        startDate,
+        endDate
+    } = useAdmin();
+    const [tempStartDate, setTempStartDate] = useState(startDate);
+    const [tempEndDate, setTempEndDate] = useState(endDate);
 
+    // wait for both
 
-    useEffect(() => {
-        if (startDate && endDate) {
-            const fetchDetails = async () => {
-                try {
-                    const response = await avgWorkHours(startDate, endDate);
-                    setActiveHours(response.activehours);
-                    setBreakHours(response.breakhours);
-                    setTotalHours(response.totalhours);
-                } catch (error) {
-                    console.log(error);
-                }
-            };
-            fetchDetails();
+    const handleResetClick = async () => {
+        setStartDate(tempStartDate);
+        setEndDate(tempEndDate);
+
+        try {
+            const response = await avgWorkHours(tempStartDate, tempEndDate);
+            setAvgActiveHours(response.activehours);
+            setAvgBreakHours(response.breakhours);
+            setAvgTotalHours(response.totalhours);
+        } catch (error) {
+            console.log(error);
         }
-    }, [startDate, endDate]); // wait for both
-
-    const handleResetClick = () => {
-        setStartDate(null)
-        setEndDate(null)
-        setDate(`${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`)
-        console.log(date)
-        console.log(startDate)
-        console.log(endDate)
     }
 
     const handleStartChange = (event) => {
-        setStartDate(event.target.value)
+        setTempStartDate(event.target.value)
     }
 
     const handleEndChange = (event) => {
-        setEndDate(event.target.value)
+        setTempEndDate(event.target.value)
         console.log("enddate", endDate)
     }
 
@@ -45,7 +45,7 @@ function CustomInput() {
             <span>Custom</span>
             <input className='mx-3 border rounded text-secondary' type='date' value={startDate} onChange={handleStartChange} />
             <input type='date' className='border rounded text-secondary' value={endDate} onChange={handleEndChange} />
-            <input type='button' className='bg-primary border rounded text-white mx-3 px-2' value="Reset" onClick={handleResetClick} />
+            <input type='button' className='bg-primary border rounded text-white mx-3 px-2' value="Apply" onClick={handleResetClick} />
         </div>
     )
 }

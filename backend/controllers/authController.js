@@ -31,7 +31,7 @@ const login = async(req,res) => {
             msg: 'Invalid password',
 
         });
-        const id = user.emp_id || user.std_id;
+        const id = user.emp_id || user.stu_id;
         console.log(user.role, user.id)
         if(!user.role){
             user.role = "student"
