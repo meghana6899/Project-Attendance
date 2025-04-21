@@ -24,6 +24,11 @@ const AddCard = ({ closecard }) => {
         role: candidate.role,
         first_name: candidate.first_name,
         last_name: candidate.last_name,
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
       });
       if (response.status === 200) {
         setAdd(false);

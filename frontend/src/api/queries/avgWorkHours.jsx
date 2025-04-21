@@ -17,6 +17,11 @@ async function avgWorkHours(startDate, endDate) {
     const response = await axios.post(`http://localhost:3000/api/details/avgHours/${user}/${user.id}`, {
         startDate,
         endDate
+    },{
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `${localStorage.getItem('token')}`,
+        }
     })
     console.log("response", response.data)
     return response.data;

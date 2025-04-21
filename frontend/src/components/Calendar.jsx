@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
 import workHours from '../api/queries/workHours.jsx';
+
 import { useAdmin } from '../context/AuthContext'
+
 
 function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState([]);
-  const { date, setDate, setEndDate, setStartDate } = useAdmin();
+  const {  setDate, setEndDate, setStartDate } = useAdmin();
 
   useEffect(() => {
     generateCalendar();

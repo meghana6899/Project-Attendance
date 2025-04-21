@@ -18,7 +18,7 @@ const calculateAvgHoursOnRange = async (req, res) => {
     const [breakHoursRows] = await getAvgBreakHoursOnRange(table, id, startDate, column, endDate, "break_hours");
     const [totalHoursRow] = await getAvgBreakHoursOnRange(table, id, startDate, column, endDate, "total_hours")
     console.log(activeHoursRows, breakHoursRows, totalHoursRow)
-    res.send({activehours: activeHoursRows["avg_active_hours"], breakhours: breakHoursRows["avg_break_hours"] , totalhours: totalHoursRow["avg_total_hours"] })
+    res.send({activehours: activeHoursRows?.avg_active_hours || 0, breakhours: breakHoursRows?.avg_break_hours || 0, totalhours: totalHoursRow?.avg_total_hours || 0 })
 }
 
 module.exports = calculateAvgHoursOnRange

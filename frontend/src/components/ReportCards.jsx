@@ -25,10 +25,13 @@ const ReportCards = () => {
   
 
   return (
-    <div>
-        <CustomizeDates />
-        <Doughnut key={employee?.stu_id || employee?.emp_id} />
-
+    <div className="report-cards-container">
+      <div className="d-flex justify-content-center align-items-center flex-column mt-4 my-3 gap-3"> 
+      <CustomizeDates />
+      <Doughnut key={employee?.stu_id || employee?.emp_id} />
+      </div>
+       
+        <div className="d-flex justify-content-end align-items-center mt-3 mx-4">
         <button
           className="btn btn-outline-danger"
           id="delete"
@@ -37,6 +40,9 @@ const ReportCards = () => {
         >
           Close
         </button>
+        </div>
+
+        
         
     </div>
   )

@@ -1,10 +1,28 @@
 const pool = require('../configdb/db.js')
+const totalWorkingHoursForRange = async (table, startDate, endDate, user_id, column, tablecolumn) => {
+  console.log("Entered model");
 
-const totalWorkingHoursForRange = async (table, startDate,endDate, user_id,column,tablecolumn) => {
-  const query = `select SUM(${tablecolumn})as total_hours from ${table} WHERE  date BETWEEN ? AND ? AND ${column} = ? GROUP BY ${column} `;
-  const [data]=await pool.execute(query,[startDate,endDate,user_id])
-  return data;
+  const query = `
+    SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(${tablecolumn}))) AS total
+    FROM ${table}
+    WHERE date BETWEEN ? AND ? AND ${column} = ?
+    GROUP BY ${column}
+  `;
+  console.log(query, "query from model");
+  console.log(startDate, endDate, user_id, "params from model");
+
+  const [data] = await pool.execute(query, [startDate, endDate, user_id]);
+  console.log(data, "data from model");
+
+  if (data.length === 0 || !data[0].total) {
+    return '00:00:00'; // fallback
+  }
+
+  return data[0].total;
 };
+
+
+
 
 //average functions start
 

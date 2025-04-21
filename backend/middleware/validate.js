@@ -35,6 +35,7 @@ const DataPresent = async (req, res, next) => {
       }
   
       // If email not found in both tables
+      console.log('return statement is here')
       return res.status(404).json({ success: false, message: 'Email not found. Ask admin to register you first.' });
   
     } catch (err) {

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const {secret} = require('../configdb/jwtConfig.js');
 
 const authMid = (req, res, next) => {
+    console.log("Auth middleware")
     console.log(req.headers)
     let token;
     let authHeader = req.headers.authorization 
@@ -9,7 +10,7 @@ const authMid = (req, res, next) => {
     if(authHeader && authHeader.startsWith("Bearer")){
         //console.log(token)
         token = authHeader.split(" ")[1]
-        console.log(token)
+       
     }else{
         token = authHeader
     }
@@ -18,7 +19,10 @@ const authMid = (req, res, next) => {
         success: false,
         msg : 'Token missing'
     });
+    console.log("Token present")
+    console.log("Token from middleware",token);
     jwt.verify(token, secret, (err, decoded) => {
+        console.log(err)
         if(err) return res.status(403).json({
             success: false,
             msg : 'Token ivalid', 

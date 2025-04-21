@@ -49,6 +49,7 @@ function Navbar() {
                     Dashboard
                   </NavLink>
                 </li>
+                {user.role ==='admin' && (<li className="nav-item" ><NavLink className='nav-link' to='/reports' > reports </NavLink> </li>)}
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/login" onClick={handleLogout}>
                     Logout

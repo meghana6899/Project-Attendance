@@ -6,9 +6,10 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import AdminHome from "./pages/AdminHome";
 import StudentDashboard from "./pages/StudentDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
+
 import DashboardRedirect from "./components/DashboardRedirect";
 import CheckIncheckOut from "./pages/checkIncheckOut";
-
+import Reports from './pages/Reports';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,13 @@ const router = createBrowserRouter([
           { path: "/dashboard", element: <DashboardRedirect /> },
           { path: "/admin-dashboard", element: <AdminHome /> },
           { path: "/employee-dashboard", element: <EmployeeDashboard /> },
+
           { path: "/student-dashboard", element: <EmployeeDashboard /> },
+
+
+          { path: "/student-dashboard", element: <StudentDashboard /> },
+          {path:"/reports",element:<Reports />}
+          
 
         ],
       },
