@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAdmin } from "../context/AuthContext";
 import axios from "axios";
+import { jwtDecode } from 'jwt-decode'
 
 function Login() {
   const { login } = useAdmin();
@@ -14,6 +15,16 @@ function Login() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
+      const decoded = jwtDecode(token);
+      const isExpired = decoded.exp * 1000 < Date.now();
+
+      if (isExpired) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/login")
+        return;
+      }
+
       const storedUser = JSON.parse(localStorage.getItem("user"));
       if (storedUser) {
         login(storedUser);

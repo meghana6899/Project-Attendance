@@ -7,6 +7,7 @@ async function avgWorkHours(startDate, endDate) {
     console.log("From axios", startDate, endDate)
 
     const user = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('token')
     var users;
     if (user.role === 'admin' || user.role === 'employee') {
         users = 'employee'
@@ -17,7 +18,7 @@ async function avgWorkHours(startDate, endDate) {
     const response = await axios.post(`http://localhost:3000/api/details/avgHours/${user}/${user.id}`, {
         startDate,
         endDate
-    },{
+    }, {
         headers: {
             'Content-Type': 'application/json',
             authorization: `${localStorage.getItem('token')}`,

@@ -15,7 +15,6 @@ const EmployeeDashboard = () => {
 
   return (
     <div className='container d-flex flex-column my-5'>
-      {date}
       <div className='d-flex my-5 '>
         <DoughnutChart />
         <Calendar />

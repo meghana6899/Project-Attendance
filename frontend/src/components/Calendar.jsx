@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
 import workHours from '../api/queries/workHours.jsx';
-
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import { useAdmin } from '../context/AuthContext'
 
 
 function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState([]);
-  const {  setDate, setEndDate, setStartDate } = useAdmin();
+  const [viewMode, setViewMode] = useState('date');
+  const { date, setDate, setEndDate, setStartDate } = useAdmin();
 
   useEffect(() => {
     generateCalendar();
@@ -59,13 +60,22 @@ function Calendar() {
 
   const handlePrev = () => {
     const newDate = new Date(currentDate);
-    newDate.setMonth(currentDate.getMonth() - 1);
+    if (viewMode === 'year') {
+      newDate.setFullYear(currentDate.getFullYear() - 12);
+    } else {
+      newDate.setMonth(currentDate.getMonth() - 1);
+    }
+
     setCurrentDate(newDate);
   };
 
   const handleNext = () => {
     const newDate = new Date(currentDate);
-    newDate.setMonth(currentDate.getMonth() + 1);
+    if (viewMode === 'year') {
+      newDate.setFullYear(currentDate.getFullYear() + 12);
+    } else {
+      newDate.setMonth(currentDate.getMonth() + 1);
+    }
     setCurrentDate(newDate);
   };
 
@@ -104,6 +114,19 @@ function Calendar() {
     setEndDate(null)
   };
 
+  const generateYears = () => {
+    const currentYear = currentDate.getFullYear();
+    const startYear = Math.floor(currentYear / 12) * 12;
+    return Array.from({ length: 16 }, (_, i) => startYear + i)
+  }
+
+  const handleYearSelect = (year) => {
+    const newDate = new Date(currentDate);
+    newDate.setFullYear(year);
+    setCurrentDate(newDate);
+    setViewMode('date')
+  }
+
 
   const monthYearString = currentDate.toLocaleString('default', {
     month: 'long',
@@ -115,36 +138,52 @@ function Calendar() {
       <div className="calendar">
         <div className="header">
           <button onClick={handlePrev}>
-            <i className="fa-solid fa-chevron-left"></i>
+            <SlArrowLeft />
           </button>
-          <div className="monthYear">{monthYearString}</div>
+          <div className="monthYear" onClick={() => setViewMode(viewMode === 'year' ? 'date' : "year")}>{monthYearString}</div>
           <button onClick={handleNext}>
-            <i className="fa-solid fa-chevron-right"></i>
+            <SlArrowRight />
           </button>
         </div>
 
-        <div className="days">
-          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
-            <div className="day" key={day}>
-              {day}
+        {viewMode === 'year' ? (
+          <div className="year-grid">
+            {generateYears().map((year) => (
+              <div
+                key={year}
+                className={`year-cell ${year === currentDate.getFullYear() ? 'selected-year' : ''}`}
+                onClick={() => handleYearSelect(year)}
+              >
+                {year}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <>
+            <div className="days">
+              {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
+                <div className="day" key={day}>
+                  {day}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div className="dates">
-          {calendarDays.map((day, index) => (
-            <div
-              onClick={() => {
-                handleDateClick(day)
-              }}
-              key={index}
-              className={`date ${day.currentMonth ? '' : 'inactive'
-                } ${day.isToday ? 'active' : ''}`}
-            >
-              {day.date}
+            <div className="dates">
+              {calendarDays.map((day, index) => (
+                <div
+                  onClick={() => {
+                    handleDateClick(day)
+                  }}
+                  key={index}
+                  className={`date ${day.currentMonth ? '' : 'inactive'
+                    } ${day.isToday ? 'active' : ''}`}
+                >
+                  {day.date}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
