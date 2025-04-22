@@ -45,11 +45,11 @@ export const AdminProvider = ({ children }) => {
     `${yearInput}-${String(monthInput).padStart(2, '0')}-${String(dateInput).padStart(2, '0')}`
   );
 
-
+  console.log(date)
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [avgactiveHours, setAvgActiveHours] = useState('');
   const [avgbreakHours, setAvgBreakHours] = useState('')
   const [avgtotalHours, setAvgTotalHours] = useState('');

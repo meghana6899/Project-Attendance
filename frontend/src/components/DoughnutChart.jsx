@@ -2,7 +2,7 @@
 
 
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useAdmin } from '../context/AuthContext';
 import workHours from '../api/queries/workHours';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
@@ -22,12 +22,15 @@ function DashboardEmployee() {
     } = useAdmin();
 
     console.log(date)
+    const hasFetched = useRef(false)
+
     const [hourData, setHourData] = useState({});
     const isCustomRange = startDate !== null && endDate !== null;
 
     useEffect(() => {
         const fetchHours = async () => {
             if (!isCustomRange) {
+                hasFetched.current = true;
                 try {
                     const response = await workHours(date);
                     setHourData(response || {});
