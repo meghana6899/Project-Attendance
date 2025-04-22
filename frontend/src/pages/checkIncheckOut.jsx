@@ -59,14 +59,14 @@ function checkIncheckOut() {
                     setToaster(false)
                 }, 1000)
             }
-            console.log("Response", response)
+
 
 
         } catch (error) {
-            if (response.data)
 
-                console.log("Catch", error.response?.data || error.message)
-            setMessage(error?.response?.data?.msg)
+
+            console.log("Catch", error)
+            setMessage(error.response?.data?.message || error.response?.data?.msg)
             setFormData({ ...formData, password: "" })
 
         }
@@ -84,7 +84,7 @@ function checkIncheckOut() {
 
             <div div className="d-flex justify-content-center vh-90 m-5" >
                 <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "400px" }}>
-                    <h3 className="text-center mb-4">Check In</h3>
+                    <h3 className="text-center mb-4">Check-In/Check-Out</h3>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Your ID</label>

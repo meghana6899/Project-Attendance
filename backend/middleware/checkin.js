@@ -53,8 +53,8 @@ const CheckingUserPresentOrNot=async(req,res,next)=>{
         catch(err){
             console.log(err);
             
-            res.status(500).send({success: "false",
-            message:"User_id is not in the DB or the invalid credentials"});
+            res.status(500).json({success: "false",
+            message:"User not found"});
             
             console.log("data is not found")
             
@@ -78,7 +78,7 @@ const CheckingUserPresentOrNot=async(req,res,next)=>{
 catch(err){
     console.log(err);
             
-    res.send({message:"User_id is not in the DB or the invalid credentials"});
+    res.status(404).send({message:"User not found"});
     
     console.log("data is not found")
 }
@@ -108,8 +108,8 @@ const validatePassword=async(req,res,next)=>{
 
 
     else if(column==='stu_id'){
-        bcrypt.compare(password,pswrd[0].password,(err,res)=>{
-            if(res){
+        bcrypt.compare(password,pswrd[0].password,(err,data)=>{
+            if(data){
                 console.log('password is validated');
                 next();
 

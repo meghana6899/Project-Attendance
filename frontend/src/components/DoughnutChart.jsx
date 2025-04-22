@@ -49,7 +49,7 @@ function DashboardEmployee() {
     const timeToDecimal = (timeStr = '00:00:00') => {
         console.log("Time STring", timeStr)
         const [h, m, s] = timeStr.split(':').map(Number);
-        return h + m / 60 + s / 3600;
+        return h + m / 60;
     };
 
     const chartData = useMemo(() => ({

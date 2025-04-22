@@ -23,10 +23,10 @@ const defaultContextValue = {
   setBreakHours: () => { },
   totalHours: '',
   setTotalHours: () => { },
-  employee:{},
-  setEmployee:()=>{},
-  showcard:{},
-  setShowcard:()=>{},
+  employee: {},
+  setEmployee: () => { },
+  showcard: {},
+  setShowcard: () => { },
 
 
 
@@ -56,9 +56,9 @@ export const AdminProvider = ({ children }) => {
   const [activeHours, setActiveHours] = useState('');
   const [breakHours, setBreakHours] = useState('')
   const [totalHours, setTotalHours] = useState('');
-  const [employee,setEmployee]=useState();
-    const [showcard,setShowcard]=useState(false);
-    const [add,setAdd]=useState(false);
+  const [employee, setEmployee] = useState();
+  const [showcard, setShowcard] = useState(false);
+  const [add, setAdd] = useState(false);
 
 
   // Check for existing user data in localStorage on initial load
@@ -92,10 +92,12 @@ export const AdminProvider = ({ children }) => {
 
   return (
 
-    <AdminContext.Provider value={{ user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate,
-     setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
-      isCheckedIn, setIsCheckedIn ,employee,setEmployee ,showcard,setShowcard,add,setAdd,activeHours, setActiveHours, breakHours, setBreakHours,
-       totalHours, setTotalHours }}>
+    <AdminContext.Provider value={{
+      user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate,
+      setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
+      isCheckedIn, setIsCheckedIn, employee, setEmployee, showcard, setShowcard, add, setAdd, activeHours, setActiveHours, breakHours, setBreakHours,
+      totalHours, setTotalHours
+    }}>
 
       {children}
     </AdminContext.Provider>
