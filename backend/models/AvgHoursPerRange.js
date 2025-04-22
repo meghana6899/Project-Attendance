@@ -36,6 +36,7 @@ const totalWorkingHoursForRange = async (table, startDate, endDate, user_id, col
         GROUP BY ${column}
       `;
       const [rows] = await pool.execute(query, [user_id, startDate, endDate]);
+      console.log(rows, "rows from model")  
       return rows; // avg_working_hours
     };
   

@@ -2,6 +2,7 @@ import React from 'react';
 import CheckInDetails from '../api/queries/CheckInDetails';
 import { useEffect, useState } from 'react';
 import { useAdmin } from '../context/AuthContext';
+import CheckinDetailsRange from '../api/queries/CheckinDetailsRange';
 
 
 
@@ -10,7 +11,7 @@ import { useAdmin } from '../context/AuthContext';
 
 
 function CheckInTable() {
-  const { checkIn, checkOut, setCheckIn, setCheckOut, isCheckedIn } = useAdmin();
+  const { checkIn, checkOut, setCheckIn, setCheckOut, isCheckedIn, startDate, endDate } = useAdmin();
   const [data, setData] = useState([])
 
 
@@ -19,6 +20,20 @@ function CheckInTable() {
     const fetchdetails = async () => {
       //console.log('Fetch')
       try {
+        if(startDate && endDate ){
+     
+        response = await CheckinDetailsRange(startDate, endDate);
+       
+        console.log("Response from range",response)
+        if (Array.isArray(response)) {
+          setData(response)
+        } else if (typeof response === 'object') {
+          console.log("Its an object")
+        } else {
+          setData([response])
+        }
+        return ;
+      }
         response = await CheckInDetails();
         console.log(response)
         if (Array.isArray(response)) {
@@ -34,7 +49,7 @@ function CheckInTable() {
       }
     }
     fetchdetails()
-  }, [checkIn, checkOut, isCheckedIn])
+  }, [checkIn, checkOut, isCheckedIn, startDate, endDate])
   //console.log(data)
 
 

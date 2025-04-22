@@ -5,7 +5,7 @@ const {active_hours,total_hours,break_hours} =require('../models/avgHoursPerMont
 const Avg_hours=async(req,res)=>{
     const id=req.params.id;
     if(id.charAt(0)==='E'){
-        console.log('if condtion');
+       
         const active=await active_hours('emp_hours','emp_id',id);
         const total=await total_hours('emp_hours','emp_id',id);
         const breakk=await break_hours('emp_hours','emp_id',id);

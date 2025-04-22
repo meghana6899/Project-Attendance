@@ -26,6 +26,13 @@ function DashboardAdmin() {
     console.log(date)
     const [hourData, setHourData] = useState({});
     const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
+    let user;
+    if(user_id === 'stu_id'){
+        user='student'
+
+    } else {
+        user='employee'
+    }
     const userValue = employee?.[user_id];
     const isCustomRange = startDate !== null && endDate !== null;
 
@@ -34,7 +41,7 @@ function DashboardAdmin() {
             if (!isCustomRange) {
                 try {
                     setHourData({});
-                    const response = await axios.post(`http://localhost:3000/api/hours/info/${userValue}`, { date }, {
+                    const response = await axios.post(`http://localhost:3000/api/hours/${user}/${userValue}`, { date }, {
                         headers: {
                             'Content-Type': 'application/json',
                             authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -90,13 +97,13 @@ function DashboardAdmin() {
                 borderWidth: 2,
             },
         ],
-    }), [avgactiveHours, avgbreakHours, avgtotalHours, hourData, isCustomRange, date, employee]);
+    }), [avgactiveHours, avgbreakHours, avgtotalHours]);
 
 
     const tooltipLabels = useMemo(() => (
         [avgactiveHours, avgbreakHours, avgtotalHours].map(hour => formatTimeLabel(timeToDecimal(hour)))
 
-    ), [avgactiveHours, avgbreakHours, avgtotalHours, hourData, isCustomRange, date]);
+    ), [avgactiveHours, avgbreakHours, avgtotalHours]);
 
 
     const chartOptions = {

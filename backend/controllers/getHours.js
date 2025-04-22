@@ -14,10 +14,10 @@ const getHours = async(req, res) => {
     }
     const date = req.body.date;
     const hours = await getHoursperDay(table, column, user_id, date);
-    console.log(hours)
+    
     res.send(hours[0])
     
 }
 
 
-module.exports = getHours
+module.exports = getHours       

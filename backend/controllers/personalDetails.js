@@ -63,7 +63,8 @@ const Delete_user_info = async (req, res) => {
     }
   };
   const Create_New_User = async (req, res) => {
-    const currentDate = new Date().toISOString().split('T')[0];
+    const currentDate = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+    
     const { user_id, email, role,first_name,last_name } = req.body;
   
     try {

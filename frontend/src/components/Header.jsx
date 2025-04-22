@@ -1,5 +1,5 @@
 import logo from '../assets/logomark.png'
-import Navbar from './Navbar'
+import Navbars from './Navbars'
 
 function Header() {
   return (
@@ -10,7 +10,7 @@ function Header() {
           <img src={logo} alt="Logo" style={{ width: '40px', height: '40px' }} className="me-2" />
           <h2 className="m-3">Gradious</h2>
         </div>
-        <Navbar />    
+        <Navbars />    
       </div>
 
     </>

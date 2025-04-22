@@ -147,7 +147,7 @@
 
 
 const express = require('express');
-const {totalActiveHoursOnOneDay: activeHours, totlaBreakHoursOnOndeDay: breakHours, totalWorkingHoursForOneDay: workingHours, allInfo} = require('../models/HoursPerDay')
+const {totalActiveHoursOnOneDay: activeHours, totlaBreakHoursOnOndeDay: breakHours, totalWorkingHoursForOneDay: workingHours, allInfo,getCheckInDetails} = require('../models/HoursPerDay')
 
 
 
@@ -176,6 +176,34 @@ const calculateAvgHours = async(req, res) => {
   res.send(activity)
 }
 
+const calculateCheckinOnRange = async(req, res) => {
+  console.log("entered Controller")
+  const user_id = req.params.id
+  const role = req.params.user;
+  const {startDate, endDate} = req.body;
+  let table;
+  let column;
+  if(role === "admin" || role === "employee"){
+    table = "attendance_emp"
+    column = "emp_id"
+  }else{
+    table = "attendance_stu"
+    column="stu_id"
+  }
+  
+
+  // const table = user_id.startsWith('E')? "attendance_emp" : "attendance_stu"
+  const date = new Date().toISOString().split('T')[0];
+  const activity = await getCheckInDetails(table, column, user_id, startDate, endDate); 
+  console.log(table, column, user_id, startDate, endDate);
+  //const activeHours = await activeHours(table, column, date, user_id);
+  //const totalHours = await breakHours()
+  console.log(activity)
+  res.send(activity)
+}
+
+
+
 const calculateWeekAvgHours = async(req, res) => {
   console.log("entered Controller")
   const user_id = req.params.id
@@ -189,5 +217,5 @@ const calculateWeekAvgHours = async(req, res) => {
   res.send(activity)
 }
 module.exports =
-  calculateAvgHours;
+ { calculateAvgHours, calculateWeekAvgHours , calculateCheckinOnRange} ;
   

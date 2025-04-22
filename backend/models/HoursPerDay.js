@@ -62,6 +62,15 @@ const allInfo = async(table, column, date, user_id) => {
   console.log(rows)
   return rows
 }
+const getCheckInDetails = async(table, column, user_id, startDate, endDate) => {
+  const [rows] = await pool.execute(`SELECT checkin, checkout, date FROM ${table} where \`${column}\` = ? and date between ? and ?` , [user_id, startDate, endDate])
+  return rows
+}
+
+
+
+
+
 
 const getHoursperDay = async(table, column, user_id, date) => {
   console.log(table, column, user_id, date)
@@ -74,5 +83,6 @@ module.exports = {
   totalBreakHoursOnOneDay,
   totalWorkingHoursForOneDay,
   allInfo,
-  getHoursperDay
+  getHoursperDay,
+  getCheckInDetails,
 }

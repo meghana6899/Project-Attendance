@@ -48,12 +48,12 @@ export const AdminProvider = ({ children }) => {
 
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [avgactiveHours, setAvgActiveHours] = useState("");
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [avgactiveHours, setAvgActiveHours] = useState('');
   const [avgbreakHours, setAvgBreakHours] = useState('')
   const [avgtotalHours, setAvgTotalHours] = useState('');
-  const [activeHours, setActiveHours] = useState("");
+  const [activeHours, setActiveHours] = useState('');
   const [breakHours, setBreakHours] = useState('')
   const [totalHours, setTotalHours] = useState('');
   const [employee,setEmployee]=useState();

@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import { useAdmin } from '../context/AuthContext'
 import avgWorkHours from '../api/queries/avgWorkHours';
 
+
+
 function CustomInput() {
-    const {
-        setStartDate,
-        setEndDate,
-        setAvgActiveHours,
-        setAvgBreakHours,
-        setAvgTotalHours,
-        startDate,
-        endDate
-    } = useAdmin();
+    const { setStartDate, setEndDate, startDate,
+      setAvgActiveHours, endDate , setAvgBreakHours, setAvgTotalHours } = useAdmin();
     const [tempStartDate, setTempStartDate] = useState(startDate);
     const [tempEndDate, setTempEndDate] = useState(endDate);
 
+
+
+
     // wait for both
+
 
     const handleResetClick = async () => {
         setStartDate(tempStartDate);
@@ -30,7 +29,7 @@ function CustomInput() {
             console.log(error);
         }
     }
-
+    
     const handleStartChange = (event) => {
         setTempStartDate(event.target.value)
         setStartDate(event.target.value)
@@ -51,5 +50,6 @@ function CustomInput() {
         </div>
     )
 }
+
 
 export default CustomInput

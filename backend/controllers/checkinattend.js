@@ -9,8 +9,8 @@ const {totalActiveHoursOnOneDay, totalWorkingHoursForOneDay, totalBreakHoursOnOn
 const {upDateTotalActiveWorkingHours, upDateTotalBreakHours, upDateTotalWorkingHours} = require('../models/updateHoursModel')
 const checkin = async (req, res) => {
     console.log("Req","\n", "Response:", res)
-    const currentTime = new Date().toTimeString().split(' ')[0]; // HH:MM:SS
-    const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const currentTime = new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour12: false });// HH:MM:SS
+    const currentDate = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });// YYYY-MM-DD
     const { user_id, table } = req.body;
 
     if (!user_id || !table) {

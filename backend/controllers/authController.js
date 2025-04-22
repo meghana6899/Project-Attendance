@@ -38,7 +38,7 @@ const login = async(req,res) => {
         }
         const token = jwt.sign({userId : user.id, role: user.role}, secret, {expiresIn});
         console.log('Now: ', token)
-        res.json({ success: true, token, role: user.role, id});
+        res.json({ success: true, token, role: user.role,id: id});
     })
 }
 

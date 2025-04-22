@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 const createUser = async (req, res) => {
   const {first_name,last_name, email, password,table} = req.body;
-  const currentDate = new Date().toISOString().split('T')[0];
+  const currentDate = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {

@@ -1,12 +1,12 @@
     const { totalWorkingHoursForRange } = require('../models/AvgHoursPerRange')
     const express = require('express');
 
-    const calculateTotalHoursOnRange = async (req, res) => {
+    const   calculateTotalHoursOnRange = async (req, res) => {
         try {
-          console.log("entered Controller");
+          console.log("entered calculateTotalHoursOnRange");
           const { id } = req.params;
           const { startDate, endDate } = req.body;
-          console.log("Inputs:", id, startDate, endDate);
+         
       
           let table, column;
           if (id.startsWith('E')) {
