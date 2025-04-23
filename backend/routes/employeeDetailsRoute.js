@@ -5,7 +5,7 @@ const authorizeRoles = require('../middleware/roleMiddleware');
 const {calculateAvgHours,calculateCheckinOnRange} = require('../controllers/workingHours');
 const calculateAvgHoursOnRange = require('../controllers/getAvgHours')
 const {AllEmployees,AllStudents}=require('../controllers/personalDetails');
-const {Update_user_info,Delete_user_info,Create_New_User}=require('../controllers/personalDetails');
+const {Update_user_info,Delete_user_info, Create_New_User}=require('../controllers/personalDetails');
 const calculateTotalHoursOnRange = require('../controllers/totalHours');
 const sendMail = require('../controllers/sendmail');
 

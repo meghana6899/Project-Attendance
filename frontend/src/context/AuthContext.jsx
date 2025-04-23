@@ -44,6 +44,7 @@ export const AdminProvider = ({ children }) => {
   const [date, setDate] = useState(
     `${yearInput}-${String(monthInput).padStart(2, '0')}-${String(dateInput).padStart(2, '0')}`
   );
+  const [firstLogin, setFirstLogin] = useState(true)
 
   console.log(date)
   const [checkIn, setCheckIn] = useState('');
@@ -96,7 +97,7 @@ export const AdminProvider = ({ children }) => {
       user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate,
       setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
       isCheckedIn, setIsCheckedIn, employee, setEmployee, showcard, setShowcard, add, setAdd, activeHours, setActiveHours, breakHours, setBreakHours,
-      totalHours, setTotalHours
+      totalHours, setTotalHours, firstLogin, setFirstLogin
     }}>
 
       {children}

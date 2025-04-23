@@ -5,10 +5,10 @@ import axios from "axios";
 import { jwtDecode } from 'jwt-decode'
 
 function Login() {
-  const { login } = useAdmin();
+  const { login, setFirstLogin } = useAdmin();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({ email: "", password: "", role: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
 
@@ -63,9 +63,9 @@ function Login() {
       newErrors.password = "Password must be at least 6 characters";
     }
 
-    if (!formData.role) {
-      newErrors.role = "Select one";
-    }
+    // if (!formData.role) {
+    //   newErrors.role = "Select one";
+    // }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -77,70 +77,56 @@ function Login() {
     if (!validate()) return;
 
     try {
-
-// <<<<<<< Updated upstream
-//       // Simulated API call
-//       console.log({ email: formData.email, password: formData.password, role: formData.role });
-//       const response = await axios.post('http://localhost:3000/api/auth/login',
-//         {
-//           email: formData.email,
-//           password: formData.password,
-//           role: formData.role,
-//           // id: formData.id
-//         }
-//       );
-
-//       if (response.data.success) {
-//         console.log(response.data)
-//         localStorage.setItem('token', response.data.token);
-//         localStorage.setItem('loggedIn', true);
-//         localStorage.setItem('role', response.data.role)
-//         localStorage.setItem('id', response.data.id)
-//         console.log(response.data.role)
-//         navigate(`/${response.data.role}-dashboard`)
-// =======
       const response = await axios.post("http://localhost:3000/api/auth/login", {
         email: formData.email,
         password: formData.password,
-        role: formData.role,
+
       });
-      console.log(response,'reponse is here');
+
+      console.log(response.data.passwordreset, 'reponse is here');
 
       // console.log(response)
+      if (response.data)
+        if (response.data.success) {
+          const userData = {
+            role: response.data.role,
+            isLoggedIn: true,
+            id: response.data.id,
+          };
 
-      if (response.data.success) {
-        const userData = {
-          role: response.data.role,
-          isLoggedIn: true,
-          id: response.data.id,
-        };
 
 
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(userData));
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", JSON.stringify(userData));
+          login(userData);
+          redirectBasedOnRole(response.data.role);
 
-        login(userData);
-        redirectBasedOnRole(response.data.role);
-      }
+          // setFirstLogin(response.data.passwordreset)
+
+
+
+
+        }
 
     }
-    
-     
-     catch (error) {
+
+
+    catch (error) {
 
       if (error.response && !error.response.data.success) {
-        // setMessage(error.response.data.message);
+        setMessage(error.response.data.message || error.response.data.msg);
         console.log(error);
       } else {
         setMessage("User with  this email and password not found  ");
       }
-      setMessage(`${error.response.data.msg}` );
+      // setMessage(`${error.response.data.msg}`);
     }
   };
-  console.log(formData,'here is form data')
+  // console.log(formData, 'here is form data')
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-70 vw-100 my-5">
+
       <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "400px" }}>
         <h3 className="text-center mb-4">Login</h3>
         <form onSubmit={handleSubmit}>
@@ -170,28 +156,12 @@ function Login() {
             {errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="role" className="form-label">Login as</label>
-            <select
-              className={`form-select ${errors.role ? "is-invalid" : ""}`}
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-            >
-              <option value="">Select role</option>
-              <option value="employee">Employee</option>
-              <option value="student">Student</option>
-            </select>
-            {errors.role && <div className="invalid-feedback">{errors.role}</div>}
-          </div>
 
           <button type="submit" className="btn btn-primary w-100">Login</button>
         </form>
 
         {message && <p className="text-center mt-3 text-danger">{message}</p>}
-        {/* <div className="text-center mt-3">
-          Create account? <Link to="/signup">Signup</Link>
-        </div> */}
+
       </div>
     </div>
   );

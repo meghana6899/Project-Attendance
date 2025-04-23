@@ -25,6 +25,8 @@ function CustomInput() {
             setAvgActiveHours(response.activehours);
             setAvgBreakHours(response.breakhours);
             setAvgTotalHours(response.totalhours);
+            // setStartDate(null)
+            // setEndDate(null)
         } catch (error) {
             console.log(error);
         }

@@ -20,20 +20,20 @@ function CheckInTable() {
     const fetchdetails = async () => {
       //console.log('Fetch')
       try {
-        if(startDate && endDate ){
-     
-        response = await CheckinDetailsRange(startDate, endDate);
-       
-        console.log("Response from range",response)
-        if (Array.isArray(response)) {
-          setData(response)
-        } else if (typeof response === 'object') {
-          console.log("Its an object")
-        } else {
-          setData([response])
+        if (startDate && endDate) {
+
+          response = await CheckinDetailsRange(startDate, endDate);
+
+          console.log("Response from range", response)
+          if (Array.isArray(response)) {
+            setData(response)
+          } else if (typeof response === 'object') {
+            console.log("Its an object")
+          } else {
+            setData([response])
+          }
+          return;
         }
-        return ;
-      }
         response = await CheckInDetails();
         console.log(response)
         if (Array.isArray(response)) {

@@ -14,8 +14,9 @@ const login = async(req,res) => {
     
     
 
-    userModel.findUser(email,role, async(err, user) => {
-        // console.log(user);
+    userModel.findUser(email, async(err, user) => {
+        console.log(user);
+        console.log("Error",err)
         if(err) return res.status(500).json({
             success: false,
             msg: 'DB error'
@@ -41,7 +42,7 @@ const login = async(req,res) => {
         }
         const token = jwt.sign({userId : user.id, role: user.role}, secret, {expiresIn});
         console.log('Now: ', token)
-        res.json({ success: true, token, role: user.role,id: id});
+        res.json({ success: true, token, role: user.role,id: id, passwordreset: user.first_login});
     })
 }
 
@@ -101,9 +102,51 @@ const resetpassword=async(req,res)=>{
         });
     }
 
+
 }
+
+const resetPasswordLoad = (req, res) => {
+    const email = req.body.email;
+    try {
+        userModel.setResetPassword(email, (err, user) => {
+            if(err){
+                return res.status(500).send({
+                    success: false,
+                    message: "DB Error"
+                })
+            }
+            if(!user){
+                return res.status(404).send({
+                    success:false,
+                    message: "User not found"
+                })
+            }
+            return res.status(200).send({
+                success: true,
+                message: "success"
+            })
+        })
+    } catch (error) {
+        return res.status(401).send({
+            success: false,
+            message: error
+        })
+    }
+}
+
+
 module.exports = {
     login,
     forgetPassword,
-    resetpassword
+    resetpassword, resetPasswordLoad
 };  
+
+
+
+
+
+
+
+
+
+

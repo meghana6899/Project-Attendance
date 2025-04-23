@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middleware/authMiddleware.js');
-const authorizeRoles = require('../middleware/roleMiddleware.js')
+const authorizeRoles = require('../middleware/roleMiddleware.js');
 
 //Only admin can access
 router.get('/admin',verifyToken.authMid, authorizeRoles("admin"), (req, res) => {
@@ -24,6 +24,8 @@ router.get('/student', verifyToken.authMid, authorizeRoles("admin", "student"), 
         msg: "Welcome to Student Page"
     })
 })
+
+
 
 
 module.exports = router

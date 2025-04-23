@@ -8,6 +8,7 @@ const AddCard = ({ closecard }) => {
     user_id: '', email: '', role: '', first_name: '', last_name: '', password: 'Grad@123'
   });
   const { setAdd } = useAdmin();
+  console.log(candidate)
   const modalRef = useRef(null);
 
   const handleChange = (e) => {
@@ -25,17 +26,19 @@ const AddCard = ({ closecard }) => {
         first_name: candidate.first_name,
         last_name: candidate.last_name,
         password: candidate.password,
-      },{
+      }, {
         headers: {
           'Content-Type': 'application/json',
           authorization: `Bearer ${localStorage.getItem('token')}`,
         }
       });
+      console.log(candidate)
       if (response.status === 200) {
         setAdd(false);
         console.log('successfully created a candidate');
       }
     } catch (err) {
+      console.log(candidate)
       console.log('got an error');
       console.log(err);
     }
@@ -55,7 +58,7 @@ const AddCard = ({ closecard }) => {
   return (
     <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', zIndex: 1050 }}>
       <div ref={modalRef} className="bg-white p-4 rounded-4 shadow-lg position-relative" style={{ maxWidth: '500px', width: '90%' }}>
-        
+
         {/* Close button */}
         <button
           type="button"

@@ -10,5 +10,7 @@ const roleAuthorize = require('../middleware/roleMiddleware.js')
 router.post('/login', authController.login);
 
 
+router.get('/reset-flag', authController.resetPasswordLoad)
+
 module.exports = router;
 

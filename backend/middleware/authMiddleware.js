@@ -36,6 +36,7 @@ const authMid = (req, res, next) => {
         req.user = decoded;
         //req.user.Role = req.headers.user
         console.log("Token verified")
+       
         //req.users = userDetails;
         next();
 

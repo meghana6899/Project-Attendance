@@ -2,11 +2,10 @@ import React from 'react'
 import Doughnut from './Doughnut';
 import { useAdmin } from '../context/AuthContext';
 import CustomizeDates from './CustomizeDates';
-import CustomInput from './CustomInput';
 import DashboardAdmin from './Doughnut';
 
 const ReportCards = () => {
-  const { setShowcard, setStartDate, setEndDate, setDate, date, startDate, endDate,  setEmployee, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours } = useAdmin();
+  const { setShowcard, setStartDate, setEndDate, setDate, date, startDate, endDate, setEmployee, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours } = useAdmin();
   const handleClose = async () => {
     setStartDate(null);
     setEndDate(null);

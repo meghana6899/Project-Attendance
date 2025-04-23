@@ -20,8 +20,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
-      { path: "/forgetpassword", element: <Reset />},
-      {path:"/resetpassword/",element:<ResetPassword />},
+      { path: "/forgetpassword", element: <Reset /> },
+      { path: "/resetpassword", element: <ResetPassword /> },
       {
         element: <ProtectedRoutes />,
         children: [
@@ -33,8 +33,8 @@ const router = createBrowserRouter([
 
 
           { path: "/student-dashboard", element: <StudentDashboard /> },
-          {path:"/reports",element:<Reports />}
-          
+          { path: "/reports", element: <Reports /> }
+
 
         ],
       },
