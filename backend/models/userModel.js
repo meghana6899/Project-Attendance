@@ -19,13 +19,18 @@ const findUser = async(username, callback) => {
     
 }
 
-const setResetPassword = async(email, callback) => {
+const setResetPassword = async(email,  callback) => {
+    console.log("model", email)
+    //if(id.startsWith('E'))
     try {
-        const [response] = await pool.query(`UPDATE employees SET first_login = 0 WHERE email = ?`, [email])
-    const [responsestd] = await pool.query(`UPDATE students SET first_login = 0 WHERE email = ?`, [email])
+        const [response] = await db.execute(`UPDATE employees SET first_login = 0 WHERE email = ?`, [email])
+        const [responsestd] = await db.execute(`UPDATE students SET first_login = 0 WHERE email = ?`, [email])
+       
     let rows = response? response: responsestd;
-    callback(null, rows[0])
+    console.log(rows)
+    callback(null, rows)
     } catch (error) {
+        console.log(error)
        callback(error, null) 
     }
     

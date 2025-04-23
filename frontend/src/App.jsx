@@ -16,7 +16,7 @@ import ResetPassword from "./components/ResetPassword";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <><Root /><Navigate to="/login" /></>,
+    // element: <><Root /><Navigate to="/login" /></>,
     children: [
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },

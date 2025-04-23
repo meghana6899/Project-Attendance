@@ -91,7 +91,8 @@ const resetpassword=async(req,res)=>{
         if(response.success){
             return res.status(200).json({
                 success: true,
-                msg: 'Password updated successfully'
+                msg: 'Password updated successfully',
+                email: response.email
             });
         }
     }catch(err){
@@ -107,8 +108,11 @@ const resetpassword=async(req,res)=>{
 
 const resetPasswordLoad = (req, res) => {
     const email = req.body.email;
+    // const id = req.body.id
+    console.log(email)
     try {
         userModel.setResetPassword(email, (err, user) => {
+            console.log(user)
             if(err){
                 return res.status(500).send({
                     success: false,

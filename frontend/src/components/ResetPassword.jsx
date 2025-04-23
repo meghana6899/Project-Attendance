@@ -33,9 +33,15 @@ const ResetPassword = () => {
         try {
 
             const response = await axios.post(`http://localhost:3000/api/resetpassword`, { token: resetToken, password: formData.password });
+            console.log(response)
             if (response.data.success) {
                 console.log("Password reset successfully")
                 // Redirect to login or show success message
+                const resset = await axios.post(`http://localhost:3000/api/auth/reset-flag`, {
+                    email: response.data.email,
+
+                });
+
             } else {
                 setErrors({ ...errors, password: response.data.message });
             }
@@ -66,7 +72,7 @@ const ResetPassword = () => {
                         <label htmlFor="password" className="form-label">Confirm Password</label>
                         <input
                             type="password"
-                            name="password"
+                            name="confirmPassword"
                             className={`form-control `}
                             placeholder="Password"
                             onChange={handleChange}

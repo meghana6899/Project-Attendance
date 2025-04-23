@@ -63,12 +63,14 @@ const resetPasswordLink = async (email,user_id) => {
         if(row.affectedRows===0){
             return {
                 success: false,
-                msg: 'Error updating password'
+                msg: 'Error updating password',
+                
             };
         }
         return {
             success: true,
-            msg: 'Password updated successfully'
+            msg: 'Password updated successfully',
+            email : decoded.email
         };
     }
 module.exports={resetPasswordLink, resetPasswordNow};
