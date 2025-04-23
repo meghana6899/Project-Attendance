@@ -8,8 +8,8 @@ import DashboardAdmin from './Doughnut';
 const ReportCards = () => {
   const { setShowcard, setStartDate, setEndDate, setDate, date, startDate, endDate,  setEmployee, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours } = useAdmin();
   const handleClose = async () => {
-    setStartDate('');
-    setEndDate('');
+    setStartDate(null);
+    setEndDate(null);
     setDate(`${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`)
     console.log(date, "date")
     console.log(startDate, "startdate")

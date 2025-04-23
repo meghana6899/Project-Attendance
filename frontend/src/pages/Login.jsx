@@ -189,9 +189,9 @@ function Login() {
         </form>
 
         {message && <p className="text-center mt-3 text-danger">{message}</p>}
-        <div className="text-center mt-3">
+        {/* <div className="text-center mt-3">
           Create account? <Link to="/signup">Signup</Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

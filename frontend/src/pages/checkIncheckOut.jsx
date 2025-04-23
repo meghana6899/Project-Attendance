@@ -4,10 +4,10 @@ import axios from 'axios';
 import CheckInTable from '../components/CheckInTable';
 import '../CSS/toaster.css'
 
-function checkIncheckOut() {
+function CheckIncheckOut() {
 
-    const { setIsCheckedIn, isCheckedIn } = useAdmin()
-    const { login } = useAdmin();
+    // const { setIsCheckedIn, isCheckedIn } = useAdmin()
+    // const { login } = useAdmin();
     const [formData, setFormData] = useState({ username: "", password: "" });
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState("");
@@ -27,7 +27,6 @@ function checkIncheckOut() {
             newErrors.username = "Id is required";
         } else if (!/^(E00\d+|S00\d+)$/.test(formData.username)) {
             newErrors.username = "Id is invalid";
-        }
 
         if (!formData.password) {
             newErrors.password = "Password is required";
@@ -123,7 +122,7 @@ function checkIncheckOut() {
     );
 }
 
+}
 
 
-
-export default checkIncheckOut
+export default CheckIncheckOut

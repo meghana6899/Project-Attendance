@@ -6,6 +6,7 @@ import '../CSS/styles.css';
 
 const Reports = () => {
   const [e, setE] = useState('employees');
+  
 
   
   return (
@@ -39,7 +40,7 @@ const Reports = () => {
             }`}
             onClick={() => setE('students')}
             style={{ cursor: 'pointer', transition: '0.3s' }}
-          >
+          > 
             🎓 Student Report
           </li>
         </ul>

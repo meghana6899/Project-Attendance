@@ -22,17 +22,22 @@ function DashboardEmployee() {
     } = useAdmin();
 
     console.log(date)
-    const hasFetched = useRef(false)
+   
 
     const [hourData, setHourData] = useState({});
     const isCustomRange = startDate !== null && endDate !== null;
+    console.log("isCustomRange", isCustomRange)
 
     useEffect(() => {
         const fetchHours = async () => {
+           
             if (!isCustomRange) {
-                hasFetched.current = true;
+
+
                 try {
+                    console.log('fetchhours here 0')
                     const response = await workHours(date);
+                    console.log(response,'hell response')
                     setHourData(response || {});
                     console.log("Rerendered", date)
                 } catch (error) {

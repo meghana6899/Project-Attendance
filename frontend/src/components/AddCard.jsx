@@ -5,7 +5,7 @@ import '../CSS/styles.css';
 
 const AddCard = ({ closecard }) => {
   const [candidate, setCandidate] = useState({
-    user_id: '', email: '', role: '', first_name: '', last_name: ''
+    user_id: '', email: '', role: '', first_name: '', last_name: '', password: 'Grad@123'
   });
   const { setAdd } = useAdmin();
   const modalRef = useRef(null);
@@ -18,12 +18,13 @@ const AddCard = ({ closecard }) => {
     try {
       console.log('entered in handlesubmit');
       e.preventDefault();
-      const response = await axios.post("http://localhost:3000/api/details/new/user", {
+      const response = await axios.post("http://localhost:3000/api/details/create/newusers/user", {
         user_id: candidate.user_id,
         email: candidate.email,
         role: candidate.role,
         first_name: candidate.first_name,
         last_name: candidate.last_name,
+        password: candidate.password,
       },{
         headers: {
           'Content-Type': 'application/json',
@@ -111,6 +112,18 @@ const AddCard = ({ closecard }) => {
                 name="email"
                 placeholder="Enter Email ID"
                 value={candidate.email}
+                onChange={handleChange}
+                className="form-control"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter Password"
+                value={candidate.password}
                 onChange={handleChange}
                 className="form-control"
                 required

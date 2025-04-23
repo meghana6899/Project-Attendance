@@ -15,7 +15,7 @@ function Navbars() {
   return (
     <Navbar expand="lg" bg="white" className="px-0">
     <Container fluid>
-      <Navbar.Brand as={NavLink} to="/" className="fw-bold">
+      <Navbar.Brand as={NavLink} to="/login" className="fw-bold">
         
       </Navbar.Brand>
 
@@ -25,7 +25,7 @@ function Navbars() {
       <Navbar.Collapse id="main-navbar" className="justify-content-end">
         <Nav className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2 ">
           {/* Not Logged In */}
-          {!user.isLoggedIn && (
+          {/* {!user.isLoggedIn && (
             <>
               <Nav.Link as={NavLink} to="/signup">
                 Register
@@ -34,7 +34,7 @@ function Navbars() {
                 Login
               </Nav.Link>
             </>
-          )}
+          )} */}
 
           {/* Logged In */}
           {user.isLoggedIn && (

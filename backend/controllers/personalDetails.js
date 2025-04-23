@@ -3,6 +3,7 @@ const pool=require('../configdb/db');
 const updateUser=require('../models/updateUsers');
 const deleteaUser=require('../models/DeleteUser');
 const CreateNewUser=require('../models/CreateNewUser');
+const bcrypt = require('bcrypt');
 
 
 const AllEmployees=async(req,res)=>{
@@ -62,22 +63,26 @@ const Delete_user_info = async (req, res) => {
       res.status(500).send({ error: "Deletion failed" });
     }
   };
-  const Create_New_User = async (req, res) => {
+  const Create_New_User = async (req, res,next) => {
     const currentDate = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
     
-    const { user_id, email, role,first_name,last_name } = req.body;
+    const { user_id, email, role,first_name,last_name,password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
   
     try {
       const isEmp = user_id.charAt(0) === 'E';
       const table = isEmp ? 'employees' : 'students';
       const column = isEmp ? 'emp_id' : 'stu_id';
-  
-      const update = await CreateNewUser(table, column, user_id,first_name,last_name,email,role,currentDate);
+
+      const update = await CreateNewUser(table, column, user_id, first_name, last_name, email, role, hashedPassword, currentDate);
       if (update.affectedRows > 0) {
           console.log('------success-----')
           res.status(200).json({ message: 'created successful',status:200 });
+          next();
         } else {
           res.status(404).json({ message: 'creating new candidate undefined',status:404 });
+          return ;
         }
   
     } catch (err) {

@@ -17,7 +17,9 @@ const authRoutes = require('./routes/authRoutes.js');
 const authMiddleware = require('./middleware/authMiddleware.js');
 const userRoutes = require('./routes/userRoutes.js');
 const adminRoutes = require('./routes/adminCRUDRoutes');
-const workingHoursRoute = require('./routes/workingHoursperDayRoute.js')
+const workingHoursRoute = require('./routes/workingHoursperDayRoute.js');
+const forgotPasswordRoute = require('./routes/forgetpassword.js');
+
 
 const cors = require('cors');
 
@@ -28,6 +30,7 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public'))); 
 
+app.use('/api', forgotPasswordRoute);
 app.use('/api',signUpUser)
 app.use('/api/auth', authRoutes );
 app.use('/api/protected', authMiddleware.authMid, (req, res) => {

@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Root from "./pages/Root";
@@ -8,16 +8,20 @@ import StudentDashboard from "./pages/StudentDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 
 import DashboardRedirect from "./components/DashboardRedirect";
-import CheckIncheckOut from "./pages/checkIncheckOut";
+import CheckIncheckOut from "./pages/CheckIncheckOut";
 import Reports from './pages/Reports';
+import Reset from "./components/Reset";
+import ResetPassword from "./components/ResetPassword";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <><Root /><Navigate to="/login" /></>,
     children: [
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
+      { path: "/forgetpassword", element: <Reset />},
+      {path:"/resetpassword/",element:<ResetPassword />},
       {
         element: <ProtectedRoutes />,
         children: [
