@@ -3,7 +3,7 @@ import { createContext, useState, useEffect, useContext, useCallback } from "rea
 // Create context with default values to prevent null
 const defaultContextValue = {
 
-  user: { role: '', isLoggedIn: false, id: '' },
+  user: { role: '', isLoggedIn: false, id: ''  },
   setUser: () => { },
   login: () => { },
   logout: () => { },
@@ -27,6 +27,8 @@ const defaultContextValue = {
   setEmployee: () => { },
   showcard: {},
   setShowcard: () => { },
+  flag:true,
+  setFlag: () => { },
 
 
 
@@ -40,13 +42,14 @@ const yearInput = new Date().getFullYear()
 export const AdminProvider = ({ children }) => {
 
   const [isCheckedIn, setIsCheckedIn] = useState(true)
-  const [user, setUser] = useState({ role: '', isLoggedIn: false });
+  const [user, setUser] = useState({ role: '', isLoggedIn: false, id: ''});
   const [date, setDate] = useState(
     `${yearInput}-${String(monthInput).padStart(2, '0')}-${String(dateInput).padStart(2, '0')}`
   );
   const [firstLogin, setFirstLogin] = useState(true)
 
   console.log(date)
+  console.log(user, "user in auth context")
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [startDate, setStartDate] = useState(null);
@@ -60,7 +63,7 @@ export const AdminProvider = ({ children }) => {
   const [employee, setEmployee] = useState();
   const [showcard, setShowcard] = useState(false);
   const [add, setAdd] = useState(false);
-
+const [flag, setFlag] = useState(true);
 
   // Check for existing user data in localStorage on initial load
   useEffect(() => {
@@ -97,7 +100,11 @@ export const AdminProvider = ({ children }) => {
       user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate,
       setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
       isCheckedIn, setIsCheckedIn, employee, setEmployee, showcard, setShowcard, add, setAdd, activeHours, setActiveHours, breakHours, setBreakHours,
+<<<<<<< Updated upstream
       totalHours, setTotalHours, firstLogin, setFirstLogin
+=======
+      totalHours, setTotalHours,flag,setFlag
+>>>>>>> Stashed changes
     }}>
 
       {children}

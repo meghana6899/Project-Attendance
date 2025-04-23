@@ -5,7 +5,8 @@ import axios from "axios";
 import { jwtDecode } from 'jwt-decode'
 
 function Login() {
-  const { login, setFirstLogin } = useAdmin();
+ 
+  const { login, flag, setFlag } = useAdmin();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -86,13 +87,26 @@ function Login() {
       console.log(response.data.passwordreset, 'reponse is here');
 
       // console.log(response)
+
       if (response.data)
-        if (response.data.success) {
-          const userData = {
-            role: response.data.role,
-            isLoggedIn: true,
-            id: response.data.id,
-          };
+ 
+
+
+      if (response.data.success) {
+        const userData = {
+          role: response.data.role,
+          isLoggedIn: true,
+          id: response.data.id,
+        
+
+        };
+        if(response.data.flag===0){
+          setFlag(true);
+        }
+        else{
+          setFlag(false);
+        }
+
 
 
 
