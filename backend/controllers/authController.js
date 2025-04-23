@@ -42,12 +42,8 @@ const login = async(req,res) => {
         }
         const token = jwt.sign({userId : user.id, role: user.role}, secret, {expiresIn});
         console.log('Now: ', token)
-<<<<<<< Updated upstream
-        res.json({ success: true, token, role: user.role,id: id, passwordreset: user.first_login});
-=======
-        console.log('here 0',typeof user.flag)
-        res.json({ success: true, token, role: user.role,id: id,flag:user.flag});
->>>>>>> Stashed changes
+        res.json({ success: true, token, role: user.role,id: id,  passwordreset: user.first_login});
+
     })
 }
 

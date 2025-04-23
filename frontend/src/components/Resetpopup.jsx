@@ -1,16 +1,41 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { useAdmin } from '../context/AuthContext'
+import { useAdmin } from '../context/AuthContext';
+import axios from 'axios';
+
 
 const Resetpopup = () => {
-    const { flag, setFlag } = useAdmin()
+    const { flag, setFlag } = useAdmin();
     console.log(flag, 'flag is here to check');
 
     const navigate = useNavigate();
 
     const handleReset = async () => {
-        navigate('/resetpassword');
-    }
+            const user=localStorage.getItem('user');
+            const email=JSON.parse(localStorage.getItem('email'));  
+            console.log(user)
+            const user1=JSON.parse(user);
+             
+               try{
+                const response=await axios.post (` http://localhost:3000/api/forgetpassword`,{
+                    email:email,
+                    user_id:user1.id,
+                })
+                console.log(response.data);
+                navigate('/confirmmail');
+
+             
+               
+               
+              
+               
+           }
+           catch(err){
+            console.log(err)
+           }
+        }
+        
+    
     const handleSkip = async () => {
         setFlag(false);
         

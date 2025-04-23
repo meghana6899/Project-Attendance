@@ -29,6 +29,8 @@ const defaultContextValue = {
   setShowcard: () => { },
   flag:true,
   setFlag: () => { },
+  email:'',
+  setEmail: () => { },
 
 
 
@@ -46,7 +48,7 @@ export const AdminProvider = ({ children }) => {
   const [date, setDate] = useState(
     `${yearInput}-${String(monthInput).padStart(2, '0')}-${String(dateInput).padStart(2, '0')}`
   );
-  const [firstLogin, setFirstLogin] = useState(true)
+  // const [firstLogin, setFirstLogin] = useState(true)
 
   console.log(date)
   console.log(user, "user in auth context")
@@ -64,6 +66,7 @@ export const AdminProvider = ({ children }) => {
   const [showcard, setShowcard] = useState(false);
   const [add, setAdd] = useState(false);
 const [flag, setFlag] = useState(true);
+const [email, setEmail] = useState('');
 
   // Check for existing user data in localStorage on initial load
   useEffect(() => {
@@ -100,11 +103,8 @@ const [flag, setFlag] = useState(true);
       user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate,
       setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
       isCheckedIn, setIsCheckedIn, employee, setEmployee, showcard, setShowcard, add, setAdd, activeHours, setActiveHours, breakHours, setBreakHours,
-<<<<<<< Updated upstream
-      totalHours, setTotalHours, firstLogin, setFirstLogin
-=======
-      totalHours, setTotalHours,flag,setFlag
->>>>>>> Stashed changes
+      totalHours, setTotalHours, flag, setFlag,email, setEmail
+
     }}>
 
       {children}

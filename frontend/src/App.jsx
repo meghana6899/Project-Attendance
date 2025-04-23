@@ -10,8 +10,9 @@ import EmployeeDashboard from "./pages/EmployeeDashboard";
 import DashboardRedirect from "./components/DashboardRedirect";
 import CheckIncheckOut from "./pages/CheckIncheckOut";
 import Reports from './pages/Reports';
-import Reset from "./components/Reset";
+
 import ResetPassword from "./components/ResetPassword";
+import ConfirmMail from "./pages/ConfirmMail";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
-      { path: "/forgetpassword", element: <Reset /> },
+      
       { path: "/resetpassword", element: <ResetPassword /> },
       {
         element: <ProtectedRoutes />,
@@ -33,14 +34,13 @@ const router = createBrowserRouter([
 
 
           { path: "/student-dashboard", element: <StudentDashboard /> },
-<<<<<<< Updated upstream
-          { path: "/reports", element: <Reports /> }
 
-=======
-          {path:"/reports",element:<Reports />},
+          { path: "/reports", element: <Reports /> },
+
           {path:"/resetpassword",element:<ResetPassword />},
+          {path:"/confirmmail",element:<ConfirmMail />},
           
->>>>>>> Stashed changes
+
 
         ],
       },

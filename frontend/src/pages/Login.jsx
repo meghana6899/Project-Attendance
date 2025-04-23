@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode'
 
 function Login() {
  
-  const { login, flag, setFlag } = useAdmin();
+  const { login, setFlag,setEmail } = useAdmin();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -88,7 +88,6 @@ function Login() {
 
       // console.log(response)
 
-      if (response.data)
  
 
 
@@ -100,10 +99,10 @@ function Login() {
         
 
         };
-        if(response.data.flag===0){
+        if(response.data.passwordreset===1){
+          localStorage.setItem('email', JSON.stringify(formData.email));
           setFlag(true);
-        }
-        else{
+        } else {
           setFlag(false);
         }
 
