@@ -4,17 +4,18 @@ import Calendar from '../components/Calendar';
 import DoughnutChart from '../components/DoughnutChart';
 import { useAdmin } from '../context/AuthContext';
 import CustomInput from '../components/CustomInput';
+import Resetpopup from '../components/resetpopup';
 
-
-import { useContext } from 'react';
 
 
 
 const EmployeeDashboard = () => {
-  const { date } = useAdmin();
+  const { flag } = useAdmin();
+
 
   return (
     <div className='container d-flex flex-column my-5'>
+      <div className='modal-overlay'>{flag && <Resetpopup />}</div>
       <div className='d-flex my-5 '>
         <DoughnutChart />
         <Calendar />

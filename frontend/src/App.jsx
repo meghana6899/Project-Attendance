@@ -33,8 +33,14 @@ const router = createBrowserRouter([
 
 
           { path: "/student-dashboard", element: <StudentDashboard /> },
+<<<<<<< Updated upstream
           { path: "/reports", element: <Reports /> }
 
+=======
+          {path:"/reports",element:<Reports />},
+          {path:"/resetpassword",element:<ResetPassword />},
+          
+>>>>>>> Stashed changes
 
         ],
       },
