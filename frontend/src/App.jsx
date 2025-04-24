@@ -17,18 +17,20 @@ import ConfirmMail from "./pages/ConfirmMail";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <><Root /><Navigate to="/login" /></>,
+    element: <><Root /> </>,
     children: [
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
+      {path:"/resetpassword",element:<ResetPassword />},
+      {path:"/confirmmail",element:<ConfirmMail />},
       
-      { path: "/resetpassword", element: <ResetPassword /> },
       {
         element: <ProtectedRoutes />,
         children: [
           { path: "/dashboard", element: <DashboardRedirect /> },
           { path: "/admin-dashboard", element: <AdminHome /> },
           { path: "/employee-dashboard", element: <EmployeeDashboard /> },
+          { path: "/resetpassword", element: <ResetPassword /> },
 
           { path: "/student-dashboard", element: <EmployeeDashboard /> },
 
@@ -37,8 +39,7 @@ const router = createBrowserRouter([
 
           { path: "/reports", element: <Reports /> },
 
-          {path:"/resetpassword",element:<ResetPassword />},
-          {path:"/confirmmail",element:<ConfirmMail />},
+         
           
 
 

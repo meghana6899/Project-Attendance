@@ -2,12 +2,14 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const ResetPassword = () => {
     const [resetToken, setResetToken] = useState('')
     const location = useLocation();
     const [formData, setFormData] = useState({ password: "", confirmPassword: "" });
     const [errors, setErrors] = useState({});
+    const Navigate = useNavigate()
     const handleChange = (e) => {
         console.log(e.target.value)
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,6 +38,7 @@ const ResetPassword = () => {
             if (response.data.success) {
                 console.log("Password reset successfully")
                 // Redirect to login or show success message
+                Navigate('/login')
             } else {
                 setErrors({ ...errors, password: response.data.message });
             }
@@ -66,7 +69,7 @@ const ResetPassword = () => {
                         <label htmlFor="password" className="form-label">Confirm Password</label>
                         <input
                             type="password"
-                            name="password"
+                            name="confirmPassword"
                             className={`form-control `}
                             placeholder="Password"
                             onChange={handleChange}

@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode'
 
 function Login() {
  
-  const { login, setFlag,setEmail } = useAdmin();
+  const { login, setFlag } = useAdmin();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
