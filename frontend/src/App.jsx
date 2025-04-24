@@ -51,7 +51,7 @@ const router = createBrowserRouter([
 
   },
   {
-    path: "/checkIn",
+    path: "/checkin",
     element: <CheckIncheckOut />
   }
 

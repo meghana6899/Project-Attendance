@@ -238,7 +238,7 @@ const Card= ()=>  {
     <input
       type="text"
       value={editData.role}
-      onChange={(e) => handleChange(e, "first_name")}
+      onChange={(e) => handleChange(e, "role")}
       onBlur={() =>
         setEdit((prev) => ({ ...prev, role: true }))
       }

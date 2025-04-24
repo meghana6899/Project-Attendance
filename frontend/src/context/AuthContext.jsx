@@ -31,6 +31,8 @@ const defaultContextValue = {
   setFlag: () => { },
   email:'',
   setEmail: () => { },
+  radio:false,
+  setRadio: () => { },
 
 
 
@@ -67,6 +69,7 @@ export const AdminProvider = ({ children }) => {
   const [add, setAdd] = useState(false);
 const [flag, setFlag] = useState(true);
 const [email, setEmail] = useState('');
+const [radio, setRadio] = useState(false);
 
   // Check for existing user data in localStorage on initial load
   useEffect(() => {
@@ -103,7 +106,7 @@ const [email, setEmail] = useState('');
       user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate,
       setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
       isCheckedIn, setIsCheckedIn, employee, setEmployee, showcard, setShowcard, add, setAdd, activeHours, setActiveHours, breakHours, setBreakHours,
-      totalHours, setTotalHours, flag, setFlag,email, setEmail
+      totalHours, setTotalHours, flag, setFlag,email, setEmail,radio, setRadio,
 
     }}>
 

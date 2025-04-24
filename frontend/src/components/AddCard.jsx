@@ -7,7 +7,8 @@ const AddCard = ({ closecard }) => {
   const [candidate, setCandidate] = useState({
     user_id: '', email: '', role: '', first_name: '', last_name: '', password: 'Grad@123'
   });
-  const { setAdd } = useAdmin();
+  const [errors, setErrors] = useState({});
+  const { setAdd,radio } = useAdmin();
   console.log(candidate)
   const modalRef = useRef(null);
 
@@ -32,13 +33,14 @@ const AddCard = ({ closecard }) => {
           authorization: `Bearer ${localStorage.getItem('token')}`,
         }
       });
-      console.log(candidate)
+      console.log(response)
       if (response.status === 200) {
         setAdd(false);
         console.log('successfully created a candidate');
       }
     } catch (err) {
-      console.log(candidate)
+      console.log(err.response.data.message);   
+      setErrors({ message: err.response.data.message });
       console.log('got an error');
       console.log(err);
     }
@@ -134,7 +136,7 @@ const AddCard = ({ closecard }) => {
             </div>
 
             <div className="mb-4">
-              <div className="form-check form-check-inline">
+             {!radio && <div className="form-check form-check-inline">
                 <input
                   type="radio"
                   id="student"
@@ -146,7 +148,20 @@ const AddCard = ({ closecard }) => {
                   required
                 />
                 <label htmlFor="student" className="form-check-label">Student</label>
-              </div>
+              </div>}
+              {radio && <div className="form-check form-check-inline">
+                <input
+                  type="radio"
+                  id="admin"
+                  name="role"
+                  value="admin"
+                  onChange={handleChange}
+                  checked={candidate.role === 'admin'}
+                  className="form-check-input"
+                  required
+                />
+                <label htmlFor="admin" className="form-check-label">Admin</label>
+              </div>}
               <div className="form-check form-check-inline">
                 <input
                   type="radio"
@@ -163,6 +178,7 @@ const AddCard = ({ closecard }) => {
             </div>
 
             <div className="text-end">
+              <div><div className='text-danger text-start'>{errors.message}</div></div>
               <button type="submit" className="btn btn-primary">
                 Add Candidate
               </button>

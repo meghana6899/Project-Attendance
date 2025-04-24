@@ -81,7 +81,7 @@ const Delete_user_info = async (req, res) => {
           res.status(200).json({ message: 'created successful',status:200 });
           next();
         } else {
-          res.status(404).json({ message: 'creating new candidate undefined',status:404 });
+          res.status(404).json({ message: 'creating new candidate undefined or Email already exists',status:404 });
           return ;
         }
   

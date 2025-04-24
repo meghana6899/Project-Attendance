@@ -8,7 +8,9 @@ import AddCard from './AddCard';
 function EmployeesTable() {
   const [data, setData] = useState([]);
 
-  const { setEmployee,employee,setShowcard,showcard,add,setAdd } = useAdmin();
+  const { setEmployee,employee,setShowcard,showcard,add,setAdd ,setRadio} = useAdmin();
+  setRadio(true);
+  
 
 
   var response;

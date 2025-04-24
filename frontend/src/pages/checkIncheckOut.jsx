@@ -8,6 +8,7 @@ function CheckIncheckOut() {
 
     // const { setIsCheckedIn, isCheckedIn } = useAdmin()
     // const { login } = useAdmin();
+    console.log("CheckIncheckOut")
     const [formData, setFormData] = useState({ username: "", password: "" });
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState("");
@@ -27,6 +28,7 @@ function CheckIncheckOut() {
             newErrors.username = "Id is required";
         } else if (!/^(E00\d+|S00\d+)$/.test(formData.username)) {
             newErrors.username = "Id is invalid";
+        }
 
         if (!formData.password) {
             newErrors.password = "Password is required";
@@ -38,6 +40,7 @@ function CheckIncheckOut() {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -52,6 +55,7 @@ function CheckIncheckOut() {
                 password: formData.password
             })
             if (response) {
+                console.log(response,'here is tje succesfull repsone')
                 setToast("Submitted Successfully")
                 setToaster(true)
                 setTimeout(() => {
@@ -117,12 +121,13 @@ function CheckIncheckOut() {
                     {message && <p className="text-center mt-3 text-danger">{message}</p>}
 
                 </div>
+                
             </div>
         </>
     );
 }
 
-}
+
 
 
 export default CheckIncheckOut

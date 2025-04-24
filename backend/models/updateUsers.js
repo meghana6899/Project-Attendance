@@ -1,6 +1,6 @@
 const pool=require('../configdb/db')
 const updateUser = async (table, user_id, id, first_name, last_name, role,email) => {
-  c
+  
     const query = `UPDATE ${table}
       SET ${user_id}=?,first_name = ?, last_name = ?, role = ?,email = ?
       WHERE ${user_id} = ?;`;
