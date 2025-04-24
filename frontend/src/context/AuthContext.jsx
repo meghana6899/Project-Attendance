@@ -3,7 +3,7 @@ import { createContext, useState, useEffect, useContext, useCallback } from "rea
 // Create context with default values to prevent null
 const defaultContextValue = {
 
-  user: { role: '', isLoggedIn: false, id: ''  },
+  user: { role: '', isLoggedIn: false, id: '' },
   setUser: () => { },
   login: () => { },
   logout: () => { },
@@ -27,10 +27,12 @@ const defaultContextValue = {
   setEmployee: () => { },
   showcard: {},
   setShowcard: () => { },
-  flag:true,
+  flag: false,
   setFlag: () => { },
-  email:'',
+  email: '',
   setEmail: () => { },
+  radio: false,
+  setRadio: () => { },
 
 
 
@@ -44,7 +46,7 @@ const yearInput = new Date().getFullYear()
 export const AdminProvider = ({ children }) => {
 
   const [isCheckedIn, setIsCheckedIn] = useState(true)
-  const [user, setUser] = useState({ role: '', isLoggedIn: false, id: ''});
+  const [user, setUser] = useState({ role: '', isLoggedIn: false, id: '' });
   const [date, setDate] = useState(
     `${yearInput}-${String(monthInput).padStart(2, '0')}-${String(dateInput).padStart(2, '0')}`
   );
@@ -65,8 +67,9 @@ export const AdminProvider = ({ children }) => {
   const [employee, setEmployee] = useState();
   const [showcard, setShowcard] = useState(false);
   const [add, setAdd] = useState(false);
-const [flag, setFlag] = useState(true);
-const [email, setEmail] = useState('');
+  const [flag, setFlag] = useState(false);
+  const [email, setEmail] = useState('');
+  const [radio, setRadio] = useState(false);
 
   // Check for existing user data in localStorage on initial load
   useEffect(() => {
@@ -103,7 +106,7 @@ const [email, setEmail] = useState('');
       user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate,
       setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
       isCheckedIn, setIsCheckedIn, employee, setEmployee, showcard, setShowcard, add, setAdd, activeHours, setActiveHours, breakHours, setBreakHours,
-      totalHours, setTotalHours, flag, setFlag,email, setEmail
+      totalHours, setTotalHours, flag, setFlag, email, setEmail, radio, setRadio,
 
     }}>
 

@@ -2,12 +2,15 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+
 
 const ResetPassword = () => {
     const [resetToken, setResetToken] = useState('')
     const location = useLocation();
     const [formData, setFormData] = useState({ password: "", confirmPassword: "" });
     const [errors, setErrors] = useState({});
+    const Navigate = useNavigate()
     const handleChange = (e) => {
         console.log(e.target.value)
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -42,6 +45,7 @@ const ResetPassword = () => {
 
                 });
 
+                Navigate('/login')
             } else {
                 setErrors({ ...errors, password: response.data.message });
             }

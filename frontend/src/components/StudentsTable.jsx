@@ -12,7 +12,8 @@ function StudentsTable() {
 
 
 
-    const { employee, setEmployee,setShowcard,showcard ,add,setAdd} = useAdmin();
+    const { employee, setEmployee,setShowcard,showcard ,add,setAdd,setRadio,radio} = useAdmin();
+    setRadio(false);
 
   useEffect(() => {
     const fetchdetails = async () => {

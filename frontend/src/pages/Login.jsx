@@ -5,8 +5,8 @@ import axios from "axios";
 import { jwtDecode } from 'jwt-decode'
 
 function Login() {
- 
-  const { login, setFlag,setEmail } = useAdmin();
+
+  const { login, setFlag } = useAdmin();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -60,7 +60,8 @@ function Login() {
 
     if (!formData.password) {
       newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
+    }
+    else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
     }
 
@@ -88,7 +89,7 @@ function Login() {
 
       // console.log(response)
 
- 
+
 
 
       if (response.data.success) {
@@ -96,11 +97,12 @@ function Login() {
           role: response.data.role,
           isLoggedIn: true,
           id: response.data.id,
-        
+
 
         };
-        if(response.data.passwordreset===1){
+        if (response.data.passwordreset === 1) {
           localStorage.setItem('email', JSON.stringify(formData.email));
+
           setFlag(true);
         } else {
           setFlag(false);
@@ -109,17 +111,17 @@ function Login() {
 
 
 
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", JSON.stringify(userData));
-          login(userData);
-          redirectBasedOnRole(response.data.role);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(userData));
+        login(userData);
+        redirectBasedOnRole(response.data.role);
 
-          // setFirstLogin(response.data.passwordreset)
-
-
+        // setFirstLogin(response.data.passwordreset)
 
 
-        }
+
+
+      }
 
     }
 
