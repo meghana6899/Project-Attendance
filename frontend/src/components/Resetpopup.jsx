@@ -5,7 +5,7 @@ import axios from 'axios';
 import icon from '../assets/icons8-loading.gif';
 
 const Resetpopup = () => {
-  const { flag, setFlag } = useAdmin();
+  const { setFlag } = useAdmin();
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();

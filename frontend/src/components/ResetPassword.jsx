@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const ResetPassword = () => {
     const [resetToken, setResetToken] = useState('')
     const location = useLocation();
-    const [formData, setFormData] = useState({ password: "", confirmPassword: "" });
+    const [formData, setFormData] = useState({ password: null, confirmPassword: null});
     const [errors, setErrors] = useState({});
     const Navigate = useNavigate()
     const handleChange = (e) => {
@@ -28,6 +28,20 @@ const ResetPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Handle form submission logic here
+        
+    if (!formData.password) {
+        setErrors({ ...errors, password: "Password is required" }); 
+        return;
+      }
+      else if (formData.password.length < 6) {
+        setErrors({ ...errors, password: "Password must be at least 6 characters" });
+        return;
+      }
+
+        if (!formData.confirmPassword) {
+            setErrors({ ...errors, confirmPassword: "Confirm Password is required" });
+            return ;
+        }
 
         if (formData.password !== formData.confirmPassword) {
             setErrors({ ...errors, confirmPassword: "Passwords do not match" });
@@ -70,7 +84,7 @@ const ResetPassword = () => {
                             placeholder="Password"
                             onChange={handleChange}
                             value={formData.password} />
-                        {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+                        <div className='text-danger'>{errors.password && errors.password}</div>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Confirm Password</label>
@@ -82,7 +96,12 @@ const ResetPassword = () => {
                             onChange={handleChange}
                             value={formData.confirmPassword}
                         />
+                        <div className='text-danger'>
+                        {errors.confirmPassword && errors.confirmPassword}
+                        </div>
                     </div>
+                    {/* <div className='text-danger'>{errors.password && errors.password }</div>
+                    <div className='text-danger text-center'>{errors.confirmPassword && errors.confirmPassword }</div> */}
                     <button type="submit" className="btn btn-primary w-100" >Submit</button>
                 </form>
             </div>
@@ -90,5 +109,6 @@ const ResetPassword = () => {
         </div >
     )
 }
+
 
 export default ResetPassword

@@ -33,21 +33,26 @@ const defaultContextValue = {
   setEmail: () => { },
   radio: false,
   setRadio: () => { },
+  isCheckedIn: true,
+  setIsCheckedIn: () => { },
+  apply:true,
+  setApply:()=>{},
+  
 
 
 
 };
 
 export const AdminContext = createContext(defaultContextValue);
-const dateInput = new Date().getDate();
-const monthInput = new Date().getMonth() + 1;
-const yearInput = new Date().getFullYear()
 
 export const AdminProvider = ({ children }) => {
-
+  
   const [isCheckedIn, setIsCheckedIn] = useState(true)
   const [accept, setAccept] = useState(false);
   const [user, setUser] = useState({ role: '', isLoggedIn: false, id: '' });
+  const dateInput = new Date().getDate();
+  const monthInput = new Date().getMonth() + 1;
+  const yearInput = new Date().getFullYear()
   const [date, setDate] = useState(
     `${yearInput}-${String(monthInput).padStart(2, '0')}-${String(dateInput).padStart(2, '0')}`
   );
@@ -71,6 +76,7 @@ export const AdminProvider = ({ children }) => {
   const [flag, setFlag] = useState(false);
   const [email, setEmail] = useState('');
   const [radio, setRadio] = useState(false);
+  const [apply,setApply]=useState(true)  ;
 
   // Check for existing user data in localStorage on initial load
   useEffect(() => {

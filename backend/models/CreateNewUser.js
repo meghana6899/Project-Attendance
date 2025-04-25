@@ -1,7 +1,7 @@
 const pool=require('../configdb/db')
 const CreateNewUser=async(table, column,user_id,first_name,last_name, email,role,hashedPassword,date)=>{
     console.log(table, column,user_id,first_name,last_name, email,role,date)
-    const result=await pool.query(`SELECT * FROM ${table} WHERE email = ?`, [email]);
+    const result=await pool.query(`SELECT * FROM ${table} WHERE email = ? and \`${column}\`=?`, [email,user_id] );
     console.log('result',result[0])
 
     if(result[0].length > 1) {

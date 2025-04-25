@@ -123,19 +123,7 @@ const AddCard = ({ closecard }) => {
                 required
               />
             </div>
-            <div className="mb-3">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Enter Password"
-                value={candidate.password}
-                onChange={handleChange}
-                className="form-control"
-                required
-              />
-            </div>
-
+            
             <div className="mb-4">
               {!radio && <div className="form-check form-check-inline">
                 <input

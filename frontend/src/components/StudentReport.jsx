@@ -38,8 +38,10 @@ function StudentsTable() {
     console.log(row);
     console.log(row.rowIndex - 1);
     const rowIndex = row.rowIndex - 1;
-    console.log(data[rowIndex])
-    setEmployee(data[rowIndex]);
+    console.log(data.avgTh[rowIndex],'here is hte data studnetsds')
+    setEmployee(data.avgTh[rowIndex]);
+    console.log(employee,'ghere is hte emokojaosef');
+    
     setShowcard(true)
 
   };
@@ -125,15 +127,8 @@ function StudentsTable() {
               alignItems: "center",
             }}
           >
-            <div
-              className="bg-white p-4 rounded-4 shadow"
-              style={{
-                width: "50%",
-                maxWidth: "700px",
-                minWidth: "400px",
-              }}
-            >
-              <ReportCards />
+             <div style={{width:'85vw'}}>
+            <ReportCards />
             </div>
           </div>
         )}

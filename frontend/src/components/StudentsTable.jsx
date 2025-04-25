@@ -12,7 +12,7 @@ function StudentsTable() {
 
 
 
-    const { employee, setEmployee,setShowcard,showcard ,add,setAdd,setRadio,radio} = useAdmin();
+    const { employee, setEmployee,setShowcard,showcard ,add,setAdd,setRadio} = useAdmin();
     setRadio(false);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ function StudentsTable() {
 
   return (<>
     {/* ADD Button */}
-    <div className="text-end mx-5   ">
+    <div className="text-start mx-5   ">
       <input
         type="button"
         value="ADD"

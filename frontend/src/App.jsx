@@ -13,6 +13,7 @@ import Reports from './pages/Reports';
 
 import ResetPassword from "./components/ResetPassword";
 import ConfirmMail from "./pages/ConfirmMail";
+import Users from "./pages/Users";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
           { path: "/student-dashboard", element: <StudentDashboard /> },
 
           { path: "/reports", element: <Reports /> },
+          {path: "/Users", element: <Users />},
 
 
 

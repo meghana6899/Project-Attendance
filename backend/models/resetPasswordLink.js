@@ -28,16 +28,16 @@ const resetPasswordLink = async (email,user_id) => {
             host: "smtp.gmail.com",
             port: 587, // true for 465, false for other ports
             auth: {
-                user: 'ruthwikarya23@gmail.com',
-            pass: 'orie wseo yida hgmt', // generated ethereal password
+                user: 'ruthwikarya23@gmail.com',  // need to add the email address here
+                pass: 'orie wseo yida hgmt', //  need to add the password here
             },
         });
     
     
         let info = await transporter.sendMail({
-            from: '"Ruthwik Arya" <ruthwikarya23@gmail.com>', // sender address
+            from: '"Ruthwik Kumar" <ruthwikarya23@gmail.com>', // sender address
             to: `${email}`, // list of receivers
-            subject: 'Account Created in gradious portal',
+            subject: 'Here You Go! Reset Password Link', // Subject line
             text: `Here is  Your reset password link: ${link}`, // plain text body
             html: `<b>Here is  Your reset password link: ${link}</b>` // html body
             

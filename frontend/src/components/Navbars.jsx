@@ -58,10 +58,16 @@ function Navbars() {
                   <Nav.Link as={NavLink} to="/reports">
                     Reports
                   </Nav.Link>
+                  
                 )}
-                {false && (
+                {user.role === "admin" && ( 
+                  <Nav.Link as={NavLink} to="/Users">
+                   Users
+                 </Nav.Link>
+                )}
+                {/* {false && (
                   <Nav.Link as={NavLink} to="/reset-password">Reset Password</Nav.Link>
-                )}
+                )} */}
 
                 <Nav.Link as={NavLink} to="/login" onClick={handleLogout}>
                   Logout
