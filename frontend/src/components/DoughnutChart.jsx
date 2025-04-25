@@ -6,7 +6,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useAdmin } from '../context/AuthContext';
 import workHours from '../api/queries/workHours';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Bar } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -22,7 +22,7 @@ function DashboardEmployee() {
     } = useAdmin();
 
     console.log(date)
-   
+
 
     const [hourData, setHourData] = useState({});
     const isCustomRange = startDate !== null && endDate !== null;
@@ -30,14 +30,14 @@ function DashboardEmployee() {
 
     useEffect(() => {
         const fetchHours = async () => {
-           
+
             if (!isCustomRange) {
 
 
                 try {
                     console.log('fetchhours here 0')
                     const response = await workHours(date);
-                    console.log(response,'hell response')
+                    console.log(response, 'hell response')
                     setHourData(response || {});
                     console.log("Rerendered", date)
                 } catch (error) {

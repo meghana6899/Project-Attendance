@@ -8,6 +8,7 @@ const {AllEmployees,AllStudents}=require('../controllers/personalDetails');
 const {Update_user_info,Delete_user_info, Create_New_User}=require('../controllers/personalDetails');
 const calculateTotalHoursOnRange = require('../controllers/totalHours');
 const sendMail = require('../controllers/sendmail');
+const {calculateAvg, calculateAvgstd} = require('../controllers/reportsController')
 
 employeeRoute.get('/:user/:id', verifyToken.authMid,calculateAvgHours );
 employeeRoute.post('/:user/:id', verifyToken.authMid, calculateCheckinOnRange );
@@ -27,6 +28,9 @@ employeeRoute.delete('/:id',verifyToken.authMid,Delete_user_info);
 employeeRoute.post('/create/newusers/user',verifyToken.authMid,Create_New_User,sendMail);
 
 employeeRoute.post('/totalhours/:id', verifyToken.authMid, calculateTotalHoursOnRange );
+
+employeeRoute.get('/reports/users/employee', calculateAvg)
+employeeRoute.get('/reports/users/student', calculateAvgstd)
 
 
 

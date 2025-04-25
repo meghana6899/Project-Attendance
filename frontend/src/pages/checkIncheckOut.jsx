@@ -44,8 +44,8 @@ function CheckIncheckOut() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
 
+        setFormData({});
         if (!validate()) return;
 
 
@@ -56,6 +56,7 @@ function CheckIncheckOut() {
             })
             if (response) {
                 console.log(response, 'here is tje succesfull repsone')
+                setFormData({ ...formData, password: "", username: "" })
                 setToast("Submitted Successfully")
                 setToaster(true)
                 setTimeout(() => {

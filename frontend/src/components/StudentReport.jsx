@@ -1,33 +1,28 @@
 import React from 'react';
-import AllStudents from '../api/queries/AllStudents';
+import AllEmployees from '../api/queries/AllEmployees';
+import { reportsAPistd } from '../api/queries/reportsAPi';
 import { useEffect, useState } from 'react';
 import { useAdmin } from '../context/AuthContext';
 import ReportCards from './ReportCards';
 
 
-
 function StudentsTable() {
-  const [data, setData] = useState([]);
- 
+  const [data, setData] = useState(null);
+  const [users, setUsers] = useState({ average_checkout_time: "", avergae_checkin_time: "", avg_active_hours: "", avg_break_hours: "", avg_total_hours: "" })
+  const { setEmployee, employee, setShowcard, showcard } = useAdmin();
 
 
-
-
-    const { employee, setEmployee,setShowcard,showcard} = useAdmin();
-
+  var response;
+  var response2;
   useEffect(() => {
     const fetchdetails = async () => {
       console.log('Fetch')
       try {
-        const response = await AllStudents();
+        response = await reportsAPistd();
         console.log(response);
-        if (Array.isArray(response)) {
-          setData(response)
-        } else if (typeof response === 'object') {
-          console.log("Its an object")
-        } else {
-          setData([response])
-        }
+        setData(response.data)
+
+
 
       } catch (err) {
         console.log(err)
@@ -35,42 +30,50 @@ function StudentsTable() {
     }
     fetchdetails()
   }, [employee])
-  console.log(data);
-  const handleClick=(e)=>{
-    const row=e.target.closest('tr');
+  console.log("Data", data);
+  console.log('here is the event target');
+  const handleClick = (e) => {
+    const row = e.target.closest('tr');
     if (!row || row.rowIndex === 0) return;
     console.log(row);
-    console.log(row.rowIndex-1);
+    console.log(row.rowIndex - 1);
     const rowIndex = row.rowIndex - 1;
     console.log(data[rowIndex])
     setEmployee(data[rowIndex]);
     setShowcard(true)
- 
+
   };
 
 
 
 
-
-  const renderedData = data.map(({ stu_id,first_name,last_name,email,role,join_date }, index) => {
-    return (
-      <tr key={index} className='px-5 py-5'>
-        
-        <td className='py-3 px-3'>{stu_id} </td>
-        <td className='py-3 px-3'>{first_name} </td>
-        <td className='py-3 px-3'>{last_name}  </td>
-        <td className='py-3 px-3'>{email}</td>
-        <td className='py-3 px-3'>{role}</td>
-        <td className='py-3 px-3'>{join_date ? join_date.split('T')[0] : ""} </td>
-       
+  const renderedData = data?.avgTh?.length > 0
+    ? data.avgTh.map((item, i) => (
+      <tr key={i} className='px-5 py-5 border'>
+        <td className='py-3 px-3 border'>{item.stu_id}</td>
+        <td className='py-3 px-3 border'>{item.full_name}</td>
+        <td className='py-3 px-3 border'>{data?.avglt?.[i]?.average_checkin_time || '-'}</td>
+        <td className='py-3 px-3 border'>{data?.avgLoT?.[i]?.average_checkout_time || '-'}</td>
+        <td className='py-3 px-3 border'>{item.avg_active_hours}</td>
+        <td className='py-3 px-3 border'>{item.avg_break_hours}</td>
+        <td className='py-3 px-3 border'>{item.avg_total_hours}</td>
       </tr>
+    ))
+    : (
+      <tr>
+        <td colSpan="7" className="py-3 px-5 text-muted text-center">Loading or No Data</td>
+      </tr>
+    );
 
-    )
-  });
- 
+
+
+
+
+
+
+
 
   return (<>
-    
     <div className="container d-flex justify-content-center my-5">
       <div className="table-responsive" style={{ width: "100%" }}>
         <table
@@ -82,7 +85,7 @@ function StudentsTable() {
             backgroundColor: "#f9f9f9",
           }}
         >
-          <thead
+          <thead className='table-light'
             style={{
               backgroundColor: "#343a40",
               color: "white",
@@ -90,28 +93,22 @@ function StudentsTable() {
             }}
           >
             <tr>
-              <th>Stu ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Joined Date</th>
+              <th className='border p-3'>Std ID</th>
+              <th className='border p-3'>Name</th>
+              <th className='border p-3'>Average Login Time</th>
+              <th className='border p-3'>Average Logout Time</th>
+              <th className='border p-3'>Average Active Hours</th>
+              <th className='border p-3'>Average Break Hours</th>
+              <th className='border p-3'>Average Total Hours</th>
             </tr>
           </thead>
           <tbody>
-            {renderedData.length > 0 ? (
-              renderedData
-            ) : (
-              <tr>
-                <td colSpan="6" className="py-3 px-5 text-muted">
-                  Loading...
-                </td>
-              </tr>
-            )}
+
+            {renderedData}
           </tbody>
         </table>
-  
-        
+
+
         {showcard && (
           <div
             className="modal-overlay"
@@ -129,7 +126,7 @@ function StudentsTable() {
             }}
           >
             <div
-              className=" bg-white p-4 rounded-4"
+              className="bg-white p-4 rounded-4 shadow"
               style={{
                 width: "50%",
                 maxWidth: "700px",
@@ -142,8 +139,9 @@ function StudentsTable() {
         )}
       </div>
     </div>
-</>
-  );
+  </>
+  )
 }
 
 export default StudentsTable;
+

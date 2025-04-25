@@ -46,6 +46,7 @@ const yearInput = new Date().getFullYear()
 export const AdminProvider = ({ children }) => {
 
   const [isCheckedIn, setIsCheckedIn] = useState(true)
+  const [accept, setAccept] = useState(false);
   const [user, setUser] = useState({ role: '', isLoggedIn: false, id: '' });
   const [date, setDate] = useState(
     `${yearInput}-${String(monthInput).padStart(2, '0')}-${String(dateInput).padStart(2, '0')}`
@@ -105,7 +106,7 @@ export const AdminProvider = ({ children }) => {
     <AdminContext.Provider value={{
       user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate,
       setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
-      isCheckedIn, setIsCheckedIn, employee, setEmployee, showcard, setShowcard, add, setAdd, activeHours, setActiveHours, breakHours, setBreakHours,
+      isCheckedIn, setIsCheckedIn, employee, setEmployee, showcard, setShowcard, add, setAdd, activeHours, setActiveHours, breakHours, setBreakHours, accept, setAccept,
       totalHours, setTotalHours, flag, setFlag, email, setEmail, radio, setRadio,
 
     }}>
