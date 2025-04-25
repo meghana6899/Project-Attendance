@@ -54,7 +54,11 @@ function DashboardEmployee() {
         return `${hours}h ${minutes}min`;
     };
 
-    const timeToDecimal = (timeStr = '00:00:00') => {
+    const timeToDecimal = (timeStr) => {
+        console.log("TimeStr", typeof timeStr)
+        if (timeStr == null || timeStr == undefined || timeStr == 0) {
+            timeStr = '00:00:00'
+        }
         console.log("Time STring", timeStr)
         const [h, m, s] = timeStr.split(':').map(Number);
         return h + m / 60;

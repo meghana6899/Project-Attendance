@@ -69,7 +69,7 @@ function CheckInTable() {
     )
   })
   return (
-    <table className='table text-center w-auto mx-auto my-5 bg-info'>
+    <table className='table text-center w-auto mx-auto my-5'>
       <thead className='table-light' >
         <tr  >
           <th className='py-3 px-5'>Date</th>
@@ -78,7 +78,7 @@ function CheckInTable() {
         </tr>
       </thead>
       <tbody>
-        {renderedData.length > 0 ? renderedData : <div>Loading...</div>}
+        {renderedData.length > 0 ? renderedData : <div className='bg-white'>Loading...</div>}
       </tbody>
 
     </table>

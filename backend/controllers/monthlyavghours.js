@@ -1,4 +1,4 @@
-const {monthlyAvgHours,EveryWeekAvg} =require('../models/monthlyavgquires');
+const {monthlyAvgHours,EveryWeekAvg, perDayinWeek} =require('../models/monthlyavgquires');
 const EveryMonthAvg=async(req,res)=>{
     try{
         console.log('iam here')
@@ -54,5 +54,28 @@ const CurrentWeekAvg = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
+
+  const CurrentWeekPerDay = async (req, res) => {
+    const id = req.params.id;
+    let table, column;
   
-module.exports={EveryMonthAvg,CurrentWeekAvg}
+    if (id.charAt(0) === 'E') {
+      table = 'emp_hours';
+      column = 'emp_id';
+    } else {
+      table = 'stu_hours';
+      column = 'stu_id';
+    }
+  
+  
+    try {
+      const response = await perDayinWeek(table, id, column);
+      res.json(response);
+    } catch (error) {
+      console.error('Error fetching weekly averages:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
+  
+module.exports={EveryMonthAvg,CurrentWeekAvg, CurrentWeekPerDay}

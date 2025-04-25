@@ -1,5 +1,4 @@
 import React from 'react';
-import AllEmployees from '../api/queries/AllEmployees';
 import reportsAPi from '../api/queries/reportsAPi';
 import { useEffect, useState } from 'react';
 import { useAdmin } from '../context/AuthContext';
@@ -30,7 +29,7 @@ function EmployeesTable() {
         // else {
         //   setData([response.data])
         // }
-        console.log('herwis the data information',response.data.avgTh);
+        console.log('herwis the data information', response.data.avgTh);
         setData(response.data);
 
 
@@ -49,9 +48,9 @@ function EmployeesTable() {
     console.log(row);
     console.log(row.rowIndex - 1);
     const rowIndex = row.rowIndex - 1;
-    console.log(data.avgTh[rowIndex],'here is jteeeeeeeeeee');
+    console.log(data.avgTh[rowIndex], 'here is jteeeeeeeeeee');
     setEmployee(data.avgTh[rowIndex]);
-    console.log('here is the click is trgiggered',employee);
+    console.log('here is the click is trgiggered', employee);
     setShowcard(true)
 
   };
@@ -137,11 +136,13 @@ function EmployeesTable() {
               alignItems: "center",
             }}
           >
-           
-           
-              
+            <div style={{ width: '85vw' }}>
+              <ReportCards />
             </div>
-         
+
+
+          </div>
+
         )}
       </div>
     </div>

@@ -11,12 +11,14 @@ const DropDown = () => {
     employee,
     setAvgActiveHours,
     setAvgBreakHours,
-    setAvgTotalHours
+    setAvgTotalHours,
+    dashBoard,
+    setSelection
   } = useAdmin();
 
-  const user_id = 'stu_id' in employee ? 'stu_id' : 'emp_id';
+  const user_id = Object.keys(employee).includes('stu_id') ? 'stu_id' : 'emp_id';
   const userValue = employee?.[user_id];
-console.log(employee,'here iss hhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+  console.log(employee, 'here iss hhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
 
   // Set today's date in state when component mounts
   useEffect(() => {
@@ -61,10 +63,13 @@ console.log(employee,'here iss hhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
 
     if (selectedValue === 'day') {
       startDate.setDate(currentDate.getDate() - 1);
+
     } else if (selectedValue === 'week') {
       startDate.setDate(currentDate.getDate() - 7);
+      setSelection('week')
     } else if (selectedValue === 'month') {
       startDate.setMonth(currentDate.getMonth() - 1);
+      setSelection('month')
     }
 
     const start = startDate.toISOString().split('T')[0];
@@ -89,7 +94,7 @@ console.log(employee,'here iss hhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
       <h4>Select an Option</h4>
       <select onChange={handleSelectClick} defaultValue="">
         <option value="" disabled>-- Select Range --</option>
-        <option value="day">Daily</option>
+        {dashBoard && <option value="day">Daily</option>}
         <option value="week">Weekly</option>
         <option value="month">Monthly</option>
       </select>

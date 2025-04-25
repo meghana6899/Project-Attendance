@@ -35,9 +35,9 @@ const defaultContextValue = {
   setRadio: () => { },
   isCheckedIn: true,
   setIsCheckedIn: () => { },
-  apply:true,
-  setApply:()=>{},
-  
+  apply: true,
+  setApply: () => { },
+
 
 
 
@@ -46,7 +46,7 @@ const defaultContextValue = {
 export const AdminContext = createContext(defaultContextValue);
 
 export const AdminProvider = ({ children }) => {
-  
+
   const [isCheckedIn, setIsCheckedIn] = useState(true)
   const [accept, setAccept] = useState(false);
   const [user, setUser] = useState({ role: '', isLoggedIn: false, id: '' });
@@ -64,19 +64,21 @@ export const AdminProvider = ({ children }) => {
   const [checkOut, setCheckOut] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [avgactiveHours, setAvgActiveHours] = useState('');
-  const [avgbreakHours, setAvgBreakHours] = useState('')
-  const [avgtotalHours, setAvgTotalHours] = useState('');
-  const [activeHours, setActiveHours] = useState('');
-  const [breakHours, setBreakHours] = useState('')
-  const [totalHours, setTotalHours] = useState('');
-  const [employee, setEmployee] = useState();
+  const [avgactiveHours, setAvgActiveHours] = useState('00:00:00');
+  const [avgbreakHours, setAvgBreakHours] = useState('00:00:00')
+  const [avgtotalHours, setAvgTotalHours] = useState('00:00:00');
+  const [activeHours, setActiveHours] = useState('00:00:00');
+  const [breakHours, setBreakHours] = useState('00:00:00')
+  const [totalHours, setTotalHours] = useState('00:00:00');
+  const [employee, setEmployee] = useState({});
   const [showcard, setShowcard] = useState(false);
   const [add, setAdd] = useState(false);
   const [flag, setFlag] = useState(false);
   const [email, setEmail] = useState('');
   const [radio, setRadio] = useState(false);
-  const [apply,setApply]=useState(true)  ;
+  const [apply, setApply] = useState(true);
+  const [dashBoard, setdashBoard] = useState(false);
+  const [selection, setSelection] = useState(null)
 
   // Check for existing user data in localStorage on initial load
   useEffect(() => {
@@ -112,7 +114,7 @@ export const AdminProvider = ({ children }) => {
     <AdminContext.Provider value={{
       user, setUser, login, logout, date, setDate, checkIn, setCheckIn, checkOut, setCheckOut, setEndDate,
       setStartDate, endDate, startDate, avgactiveHours, avgbreakHours, avgtotalHours, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
-      isCheckedIn, setIsCheckedIn, employee, setEmployee, showcard, setShowcard, add, setAdd, activeHours, setActiveHours, breakHours, setBreakHours, accept, setAccept,
+      isCheckedIn, setIsCheckedIn, employee, setEmployee, showcard, setShowcard, add, setAdd, activeHours, setActiveHours, breakHours, setBreakHours, accept, setAccept, dashBoard, setdashBoard, selection, setSelection,
       totalHours, setTotalHours, flag, setFlag, email, setEmail, radio, setRadio,
 
     }}>
