@@ -62,7 +62,7 @@ function Checkinuser() {
         //     employee.user_id = employee.stu_id  
         // }   
 
-        const response = await axios.get(`http://localhost:3000/api/details/${employee.role}/${user_id}`, { // Updated to use employee.user_id
+        const response = await axios.get(`http://localhost:3000/api/details/${table}/${user_id}`, { // Updated to use employee.user_id
             headers: {
                 authorization: token,
             }
@@ -109,7 +109,7 @@ function Checkinuser() {
           <th className='py-3 px-5' scope='col'>Check Out</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody >
   {renderedData.length > 0 ? (
     renderedData
   ) : (

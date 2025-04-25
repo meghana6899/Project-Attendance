@@ -30,10 +30,15 @@ const totalWorkingHoursForRange = async (table, startDate, endDate, user_id, col
   const getAvgBreakHoursOnRange = async (table, user_id, startDate,column, endDate,tablecolumn) => {
     console.log("Entered model")
       const query = `
-        SELECT ${column}, SEC_TO_TIME(AVG(TIME_TO_SEC(${tablecolumn}))) AS avg_${tablecolumn}
-        FROM ${table}
-        WHERE ${column} = ? AND date BETWEEN ? AND ?
-        GROUP BY ${column}
+        SELECT ${column}, 
+  CONCAT(
+    FLOOR(AVG(TIME_TO_SEC(${tablecolumn})) / 3600), 'hr ',
+    LPAD(CEIL((AVG(TIME_TO_SEC(${tablecolumn})) % 3600) / 60), 2, '0'), ' min'
+  ) AS avg_${tablecolumn}
+FROM ${table}
+WHERE ${column} = ? AND date BETWEEN ? AND ?
+GROUP BY ${column}
+
       `;
       const [rows] = await pool.execute(query, [user_id, startDate, endDate]);
       console.log(rows, "rows from model")  

@@ -1,150 +1,149 @@
-
-
-
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { useAdmin } from '../context/AuthContext';
-
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+  Title
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 import axios from 'axios';
 
-ChartJS.register(ArcElement, Tooltip, Legend, Title);
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
 
 function DashboardAdmin() {
-    const {
-        date,
+  const {
+    date,
+    startDate,
+    endDate,
+    avgactiveHours,
+    avgbreakHours,
+    avgtotalHours,
+    employee
+  } = useAdmin();
 
-        startDate,
-        endDate,
-        avgactiveHours,
-        avgbreakHours,
-        avgtotalHours,
-        employee
-    } = useAdmin();
+  const [hourData, setHourData] = useState({});
+  const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
+  const user = user_id === 'stu_id' ? 'student' : 'employee';
+  const userValue = employee?.[user_id];
+  const isCustomRange = startDate !== null && endDate !== null;
 
-    console.log(date)
-    const [hourData, setHourData] = useState({});
-    const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
-    let user;
-    if(user_id === 'stu_id'){
-        user='student'
-
-    } else {
-        user='employee'
-    }
-    const userValue = employee?.[user_id];
-    const isCustomRange = startDate !== null && endDate !== null;
-
-    useEffect(() => {
-        const fetchHours = async () => {
-            if (!isCustomRange) {
-                try {
-                    setHourData({});
-                    const response = await axios.post(`http://localhost:3000/api/hours/${user}/${userValue}`, { date }, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            authorization: `Bearer ${localStorage.getItem('token')}`,
-                        }
-                    });
-                    console.log("response", response.data)
-                    setHourData(response.data); // <- Use the actual data from API
-
-                    console.log("Rerendered", date)
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        };
-        fetchHours();
-    }, [date, isCustomRange, userValue]);
-
-    const formatTimeLabel = (decimalHour = 0) => {
-        const hours = Math.floor(decimalHour);
-        const minutes = Math.round((decimalHour - hours) * 60);
-        return `${hours}h ${minutes}min`;
-    };
-
-    const timeToDecimal = (timeStr = '00:00:00') => {
-        if (typeof timeStr !== 'string') return 0;
-        const [h, m, s] = timeStr.split(':').map(Number);
-        console.log(h, m, s)
-        return h + m / 60 + s / 3600;
-    };
-
-
-    const chartData = useMemo(() => ({
-        labels: ['Active Hours', 'Break Hours', 'Total'],
-        datasets: [
+  useEffect(() => {
+    const fetchHours = async () => {
+      if (!isCustomRange) {
+        try {
+          setHourData({});
+          const response = await axios.post(
+            `http://localhost:3000/api/hours/${user}/${userValue}`,
+            { date },
             {
-                data: [
-                    typeof avgactiveHours === 'string' ? timeToDecimal(avgactiveHours) : 0,
-                    typeof avgbreakHours === 'string' ? timeToDecimal(avgbreakHours) : 0,
-                    typeof avgtotalHours === 'string' ? timeToDecimal(avgtotalHours) : 0,
-                ],
-
-                // : [
-                //     timeToDecimal(hourData.active_hours),
-                //     timeToDecimal(hourData.break_hours),
-                //     timeToDecimal(hourData.total_hours),
-                // ],
-                backgroundColor: [
-                    'rgba(43, 63, 229, 0.8)',
-                    'rgba(250, 192, 19, 0.8)',
-                    'rgba(253, 135, 135, 0.8)',
-                ],
-                borderColor: '#fff',
-                borderWidth: 2,
-            },
-        ],
-    }), [avgactiveHours, avgbreakHours, avgtotalHours]);
-
-
-    const tooltipLabels = useMemo(() => (
-        [avgactiveHours, avgbreakHours, avgtotalHours].map(hour => formatTimeLabel(timeToDecimal(hour)))
-
-    ), [avgactiveHours, avgbreakHours, avgtotalHours]);
-
-
-    const chartOptions = {
-        maintainAspectRatio: false,
-        plugins: {
-            title: {
-                display: true,
-                text: `${date}`,
-                font: {
-                    size: 15,
-                    weight: 'bold'
-                },
-                padding: {
-                    top: '0px',
-                    bottom: '0px'
-                },
-                color: '#333'
-            },
-            tooltip: {
-                callbacks: {
-                    label: function (context) {
-                        const index = context.dataIndex;
-                        return tooltipLabels[index];
-                    },
-                },
-            },
-        },
+              headers: {
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+              }
+            }
+          );
+          setHourData(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
     };
+    fetchHours();
+  }, [date, isCustomRange, userValue]);
 
-    return (
+  // Convert "Xhr Y minutes" string to total minutes
+  const timeToMinutes = (timeStr) => {
+    const hoursMatch = timeStr.match(/(\d+)\s*hr/);
+    const minutesMatch = timeStr.match(/(\d+)\s*min?/);
+    const hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0;
+    const minutes = minutesMatch ? parseInt(minutesMatch[1], 10) : 0;
+    return hours * 60 + minutes;
+  };
 
-        <div className="border w-100 rounded p-3 shadow-sm" style={{ height: '420px' }}>
+  // Convert minutes to "Xh Ym" label
+  const minutesToHourMinute = (mins) => {
+    const hours = Math.floor(mins / 60);
+    const minutes = mins % 60;
+    return `${hours}h ${minutes}m`;
+  };
 
-            <Doughnut key={isCustomRange ? `${startDate} - ${endDate}` : date} data={chartData} options={chartOptions} />
+  const chartData = useMemo(() => ({
+    labels: ['Active Hours', 'Break Hours', 'Total'],
+    datasets: [
+      {
+        label: 'Average Hours',
+        data: [
+          typeof avgactiveHours === 'string' ? timeToMinutes(avgactiveHours) : 0,
+          typeof avgbreakHours === 'string' ? timeToMinutes(avgbreakHours) : 0,
+          typeof avgtotalHours === 'string' ? timeToMinutes(avgtotalHours) : 0,
+        ],
+        backgroundColor: [
+          'rgba(43, 63, 229, 0.8)',
+          'rgba(250, 192, 19, 0.8)',
+          'rgba(253, 135, 135, 0.8)',
+        ],
+        borderWidth: 2,
+      }
+    ]
+  }), [avgactiveHours, avgbreakHours, avgtotalHours]);
 
-        </div>
+  const tooltipLabels = useMemo(() => (
+    [
+      typeof avgactiveHours === 'string' ? avgactiveHours : '0hr 0minutes',
+      typeof avgbreakHours === 'string' ? avgbreakHours : '0hr 0minutes',
+      typeof avgtotalHours === 'string' ? avgtotalHours : '0hr 0minutes',
+    ]
+  ), [avgactiveHours, avgbreakHours, avgtotalHours]);
 
+  const chartOptions = {
+    maintainAspectRatio: false,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Bar chart',
+        font: {
+          size: 15,
+          weight: 'bold'
+        },
+        color: '#333'
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            return tooltipLabels[context.dataIndex];
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Average Time'
+        },
+        ticks: {
+          callback: function (value) {
+            return minutesToHourMinute(value);
+          }
+        }
+      }
+    }
+  };
 
-    );
+  return (
+    <div className="border w-100 rounded p-3 shadow-sm" style={{ height: '420px' }}>
+      <Bar
+        key={isCustomRange ? `${startDate} - ${endDate}` : date}
+        data={chartData}
+        options={chartOptions}
+      />
+    </div>
+  );
 }
 
 export default DashboardAdmin;
-
-

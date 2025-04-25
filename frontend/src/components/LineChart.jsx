@@ -27,7 +27,7 @@ const LineChart = () => {
     const { setdashBoard, selection } = useAdmin()
     const user = JSON.parse(localStorage.getItem('user'))
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const weekdays = [ "Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"];
     const getDayName = (dateStr) => {
         const date = new Date(dateStr);
         return weekdays[date.getDay()];
@@ -97,9 +97,9 @@ const LineChart = () => {
         labels = weekdays;
 
 
-        totalHoursData = new Array(7).fill(0);
-        activeHoursData = new Array(7).fill(0);
-        breakHoursData = new Array(7).fill(0);
+        totalHoursData = new Array(6).fill(0);
+        activeHoursData = new Array(6).fill(0);
+        breakHoursData = new Array(6).fill(0);
 
 
         data?.forEach(({ date, total_hours, active_hours, break_hours }) => {
@@ -142,7 +142,7 @@ const LineChart = () => {
             {
                 label: "Break Hours",
                 data: breakHoursData,
-                borderColor: "rgb(30, 123, 123)",
+                borderColor: "rgb(214, 26, 26)",
                 tension: 0.1
             }
 
@@ -150,7 +150,7 @@ const LineChart = () => {
     }
     return (
         <div className='w-90 h-70 border rounded text-start p-3'>
-            <CustomizeDates />
+          
             <DropDown className='m-3' />
             <Line className='bg-light m-2' options={options} data={lineardata} />
 

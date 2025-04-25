@@ -20,7 +20,10 @@ const FetchAverageHours = async ({
       }
     });
 
-    const { activehours, breakhours, totalhours } = response.data;
+    const  { activehours, breakhours, totalhours } = response.data;
+    console.log(response.data)
+  
+
 
     setAvgActiveHours(activehours);
     setAvgBreakHours(breakhours);

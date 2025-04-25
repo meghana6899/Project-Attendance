@@ -5,10 +5,19 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useAdmin } from '../context/AuthContext';
 import workHours from '../api/queries/workHours';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
-import { Doughnut, Bar } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    BarElement,
+    CategoryScale,
+    LinearScale,
+    Tooltip,
+    Legend,
+    Title
+  } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
-ChartJS.register(ArcElement, Tooltip, Legend, Title);
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
+
 
 function DashboardEmployee() {
     const {
@@ -68,6 +77,7 @@ function DashboardEmployee() {
         labels: ['Active Hours', 'Break Hours', 'Total'],
         datasets: [
             {
+                label:'Working Hours',
                 data: isCustomRange
                     ? [
                         typeof avgbreakHours === 'string' ? timeToDecimal(avgactiveHours) : 0,
@@ -126,13 +136,23 @@ function DashboardEmployee() {
                 },
             },
         },
+        scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Average Time'
+              },
+              
+            }
+          }
     };
 
     return (
 
         <div className="border w-60 rounded p-3 shadow-sm" style={{ height: '380px' }}>
 
-            <Doughnut key={isCustomRange ? `${startDate} - ${endDate}` : date} data={chartData} options={chartOptions} />
+            <Bar key={isCustomRange ? `${startDate} - ${endDate}` : date} data={chartData} options={chartOptions} />
 
         </div>
 

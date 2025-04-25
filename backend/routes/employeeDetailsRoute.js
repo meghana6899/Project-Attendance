@@ -14,7 +14,7 @@ employeeRoute.get('/:user/:id', verifyToken.authMid,calculateAvgHours );
 employeeRoute.post('/:user/:id', verifyToken.authMid, calculateCheckinOnRange );
 
 employeeRoute.post('/avgHours/:user/:id', verifyToken.authMid,calculateAvgHoursOnRange );
-employeeRoute.post('/AvgHours/info/:id', verifyToken.authMid, calculateAvgHoursOnRange );
+employeeRoute.post('/AvgHours/info/:id', verifyToken.authMid,calculateAvgHoursOnRange );
 
 
 employeeRoute.get('/employee/:id',verifyToken.authMid, calculateAvgHours );

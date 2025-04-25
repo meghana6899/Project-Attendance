@@ -85,33 +85,47 @@ const ReportCards = () => {
             </div>
           </div>
 
-          <div className="mt-4">
-            <Checkinuser />
-          </div>
-        </div>
-      </div>
-
-      {/* 📊 Right Column: Doughnut Chart + Fixed Close Button */}
-      <div className="d-flex flex-column align-items-center justify-content-between my-5" style={{ minWidth: '350px' }}>
-        <div className="card w-100 p-4 shadow-sm">
-          <h5 className="text-center text-dark mb-3">Visual Summary</h5>
-          <Doughnut />
-        </div>
-
-        <button
-          className="btn btn-outline-danger mt-4"
-          style={{
-            position: 'fixed',
-            bottom: 45,
-            right: 180,
-            width: '130px',
-          }}
-          onClick={handleClose}
-        >
-          Close
-        </button>
+      <div className="mt-4 ">
+        <Checkinuser />
       </div>
     </div>
+  </div>
+
+  {/* 📊 Right Column: Doughnut Chart + Fixed Close Button */}
+  <div className="d-flex flex-column align-items-center justify-content-between my-5" style={{ minWidth: '450px' }}>
+  <div className="row text-center bg-shadow py-3 my-2">
+        <div className="col-md-4 mb-3">
+          <h6>Active Hours</h6>
+          <p className="text-info fs-5 fw-bold">{avgactiveHours}</p>
+        </div>
+        <div className="col-md-4 mb-3">
+          <h6>Break Hours</h6>
+          <p className="text-warning fs-5 fw-bold">{avgbreakHours}</p>
+        </div>
+        <div className="col-md-4 mb-3">
+          <h6>Total Hours</h6>
+          <p className="text-primary fs-5 fw-bold">{avgtotalHours}</p>
+        </div>
+      </div>
+    <div className="card w-100 p-4 shadow-sm">
+      {/* <h5 className="text-center text-dark mb-3">Visual Summary</h5> */}
+      <Doughnut />
+    </div>
+
+    <button
+      className="btn  text-white mt-4 bg-danger"
+      style={{
+        position: 'fixed',
+        bottom: 45,
+        right: 180,
+        width: '130px',
+      }}
+      onClick={handleClose}
+    >
+      Close
+    </button>
+  </div>
+</div>
 
   )
 }

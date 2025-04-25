@@ -118,14 +118,15 @@ function EmployeesTable() {
       <input type="button" onClick={noDelete} className="text-white bg-secondary p-2 border rounded shadow m-2" value="Close" />
     </div>
     }
-    <input
+   
+  </div>
+  <input
       type="button"
       value="ADD"
       onClick={handleAdd}
-      className="btn btn-outline-primary fw-semibold px-5 py-2 rounded-3"
+      className="btn btn-outline-primary fw-semibold px-5 py-2 rounded-3 text-start "
       style={{ fontSize: "1.1rem" }}
     />
-  </div>
 
     {/* AddCard Popup */}
     {add && (
