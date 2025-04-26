@@ -8,11 +8,11 @@ import { useNavigate } from 'react-router-dom';
 const ResetPassword = () => {
     const [resetToken, setResetToken] = useState('')
     const location = useLocation();
-    const [formData, setFormData] = useState({ password: null, confirmPassword: null});
+    const [formData, setFormData] = useState({ password: null, confirmPassword: null });
     const [errors, setErrors] = useState({});
     const Navigate = useNavigate()
     const handleChange = (e) => {
-        console.log(e.target.value)
+
         setFormData({ ...formData, [e.target.name]: e.target.value });
         setErrors({ ...errors, [e.target.name]: "" });
     }
@@ -28,19 +28,19 @@ const ResetPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Handle form submission logic here
-        
-    if (!formData.password) {
-        setErrors({ ...errors, password: "Password is required" }); 
-        return;
-      }
-      else if (formData.password.length < 6) {
-        setErrors({ ...errors, password: "Password must be at least 6 characters" });
-        return;
-      }
+
+        if (!formData.password) {
+            setErrors({ ...errors, password: "Password is required" });
+            return;
+        }
+        else if (formData.password.length < 6) {
+            setErrors({ ...errors, password: "Password must be at least 6 characters" });
+            return;
+        }
 
         if (!formData.confirmPassword) {
             setErrors({ ...errors, confirmPassword: "Confirm Password is required" });
-            return ;
+            return;
         }
 
         if (formData.password !== formData.confirmPassword) {
@@ -50,9 +50,9 @@ const ResetPassword = () => {
         try {
 
             const response = await axios.post(`http://localhost:3000/api/resetpassword`, { token: resetToken, password: formData.password });
-            console.log(response)
+
             if (response.data.success) {
-                console.log("Password reset successfully")
+
                 // Redirect to login or show success message
                 const resset = await axios.post(`http://localhost:3000/api/auth/reset-flag`, {
                     email: response.data.email,
@@ -97,7 +97,7 @@ const ResetPassword = () => {
                             value={formData.confirmPassword}
                         />
                         <div className='text-danger'>
-                        {errors.confirmPassword && errors.confirmPassword}
+                            {errors.confirmPassword && errors.confirmPassword}
                         </div>
                     </div>
                     {/* <div className='text-danger'>{errors.password && errors.password }</div>

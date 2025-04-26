@@ -13,7 +13,7 @@ import {
     Tooltip,
     Legend,
     Title
-  } from 'chart.js';
+} from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
@@ -30,12 +30,24 @@ function DashboardEmployee() {
         avgtotalHours,
     } = useAdmin();
 
-    console.log(date)
 
+
+    console.log('avgactiveHours', avgactiveHours);
+    console.log('avgbreakHours', avgbreakHours);
+    console.log('avgtotalHours', avgtotalHours);
+    console.log('startDate', startDate);
+    console.log('endDate', endDate);
 
     const [hourData, setHourData] = useState({});
     const isCustomRange = startDate !== null && endDate !== null;
-    console.log("isCustomRange", isCustomRange)
+
+
+    useEffect(() => {
+        console.log("Updated avgactiveHours:", avgactiveHours);
+        console.log("Updated avgbreakHours:", avgbreakHours);
+        console.log("Updated avgtotalHours:", avgtotalHours);
+    }, [avgactiveHours, avgbreakHours, avgtotalHours]);
+
 
     useEffect(() => {
         const fetchHours = async () => {
@@ -44,18 +56,18 @@ function DashboardEmployee() {
 
 
                 try {
-                    console.log('fetchhours here 0')
+
                     const response = await workHours(date);
-                    console.log(response, 'hell response')
+                    console.log("Response", response)
                     setHourData(response || {});
-                    console.log("Rerendered", date)
+
                 } catch (error) {
                     console.log(error);
                 }
             }
         };
         fetchHours();
-    }, [date, isCustomRange]);
+    }, [date, isCustomRange, avgactiveHours, avgbreakHours, avgtotalHours]);
 
     const formatTimeLabel = (decimalHour = 0) => {
         const hours = Math.floor(decimalHour);
@@ -64,27 +76,44 @@ function DashboardEmployee() {
     };
 
     const timeToDecimal = (timeStr) => {
-        console.log("TimeStr", typeof timeStr)
+        console.log(timeStr)
         if (timeStr == null || timeStr == undefined || timeStr == 0) {
             timeStr = '00:00:00'
         }
-        console.log("Time STring", timeStr)
+
         const [h, m, s] = timeStr.split(':').map(Number);
-        return h + m / 60;
+        console.log(h, m, s)
+        return h + m / 60 + s / 3600;
     };
+    const timeToDecimal2 = (timeStr) => {
+        console.log("timeStr inside decimal:", timeStr);
+        if (!timeStr) return 0;
+
+        const hrMatch = timeStr.match(/(\d+)hr/);
+        const minMatch = timeStr.match(/(\d+)min/);
+
+        const hours = hrMatch ? parseInt(hrMatch[1], 10) : 0;
+        const minutes = minMatch ? parseInt(minMatch[1], 10) : 0;
+
+        console.log("hours:", hours, "minutes:", minutes);
+
+        return hours + minutes / 60;
+    };
+
+    console.log("Formatted Active Hours:", timeToDecimal(avgactiveHours));
+
 
     const chartData = useMemo(() => ({
         labels: ['Active Hours', 'Break Hours', 'Total'],
         datasets: [
             {
-                label:'Working Hours',
+                label: 'Working Hours',
                 data: isCustomRange
                     ? [
-                        typeof avgbreakHours === 'string' ? timeToDecimal(avgactiveHours) : 0,
-                        typeof avgbreakHours === 'string' ? timeToDecimal(avgbreakHours) : 0,
-                        typeof avgtotalHours === 'string' ? timeToDecimal(avgtotalHours) : 0,
+                        avgactiveHours ? timeToDecimal2(avgactiveHours) : 0,
+                        avgbreakHours ? timeToDecimal2(avgbreakHours) : 0,
+                        avgtotalHours ? timeToDecimal2(avgtotalHours) : 0,
                     ]
-
                     : [
                         timeToDecimal(hourData.active_hours),
                         timeToDecimal(hourData.break_hours),
@@ -99,7 +128,8 @@ function DashboardEmployee() {
                 borderWidth: 2,
             },
         ],
-    }), [avgactiveHours, avgbreakHours, avgtotalHours, hourData, isCustomRange, date]);
+    }), [avgactiveHours, avgbreakHours, avgtotalHours, hourData, isCustomRange, startDate, endDate]);
+
 
 
     const tooltipLabels = useMemo(() => (
@@ -113,6 +143,9 @@ function DashboardEmployee() {
 
     const chartOptions = {
         maintainAspectRatio: false,
+        animation: {
+            duration: 0,
+        },
         plugins: {
             title: {
                 display: true,
@@ -138,21 +171,26 @@ function DashboardEmployee() {
         },
         scales: {
             y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Average Time'
-              },
-              
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Average Time'
+                },
+
             }
-          }
+        }
     };
 
     return (
 
         <div className="border w-60 rounded p-3 shadow-sm" style={{ height: '380px' }}>
 
-            <Bar key={isCustomRange ? `${startDate} - ${endDate}` : date} data={chartData} options={chartOptions} />
+            <Bar
+                key={JSON.stringify([avgactiveHours, avgbreakHours, avgtotalHours, startDate, endDate])}
+                data={chartData}
+                options={chartOptions}
+            />
+
 
         </div>
 

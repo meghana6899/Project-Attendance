@@ -104,7 +104,7 @@ function Calendar() {
     const dd = String(selectedDate.getDate()).padStart(2, '0');
 
     const formattedDate = `${yyyy}-${mm}-${dd}`;
-    console.log(typeof formattedDate, formattedDate)
+
 
 
 

@@ -7,7 +7,7 @@ import { AdminContext } from "../context/AuthContext";
 function Navbars() {
   const { user, logout, firstLogin } = useContext(AdminContext);  // Get user from context
   const navigate = useNavigate();
-  console.log(firstLogin)
+
 
   const handleLogout = () => {
     logout();  // Call logout from context to update state
@@ -58,12 +58,12 @@ function Navbars() {
                   <Nav.Link as={NavLink} to="/reports">
                     Reports
                   </Nav.Link>
-                  
+
                 )}
-                {user.role === "admin" && ( 
+                {user.role === "admin" && (
                   <Nav.Link as={NavLink} to="/Users">
-                   Users
-                 </Nav.Link>
+                    Users
+                  </Nav.Link>
                 )}
                 {/* {false && (
                   <Nav.Link as={NavLink} to="/reset-password">Reset Password</Nav.Link>

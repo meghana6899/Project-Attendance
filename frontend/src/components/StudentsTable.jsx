@@ -7,20 +7,20 @@ import AddCard from './AddCard';
 
 function StudentsTable() {
   const [data, setData] = useState([]);
- 
 
 
 
 
-    const { employee, setEmployee,setShowcard,showcard ,add,setAdd,setRadio} = useAdmin();
-    setRadio(false);
+
+  const { employee, setEmployee, setShowcard, showcard, add, setAdd, setRadio } = useAdmin();
+  setRadio(false);
 
   useEffect(() => {
     const fetchdetails = async () => {
-      console.log('Fetch')
+
       try {
         const response = await AllStudents();
-        console.log(response);
+
         if (Array.isArray(response)) {
           setData(response)
         } else if (typeof response === 'object') {
@@ -34,15 +34,14 @@ function StudentsTable() {
       }
     }
     fetchdetails()
-  }, [employee,add])
-  console.log(data);
-  const handleClick=(e)=>{
-    const row=e.target.closest('tr');
+  }, [employee, add])
+
+  const handleClick = (e) => {
+    const row = e.target.closest('tr');
     if (!row || row.rowIndex === 0) return;
-    console.log(row);
-    console.log(row.rowIndex-1);
+
     const rowIndex = row.rowIndex - 1;
-    console.log(data[rowIndex])
+
     setEmployee(data[rowIndex]);
     setShowcard(true)
   };
@@ -51,26 +50,26 @@ function StudentsTable() {
 
 
 
-  const renderedData = data.map(({ stu_id,first_name,last_name,email,role,join_date }, index) => {
+  const renderedData = data.map(({ stu_id, first_name, last_name, email, role, join_date }, index) => {
     return (
       <tr key={index} className='px-5 py-5'>
-        
+
         <td className='py-3 px-3'>{stu_id} </td>
         <td className='py-3 px-3'>{first_name} </td>
         <td className='py-3 px-3'>{last_name}  </td>
         <td className='py-3 px-3'>{email}</td>
         <td className='py-3 px-3'>{role}</td>
         <td className='py-3 px-3'>{join_date ? join_date.split('T')[0] : ""} </td>
-       
+
       </tr>
 
     )
   });
-  const handleAdd=()=>{
-    if(add){
+  const handleAdd = () => {
+    if (add) {
       setAdd(false)
     }
-    else{
+    else {
       setAdd(true)
     }
   }
@@ -86,7 +85,7 @@ function StudentsTable() {
         style={{ fontSize: "1.1rem" }}
       />
     </div>
-  
+
     {/* AddCard Popup */}
     {add && (
       <div
@@ -105,19 +104,19 @@ function StudentsTable() {
         }}
       >
         <div
-          // className="bg-white p-4 rounded-4 shadow"
-          // style={{
-          //   width: "50%",
-          //   maxWidth: "600px",
-          //   minWidth: "300px",
-          // }}
+        // className="bg-white p-4 rounded-4 shadow"
+        // style={{
+        //   width: "50%",
+        //   maxWidth: "600px",
+        //   minWidth: "300px",
+        // }}
         >
           <AddCard closecard={() => setAdd(false)} />
 
         </div>
       </div>
     )}
-  
+
     <div className="container d-flex justify-content-center my-5">
       <div className="table-responsive" style={{ width: "100%" }}>
         <table
@@ -157,7 +156,7 @@ function StudentsTable() {
             )}
           </tbody>
         </table>
-  
+
         {/* Card Popup */}
         {showcard && (
           <div
@@ -190,8 +189,8 @@ function StudentsTable() {
       </div>
     </div>
   </>
-  
-    
+
+
   );
 }
 

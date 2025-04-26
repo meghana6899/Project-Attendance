@@ -9,7 +9,7 @@ const AddCard = ({ closecard }) => {
   });
   const [errors, setErrors] = useState({});
   const { setAdd, radio } = useAdmin();
-  console.log(candidate)
+
   const modalRef = useRef(null);
 
   const handleChange = (e) => {
@@ -18,7 +18,7 @@ const AddCard = ({ closecard }) => {
 
   const handleSubmit = async (e) => {
     try {
-      console.log('entered in handlesubmit');
+
       e.preventDefault();
       const response = await axios.post("http://localhost:3000/api/details/create/newusers/user", {
         user_id: candidate.user_id,
@@ -33,10 +33,10 @@ const AddCard = ({ closecard }) => {
           authorization: `Bearer ${localStorage.getItem('token')}`,
         }
       });
-      console.log(response)
+
       if (response.status === 200) {
         setAdd(false);
-        console.log('successfully created a candidate');
+
       }
     } catch (err) {
       console.log(err.response.data.message);
@@ -123,7 +123,7 @@ const AddCard = ({ closecard }) => {
                 required
               />
             </div>
-            
+
             <div className="mb-4">
               {!radio && <div className="form-check form-check-inline">
                 <input

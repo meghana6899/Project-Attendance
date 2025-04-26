@@ -24,7 +24,6 @@ function CheckInTable() {
 
           response = await CheckinDetailsRange(startDate, endDate);
 
-          console.log("Response from range", response)
           if (Array.isArray(response)) {
             setData(response)
           } else if (typeof response === 'object') {
@@ -35,11 +34,11 @@ function CheckInTable() {
           return;
         }
         response = await CheckInDetails();
-        console.log(response)
+
         if (Array.isArray(response)) {
           setData(response)
         } else if (typeof response === 'object') {
-          console.log("Its an object")
+
         } else {
           setData([response])
         }

@@ -8,7 +8,7 @@ function CheckIncheckOut() {
 
     // const { setIsCheckedIn, isCheckedIn } = useAdmin()
     // const { login } = useAdmin();
-    console.log("CheckIncheckOut")
+
     const [formData, setFormData] = useState({ username: "", password: "" });
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState("");
@@ -16,7 +16,7 @@ function CheckIncheckOut() {
     const [toast, setToast] = useState("")
 
     const handleChange = (e) => {
-        console.log(e.target.value)
+
         setFormData({ ...formData, [e.target.name]: e.target.value });
         setErrors({ ...errors, [e.target.name]: "" });
         setMessage('');
@@ -55,7 +55,7 @@ function CheckIncheckOut() {
                 password: formData.password
             })
             if (response) {
-                console.log(response, 'here is tje succesfull repsone')
+
                 setFormData({ ...formData, password: "", username: "" })
                 setToast("Submitted Successfully")
                 setToaster(true)
@@ -76,7 +76,7 @@ function CheckIncheckOut() {
         }
 
     };
-    console.log(toast, toaster)
+
 
     return (
         <>

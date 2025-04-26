@@ -16,10 +16,10 @@ function StudentsTable() {
   var response2;
   useEffect(() => {
     const fetchdetails = async () => {
-      console.log('Fetch')
+
       try {
         response = await reportsAPistd();
-        console.log(response);
+
         setData(response.data)
 
 
@@ -30,18 +30,17 @@ function StudentsTable() {
     }
     fetchdetails()
   }, [employee])
-  console.log("Data", data);
-  console.log('here is the event target');
+
   const handleClick = (e) => {
     const row = e.target.closest('tr');
-    console.log("Row", row);
+
     if (!row || row.rowIndex === 0) return;
 
-    console.log(row.rowIndex - 1);
+
     const rowIndex = row.rowIndex - 1;
-    console.log(data.avgTh[rowIndex], 'here is hte data studnetsds')
+
     setEmployee(data.avgTh[rowIndex]);
-    console.log(employee, 'ghere is hte emokojaosef');
+
 
     setShowcard(true)
 

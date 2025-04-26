@@ -17,7 +17,7 @@ const Card = () => {
   const [save, setSave] = useState(false);
   const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
   const userValue = employee?.[user_id];
-  console.log('here is user value', userValue);
+
   const [edit, setEdit] = useState({ first_name: true, last_name: true, email: true, role: true });
   const [editData, setEditData] = useState({ user_id: '', first_name: '', last_name: '', email: '', role: '' });
   useEffect(() => {
@@ -37,10 +37,10 @@ const Card = () => {
     const fetchdetails = async () => {
       if (!userValue) return;
 
-      console.log('Fetch')
+
       try {
         const response = await AvgHours(userValue);
-        console.log(response);
+
         setData(response)
 
 
@@ -51,8 +51,7 @@ const Card = () => {
     }
     fetchdetails()
   }, [userValue, employee])
-  console.log('hi ruthwik');
-  console.log(data);
+
 
   const handleChange = (e, field) => {
     setEditData(prev => ({
@@ -78,10 +77,9 @@ const Card = () => {
 
   const handleSave = async () => {
     const response = await updateDetails(userValue, editData);
-    console.log('reposne is done');
-    console.log(response)
+
     if (response.status === 200) {
-      console.log('sucessss stroyyyyy')
+
       setEmployee((prev) => ({
         ...prev,
         first_name: editData.first_name,

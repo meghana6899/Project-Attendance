@@ -12,8 +12,8 @@ import axios from 'axios';
 
 
 function Checkinuser() {
-    const token = localStorage.getItem('token');
-  const { checkIn, checkOut, setCheckIn, setCheckOut, isCheckedIn, startDate, endDate,employee } = useAdmin();
+  const token = localStorage.getItem('token');
+  const { checkIn, checkOut, setCheckIn, setCheckOut, isCheckedIn, startDate, endDate, employee } = useAdmin();
   const [data, setData] = useState([])
 
 
@@ -23,27 +23,27 @@ function Checkinuser() {
       try {
         const user_id = employee.emp_id || employee.stu_id;
         let table;
-        if(employee.emp_id){
-          table='employee' ;
+        if (employee.emp_id) {
+          table = 'employee';
 
         }
-        else{
-          table='students';
+        else {
+          table = 'students';
         }
         if (startDate && endDate) {
-            console.log("Inside the if condition")
-          
 
-            const response = await axios.post(`http://localhost:3000/api/details/${table}/${user_id}`,{
-                startDate,
-                endDate
-            }, {
-              headers: {
-                authorization: token,
-              }
-            })
 
-          console.log("Response from range", response.data)
+
+          const response = await axios.post(`http://localhost:3000/api/details/${table}/${user_id}`, {
+            startDate,
+            endDate
+          }, {
+            headers: {
+              authorization: token,
+            }
+          })
+
+
           if (Array.isArray(response.data)) {
             setData(response.data)
           } else if (typeof response.data === 'object') {
@@ -53,7 +53,7 @@ function Checkinuser() {
           }
           return;
         }
-        console.log('came out sideof the if condition',employee)
+
         // if('emp_id' in employee){
         //     console.log("Inside the if condition")
         //     employee.user_id = employee.emp_id
@@ -63,11 +63,11 @@ function Checkinuser() {
         // }   
 
         const response = await axios.get(`http://localhost:3000/api/details/${table}/${user_id}`, { // Updated to use employee.user_id
-            headers: {
-                authorization: token,
-            }
+          headers: {
+            authorization: token,
+          }
         })
-        console.log(response.data,'jere is hte repsojse')
+
         if (Array.isArray(response.data)) {
           setData(response.data)
         } else if (typeof response.data === 'object') {
@@ -81,7 +81,7 @@ function Checkinuser() {
       }
     }
     fetchdetails()
-  }, [checkIn, checkOut, isCheckedIn,startDate,endDate,employee])
+  }, [checkIn, checkOut, isCheckedIn, startDate, endDate, employee])
   //console.log(data)
 
 
@@ -110,14 +110,14 @@ function Checkinuser() {
         </tr>
       </thead>
       <tbody >
-  {renderedData.length > 0 ? (
-    renderedData
-  ) : (
-    <tr>
-      <td colSpan="3" className="py-3 px-5">Loading...</td>
-    </tr>
-  )}
-</tbody>
+        {renderedData.length > 0 ? (
+          renderedData
+        ) : (
+          <tr>
+            <td colSpan="3" className="py-3 px-5">Loading...</td>
+          </tr>
+        )}
+      </tbody>
 
 
     </table>

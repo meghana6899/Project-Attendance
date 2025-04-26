@@ -10,7 +10,7 @@ const AllEmployees = async () => {
 
         }
     });
-    console.log("Entered axios", response.data)
+
     return response.data
 
 }

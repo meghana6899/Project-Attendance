@@ -22,7 +22,7 @@ async function workHours(date) {
     }
 
     )
-    console.log("response", response.data)
+
     return response.data;
 }
 

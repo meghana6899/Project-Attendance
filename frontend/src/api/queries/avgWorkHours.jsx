@@ -4,7 +4,7 @@ import React from 'react'
 import axios from 'axios'
 
 async function avgWorkHours(startDate, endDate) {
-    console.log("From axios", startDate, endDate)
+
 
     const user = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token')
@@ -15,7 +15,7 @@ async function avgWorkHours(startDate, endDate) {
     else {
         users = 'student'
     }
-    const response = await axios.post(`http://localhost:3000/api/details/avgHours/${user}/${user.id}`, {
+    const response = await axios.post(`http://localhost:3000/api/details/avgHours/${users}/${user.id}`, {
         startDate,
         endDate
     }, {
@@ -24,7 +24,7 @@ async function avgWorkHours(startDate, endDate) {
             authorization: `${localStorage.getItem('token')}`,
         }
     })
-    console.log("response", response.data)
+
     return response.data;
 }
 

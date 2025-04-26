@@ -5,14 +5,14 @@ import axios from 'axios';
 async function CheckInDetails() {
     const user = JSON.parse(localStorage.getItem('user'))
     const token = localStorage.getItem('token')
-    console.log("user", user.role, user.id)
+
 
     const response = await axios.get(`http://localhost:3000/api/details/${user.role}/${user.id}`, {
         headers: {
             authorization: token,
         }
     })
-    console.log("Entered axios", response)
+
     return response.data
 }
 

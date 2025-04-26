@@ -85,7 +85,7 @@ function Login() {
 
       });
 
-      console.log(response.data.passwordreset, 'reponse is here');
+
 
       // console.log(response)
 

@@ -27,7 +27,7 @@ const LineChart = () => {
     const { setdashBoard, selection } = useAdmin()
     const user = JSON.parse(localStorage.getItem('user'))
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-    const weekdays = [ "Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"];
+    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const getDayName = (dateStr) => {
         const date = new Date(dateStr);
         return weekdays[date.getDay()];
@@ -36,7 +36,7 @@ const LineChart = () => {
         const options = { day: '2-digit', month: 'short' }; // like "21 Apr"
         return new Date(dateStr).toLocaleDateString('en-GB', options);
     }
-    console.log(selection)
+
     useEffect(() => {
         setdashBoard(false)
 
@@ -44,7 +44,7 @@ const LineChart = () => {
             if (selection == 'month') {
                 try {
                     const monthAvg = await avgMonth(user.id);
-                    console.log(monthAvg)
+
                     setData(monthAvg)
                 } catch (error) {
                     console.log(error)
@@ -52,7 +52,7 @@ const LineChart = () => {
             } else {
                 try {
                     const weekavg = await weekPerDay(user.id);
-                    console.log(weekavg)
+
                     setData(weekavg)
                 } catch (error) {
                     console.log(error)
@@ -69,11 +69,11 @@ const LineChart = () => {
     let labels = []
 
     const timeToDecimal = (timeStr) => {
-        console.log("TimeStr", typeof timeStr)
+
         if (timeStr == null || timeStr == undefined || timeStr == 0) {
             timeStr = '00:00:00'
         }
-        console.log("Time STring", timeStr)
+
         const [h, m, s] = timeStr.split(':').map(Number);
         return h + m / 60;
     };
@@ -123,7 +123,7 @@ const LineChart = () => {
 
 
 
-    console.log("Response", data)
+
     const lineardata = {
         labels: labels,
         datasets: data ? [
@@ -150,7 +150,7 @@ const LineChart = () => {
     }
     return (
         <div className='w-90 h-70 border rounded text-start p-3'>
-          
+
             <DropDown className='m-3' />
             <Line className='bg-light m-2' options={options} data={lineardata} />
 

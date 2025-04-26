@@ -15,10 +15,10 @@ function EmployeesTable() {
   var response2;
   useEffect(() => {
     const fetchdetails = async () => {
-      console.log('Fetch')
+
       try {
         response = await reportsAPi();
-        console.log(response);
+
         // if (Array.isArray(response)) {
         //   setData(response.data)
         // }
@@ -29,7 +29,7 @@ function EmployeesTable() {
         // else {
         //   setData([response.data])
         // }
-        console.log('herwis the data information', response.data.avgTh);
+
         setData(response.data);
 
 
@@ -40,17 +40,15 @@ function EmployeesTable() {
     }
     fetchdetails()
   }, [employee])
-  console.log("Data", data);
-  console.log('here is the event target');
+
   const handleClick = (e) => {
     const row = e.target.closest('tr');
     if (!row || row.rowIndex === 0) return;
-    console.log(row);
-    console.log(row.rowIndex - 1);
+
     const rowIndex = row.rowIndex - 1;
-    console.log(data.avgTh[rowIndex], 'here is jteeeeeeeeeee');
+
     setEmployee(data.avgTh[rowIndex]);
-    console.log('here is the click is trgiggered', employee);
+
     setShowcard(true)
 
   };

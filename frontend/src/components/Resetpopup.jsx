@@ -23,7 +23,7 @@ const Resetpopup = () => {
         user_id: user1.id,
       });
 
-      console.log(response.data);
+
       setLoading(false);
       navigate('/confirmmail');
     } catch (err) {

@@ -15,12 +15,11 @@ function EmployeesTable() {
   const userValue = employee?.[user_id];
 
   const confirmDelete = async () => {
-    console.log("Entered Cofim Delete")
+
     const response = await DeleteUser(userValue);
-    console.log('Deletion is done');
-    console.log(response);
+
     if (response.status === 200) {
-      console.log('sucessss stroyyyyy');
+
       setEmployee({});
       setShowcard(false);
 
@@ -38,11 +37,11 @@ function EmployeesTable() {
   var response;
   useEffect(() => {
     const fetchdetails = async () => {
-      console.log('Fetch')
+
       try {
         response = await AllEmployees();
 
-        console.log(response);
+
         if (Array.isArray(response)) {
           setData(response)
         } else if (typeof response === 'object') {
@@ -57,16 +56,14 @@ function EmployeesTable() {
     }
     fetchdetails()
   }, [employee, add])
-  console.log(data);
-  console.log('here is the event target');
+
 
   const handleClick = (e) => {
     const row = e.target.closest('tr');
     if (!row || row.rowIndex === 0) return;
-    console.log(row);
-    console.log(row.rowIndex - 1);
+
     const rowIndex = row.rowIndex - 1;
-    console.log(data[rowIndex])
+
     setEmployee(data[rowIndex]);
     setShowcard(true)
   };
@@ -118,9 +115,9 @@ function EmployeesTable() {
       <input type="button" onClick={noDelete} className="text-white bg-secondary p-2 border rounded shadow m-2" value="Close" />
     </div>
     }
-   
+
   </div>
-  <input
+    <input
       type="button"
       value="ADD"
       onClick={handleAdd}
