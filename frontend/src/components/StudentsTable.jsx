@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useAdmin } from '../context/AuthContext';
 import Card from './Card';
 import AddCard from './AddCard';
+import DeleteUser from '../api/queries/DeleteUser';
 
 function StudentsTable() {
   const [data, setData] = useState([]);
@@ -12,8 +13,31 @@ function StudentsTable() {
 
 
 
-  const { employee, setEmployee, setShowcard, showcard, add, setAdd, setRadio } = useAdmin();
-  setRadio(false);
+    const { employee, setEmployee,setShowcard,showcard ,add,setAdd,setRadio,accept,setAccept} = useAdmin();
+    setRadio(false);
+    const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
+  const userValue = employee?.[user_id];
+
+  
+  const confirmDelete = async () => {
+    console.log("Entered Cofim Delete")
+    const response = await DeleteUser(userValue);
+    console.log('Deletion is done');
+    console.log(response);
+    if (response.status === 200) {
+      console.log('sucessss stroyyyyy');
+      setEmployee({});
+      setShowcard(false);
+
+    };
+    setAccept(false)
+  }
+
+  const noDelete = async () => {
+    setAccept(false)
+  }
+  setRadio(true);
+
 
   useEffect(() => {
     const fetchdetails = async () => {
@@ -76,7 +100,26 @@ function StudentsTable() {
 
   return (<>
     {/* ADD Button */}
-    <div className="text-start mx-5   ">
+    <div className="text-end  mx-5">
+    {accept && <div className="shadow-lg mx-auto rounded p-3 border-0 text-start" style={{
+      position: "fixed",
+      top: "10%",
+      left: "50%",
+      transform: `translate(-50%, -50%)`,
+      width: "35vw",
+      height: "15vh",
+      backgroundColor: "white",
+      zIndex: 1050,
+      // margin: "auto",
+    }}>
+      <h5>Are you sure you want to remove user {employee?.first_name}?</h5>
+      <input type="button" onClick={confirmDelete} className="text-white bg-danger p-2 border rounded shadow m-2" value="Delete" />
+      <input type="button" onClick={noDelete} className="text-white bg-secondary p-2 border rounded shadow m-2" value="Close" />
+    </div>
+    }
+   
+  </div>
+    <div className="text-end mx-5   ">
       <input
         type="button"
         value="ADD"
@@ -116,8 +159,8 @@ function StudentsTable() {
         </div>
       </div>
     )}
-
-    <div className="container d-flex justify-content-center my-5">
+  
+  <div className="container d-flex justify-content-center my-4">
       <div className="table-responsive" style={{ width: "100%" }}>
         <table
           className="table table-borderless table-hover text-center align-middle shadow-sm"
@@ -128,7 +171,7 @@ function StudentsTable() {
             backgroundColor: "#f9f9f9",
           }}
         >
-          <thead
+          <thead className='table-light'
             style={{
               backgroundColor: "#343a40",
               color: "white",

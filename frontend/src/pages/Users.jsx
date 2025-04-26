@@ -2,37 +2,50 @@ import React from 'react'
 import { useState } from 'react';
 import EmployeesTable from '../components/EmployeesTable';
 import StudentsTable from '../components/StudentsTable';
+import '../CSS/Users.css'
+import { useAdmin } from '../context/AuthContext';
 
 const Users = () => {
     const [e, setE] = useState('employees');
+    const {setAccept}=useAdmin();
       
+
     
-      
+      return (
+        <>
+          <div className="container d-flex flex-column align-items-start p-4">
+            
+            {/* Button Group */}
+            <div className="d-flex gap-3 mb-4 mx-4">
+              <button 
+                className={`btn-switch ${e === 'employees' ? 'active' : ''}`}
+                onClick={() => {setE('employees');setAccept(false)}}
+              >
+                👨‍💼 Employees
+              </button>
     
-  return (
-    <>
-    <div className="container d-flex flex-column ">
-      <div className="d-flex justify-content-center align-items-end flex-column" style={{marginRight: '20px'}}>
-      <select name="reportType" id="reportType" style={{ width: '200px', marginTop: '20px' }} className="form-select" onChange={(e) => setE(e.target.value)}>
-        <option value="employees"  onClick={() => setE('employees')}
-            style={{ cursor: 'pointer', transition: '0.3s' }}>  👨‍💼 Employee Report</option>
-
-
-        <option value="students"  onClick={() => setE('students')}
-            style={{ cursor: 'pointer', transition: '0.3s' }} > 🎓 Student Report</option>
-      </select>
-      </div>
-
-     <div >
-     {e === 'employees' && <EmployeesTable />}
-     {e === 'students' && <StudentsTable />}
-     </div>
-   
-       
-        </div>
+              <button 
+                className={`btn-switch ${e === 'students' ? 'active' : ''}`}
+                onClick={() => {setE('students');setAccept(false)}}
+              >
+                🎓 Students
+              </button>
+            </div>
+    
+            {/* Table Section */}
+            <div className="w-100" style={{'marginTop':'-40px'}}>
+              {e === 'employees' && <EmployeesTable />}
+              {e === 'students' && <StudentsTable />}
+            </div>
+    
+          </div>
+    
+          
         </>
+      );
+    }
     
-   )
-}
+    
+ 
 
 export default Users

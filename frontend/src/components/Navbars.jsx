@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { NavLink, useNavigate } from "react-router-dom";  // Updated from 'react-router'
 import { AdminContext } from "../context/AuthContext";
+import '../CSS/Users.css'
 
 
 function Navbars() {
@@ -15,69 +16,47 @@ function Navbars() {
   };
 
   return (
-    <Navbar expand="lg" bg="white" className="px-0">
-      <Container fluid>
-        <Navbar.Brand as={NavLink} to="/login" className="fw-bold">
+    <nav className="bg-white py-3">
+    <Container className="d-flex justify-content-end align-items-center gap-4">
+      
+      {/* Logged In */}
+      {user.isLoggedIn && (
+        <>
+          <NavLink
+            to={
+              user.role === "admin"
+                ? "/admin-dashboard"
+                : user.role === "student"
+                ? "/student-dashboard"
+                : "/employee-dashboard"
+            }
+            className="nav-link-custom"
+          >
+            Dashboard
+          </NavLink>
 
-        </Navbar.Brand>
+          {user.role === "admin" && (
+            <NavLink to="/reports" className="nav-link-custom">
+              Reports
+            </NavLink>
+          )}
 
-        {/* Toggle for small screens */}
-        <Navbar.Toggle aria-controls="main-navbar" />
+          {user.role === "admin" && (
+            <NavLink to="/users" className="nav-link-custom">
+              Users
+            </NavLink>
+          )}
 
-        <Navbar.Collapse id="main-navbar" className="justify-content-end">
-          <Nav className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2 ">
-            {/* Not Logged In */}
-            {/* {!user.isLoggedIn && (
-            <>
-              <Nav.Link as={NavLink} to="/signup">
-                Register
-              </Nav.Link> */}
-            {/* <Nav.Link as={NavLink} to="/login">
-                Login
-              </Nav.Link>
-            </>
-          )} */}
+          <NavLink to="/login" className="nav-link-custom" onClick={handleLogout}>
+            Logout
+          </NavLink>
+        </>
+      )}
+      
+    </Container>
 
-            {/* Logged In */}
-            {user.isLoggedIn && (
-              <>
-                <Nav.Link
-                  as={NavLink}
-                  to={
-                    user.role === "admin"
-                      ? "/admin-dashboard"
-                      : user.role === "student"
-                        ? "/student-dashboard"
-                        : "/employee-dashboard"
-                  }
-                >
-                  Dashboard
-                </Nav.Link>
-
-                {user.role === "admin" && (
-                  <Nav.Link as={NavLink} to="/reports">
-                    Reports
-                  </Nav.Link>
-
-                )}
-                {user.role === "admin" && (
-                  <Nav.Link as={NavLink} to="/Users">
-                    Users
-                  </Nav.Link>
-                )}
-                {/* {false && (
-                  <Nav.Link as={NavLink} to="/reset-password">Reset Password</Nav.Link>
-                )} */}
-
-                <Nav.Link as={NavLink} to="/login" onClick={handleLogout}>
-                  Logout
-                </Nav.Link>
-              </>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    
+    </nav>
   );
 }
 

@@ -28,7 +28,7 @@ function DashboardAdmin() {
   const [hourData, setHourData] = useState({});
   const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
   const user = user_id === 'stu_id' ? 'student' : 'employee';
-  const userValue = employee?.[user_id];
+  const userValue = employee?.[user_id] ;
   const isCustomRange = startDate !== null && endDate !== null;
 
   useEffect(() => {

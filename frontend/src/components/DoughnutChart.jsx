@@ -52,7 +52,7 @@ function DashboardEmployee() {
     useEffect(() => {
         const fetchHours = async () => {
 
-            if (!isCustomRange) {
+            if (date && !isCustomRange) {
 
 
                 try {

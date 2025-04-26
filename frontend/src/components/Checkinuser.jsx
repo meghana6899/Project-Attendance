@@ -31,7 +31,8 @@ function Checkinuser() {
           table = 'students';
         }
         if (startDate && endDate) {
-
+          console.log('here is hwstgjnaskg oajsgrjaijrgijadifgdaif ',startDate,endDate)
+          
 
 
           const response = await axios.post(`http://localhost:3000/api/details/${table}/${user_id}`, {

@@ -83,7 +83,7 @@ function EmployeesTable() {
 
 
   return (<>
-    <div className=" d-flex justify-content-center my-5">
+    <div className=" d-flex justify-content-center my-4">
       <div className="table-responsive" style={{ width: "100%" }}>
         <table
           className="table table-borderless table-hover text-center align-middle shadow-sm"

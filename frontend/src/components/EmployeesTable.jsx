@@ -117,14 +117,15 @@ function EmployeesTable() {
     }
 
   </div>
-    <input
+  <div className="text-end mx-5   ">
+  <input
       type="button"
       value="ADD"
       onClick={handleAdd}
-      className="btn btn-outline-primary fw-semibold px-5 py-2 rounded-3 text-start "
+      className="btn btn-outline-primary fw-semibold px-5 py-2 rounded-3  "
       style={{ fontSize: "1.1rem" }}
     />
-
+    </div>
     {/* AddCard Popup */}
     {add && (
       <div
@@ -155,7 +156,7 @@ function EmployeesTable() {
         </div>
       </div>
     )}
-    <div className="container d-flex justify-content-center my-5">
+ <div className="container d-flex justify-content-center my-4">
       <div className="table-responsive" style={{ width: "100%" }}>
         <table
           className="table table-borderless table-hover text-center align-middle shadow-sm"
@@ -166,7 +167,7 @@ function EmployeesTable() {
             backgroundColor: "#f9f9f9",
           }}
         >
-          <thead
+          <thead className='table-light'
             style={{
               backgroundColor: "#343a40",
               color: "white",

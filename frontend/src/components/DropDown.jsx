@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+  import React, { useEffect } from 'react';
 import { useAdmin } from '../context/AuthContext';
 import FetchAverageHours from '../api/queries/FetchAverageHours';
 
@@ -16,7 +16,7 @@ const DropDown = () => {
     setSelection
   } = useAdmin();
 
-  const user_id = Object.keys(employee).includes('stu_id') ? 'stu_id' : 'emp_id';
+  const user_id = 'stu_id' in employee ? 'stu_id' : 'emp_id';
   const userValue = employee?.[user_id];
 
 
@@ -92,8 +92,8 @@ const DropDown = () => {
   return (
     <>
       <h4>Select an Option</h4>
-      <select onChange={handleSelectClick} defaultValue="">
-        <option value="" disabled>-- Select Range --</option>
+      <select onChange={handleSelectClick} defaultValue=''>
+      <option value="" disabled>-- Select Range --</option>
         {dashBoard && <option value="day">Daily</option>}
         <option value="week">Weekly</option>
         <option value="month">Monthly</option>

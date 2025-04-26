@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode'
 
 function Login() {
 
-  const { login, setFlag } = useAdmin();
+  const { login, setFlag ,setEmployee} = useAdmin();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -114,6 +114,7 @@ function Login() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(userData));
         login(userData);
+        
         redirectBasedOnRole(response.data.role);
 
         // setFirstLogin(response.data.passwordreset)

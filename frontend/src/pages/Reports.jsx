@@ -12,26 +12,35 @@ const Reports = () => {
   return (
 
     <>
-    <div className="container d-flex flex-column ">
-      <div className="d-flex justify-content-center align-items-end flex-column" style={{marginRight: '20px'}}>
-      <select name="reportType" id="reportType" style={{ width: '200px', marginTop: '20px' }} className="form-select" onChange={(e) => setE(e.target.value)}>
-        <option value="employees"  onClick={() => setE('employees')}
-            style={{ cursor: 'pointer', transition: '0.3s' }}>  👨‍💼 Employee Report</option>
+    <div className="container d-flex flex-column align-items-end p-4">
+      
+      {/* Button Group */}
+      <div className="d-flex gap-3 mb-4">
+        <button 
+          className={`btn-switch ${e === 'employees' ? 'active' : ''}`}
+          onClick={() => setE('employees')}
+        >
+          👨‍💼 Employees Report
+        </button>
 
-
-        <option value="students"  onClick={() => setE('students')}
-            style={{ cursor: 'pointer', transition: '0.3s' }} > 🎓 Student Report</option>
-      </select>
+        <button 
+          className={`btn-switch ${e === 'students' ? 'active' : ''}`}
+          onClick={() => setE('students')}
+        >
+          🎓 Students Report 
+        </button>
       </div>
 
-     <div >
-     {e === 'employees' && <EmployeeReport />}
-     {e === 'students' && <StudentReport />}
-     </div>
-   
-       
-        </div>
-        </>
+      {/* Table Section */}
+      <div className="w-100">
+        {e === 'employees' && <EmployeeReport />}
+        {e === 'students' && <StudentReport />}
+      </div>
+
+    </div>
+
+    
+  </>
     
   );
 };

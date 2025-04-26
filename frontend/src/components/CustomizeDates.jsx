@@ -13,6 +13,7 @@ function CustomizeDates() {
     const userValue = employee?.[user_id];
     const [tempStartDate, setTempStartDate] = useState(startDate);
     const [tempEndDate, setTempEndDate] = useState(endDate);
+    const [applyClicked, setApplyClicked] = useState(false);
 
 
     useEffect(() => {
@@ -36,12 +37,6 @@ function CustomizeDates() {
         });
 
 
-        // console.log("response", response.data) 
-        // setAvgActiveHours(response.data.activehours);
-        // setAvgBreakHours(response.data.breakhours);
-        // setAvgTotalHours(response.data.totalhours);
-        // console.log(response);
-        // console.log("activehours", response.data.activehours)
 
 
     }

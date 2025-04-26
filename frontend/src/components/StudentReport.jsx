@@ -76,7 +76,7 @@ function StudentsTable() {
 
 
   return (<>
-    <div className="container d-flex justify-content-center my-5">
+    <div className="container d-flex justify-content-center my-4">
       <div className="table-responsive" style={{ width: "100%" }}>
         <table
           className="table table-borderless table-hover text-center align-middle shadow-sm"
