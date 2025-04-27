@@ -1,4 +1,4 @@
-  import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAdmin } from '../context/AuthContext';
 import FetchAverageHours from '../api/queries/FetchAverageHours';
 
@@ -90,15 +90,15 @@ const DropDown = () => {
   };
 
   return (
-    <>
-      <h4>Select an Option</h4>
-      <select onChange={handleSelectClick} defaultValue=''>
-      <option value="" disabled>-- Select Range --</option>
+    <div className='px-4' >
+      {/* <h4>Select an Option</h4> */}
+      <select onChange={handleSelectClick} defaultValue={dashBoard ? "" : "month"}>
+        {dashBoard && <option value="" disabled>-- Select Range --</option>}
         {dashBoard && <option value="day">Daily</option>}
         <option value="week">Weekly</option>
         <option value="month">Monthly</option>
       </select>
-    </>
+    </div>
   );
 };
 

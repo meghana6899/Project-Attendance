@@ -13,12 +13,12 @@ function StudentsTable() {
 
 
 
-    const { employee, setEmployee,setShowcard,showcard ,add,setAdd,setRadio,accept,setAccept} = useAdmin();
-    setRadio(false);
-    const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
+  const { employee, setEmployee, setShowcard, showcard, add, setAdd, setRadio, accept, setAccept } = useAdmin();
+  setRadio(false);
+  const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
   const userValue = employee?.[user_id];
 
-  
+
   const confirmDelete = async () => {
     console.log("Entered Cofim Delete")
     const response = await DeleteUser(userValue);
@@ -78,12 +78,12 @@ function StudentsTable() {
     return (
       <tr key={index} className='px-5 py-5'>
 
-        <td className='py-3 px-3'>{stu_id} </td>
-        <td className='py-3 px-3'>{first_name} </td>
-        <td className='py-3 px-3'>{last_name}  </td>
-        <td className='py-3 px-3'>{email}</td>
-        <td className='py-3 px-3'>{role}</td>
-        <td className='py-3 px-3'>{join_date ? join_date.split('T')[0] : ""} </td>
+        <td className='py-3 px-3 border'>{stu_id} </td>
+        <td className='py-3 px-3 border'>{first_name} </td>
+        <td className='py-3 px-3 border'>{last_name}  </td>
+        <td className='py-3 px-3 border'>{email}</td>
+        <td className='py-3 px-3 border'>{role}</td>
+        <td className='py-3 px-3 border'>{join_date ? join_date.split('T')[0] : ""} </td>
 
       </tr>
 
@@ -101,24 +101,24 @@ function StudentsTable() {
   return (<>
     {/* ADD Button */}
     <div className="text-end  mx-5">
-    {accept && <div className="shadow-lg mx-auto rounded p-3 border-0 text-start" style={{
-      position: "fixed",
-      top: "10%",
-      left: "50%",
-      transform: `translate(-50%, -50%)`,
-      width: "35vw",
-      height: "15vh",
-      backgroundColor: "white",
-      zIndex: 1050,
-      // margin: "auto",
-    }}>
-      <h5>Are you sure you want to remove user {employee?.first_name}?</h5>
-      <input type="button" onClick={confirmDelete} className="text-white bg-danger p-2 border rounded shadow m-2" value="Delete" />
-      <input type="button" onClick={noDelete} className="text-white bg-secondary p-2 border rounded shadow m-2" value="Close" />
+      {accept && <div className="shadow-lg mx-auto rounded p-3 border-0 text-start" style={{
+        position: "fixed",
+        top: "10%",
+        left: "50%",
+        transform: `translate(-50%, -50%)`,
+        width: "35vw",
+        height: "15vh",
+        backgroundColor: "white",
+        zIndex: 1050,
+        // margin: "auto",
+      }}>
+        <h5>Are you sure you want to remove user {employee?.first_name}?</h5>
+        <input type="button" onClick={confirmDelete} className="text-white bg-danger p-2 border rounded shadow m-2" value="Delete" />
+        <input type="button" onClick={noDelete} className="text-white bg-secondary p-2 border rounded shadow m-2" value="Close" />
+      </div>
+      }
+
     </div>
-    }
-   
-  </div>
     <div className="text-end mx-5   ">
       <input
         type="button"
@@ -159,8 +159,8 @@ function StudentsTable() {
         </div>
       </div>
     )}
-  
-  <div className="container d-flex justify-content-center my-4">
+
+    <div className="container d-flex justify-content-center my-4">
       <div className="table-responsive" style={{ width: "100%" }}>
         <table
           className="table table-borderless table-hover text-center align-middle shadow-sm"
@@ -179,12 +179,12 @@ function StudentsTable() {
             }}
           >
             <tr>
-              <th>Stu ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Joined Date</th>
+              <th className='border p-3'>Stu ID</th>
+              <th className='border p-3'>First Name</th>
+              <th className='border p-3'>Last Name</th>
+              <th className='border p-3'>Email</th>
+              <th className='border p-3'>Role</th>
+              <th className='border p-3'>Joined Date</th>
             </tr>
           </thead>
           <tbody>

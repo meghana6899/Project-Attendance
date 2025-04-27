@@ -1,10 +1,248 @@
-import React, { useEffect, useState } from 'react'
+
+
+
+// import React, { useEffect, useState } from 'react';
+// import { Line } from 'react-chartjs-2';
+// import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
+// import avgMonth, { weekPerDay } from '../api/queries/avgMonthWeek';
+// import DropDown from './DropDown';
+// import { useAdmin } from '../context/AuthContext';
+
+// ChartJS.register(
+//     CategoryScale,
+//     LinearScale,
+//     PointElement,
+//     LineElement,
+//     Title,
+//     Tooltip,
+//     Legend,
+//     Filler
+// );
+
+// const LineChart = () => {
+//     const [data, setData] = useState(null);
+//     const { setdashBoard, selection } = useAdmin();
+//     const user = JSON.parse(localStorage.getItem('user'));
+//     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+//     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+//     useEffect(() => {
+//         setdashBoard(false);
+
+//         const fetchHours = async () => {
+//             try {
+//                 const result = selection === 'month'
+//                     ? await avgMonth(user.id)
+//                     : await weekPerDay(user.id);
+//                 setData(result);
+//             } catch (error) {
+//                 console.log(error);
+//             }
+//         };
+
+//         fetchHours();
+//     }, [selection]);
+
+//     const timeToDecimal = (timeStr) => {
+//         if (!timeStr) timeStr = '00:00:00';
+//         const [h, m] = timeStr.split(':').map(Number);
+//         return h + m / 60;
+//     };
+
+//     const getLast7Days = () => {
+//         const days = [];
+//         for (let i = 6; i >= 0; i--) {
+//             const d = new Date();
+//             d.setDate(d.getDate() - i);
+//             days.push(d.toISOString().split('T')[0]); // Format as "YYYY-MM-DD"
+//         }
+//         return days;
+//     };
+
+
+//     let labels = [];
+//     let totalHoursData = [];
+//     let activeHoursData = [];
+//     let breakHoursData = [];
+//     const adjustToLocalDate = (utcDateString) => {
+//         const date = new Date(utcDateString);
+//         // Convert to your desired timezone by adding 5.5 hours (19800 seconds)
+//         date.setMinutes(date.getMinutes() + 330);
+//         return date;
+//     }
+
+
+//     if (selection === 'month') {
+//         labels = months;
+//         totalHoursData = new Array(12).fill(null);
+//         activeHoursData = new Array(12).fill(null);
+//         breakHoursData = new Array(12).fill(null);
+
+//         data?.forEach(({ month, avg_total_hours, avg_active_hours, avg_break_hours }) => {
+//             const monthIndex = parseInt(month?.split("-")[1], 10) - 1;
+//             totalHoursData[monthIndex] = timeToDecimal(avg_total_hours);
+//             activeHoursData[monthIndex] = timeToDecimal(avg_active_hours);
+//             breakHoursData[monthIndex] = timeToDecimal(avg_break_hours);
+//         });
+//     } else {
+//         const last7Days = getLast7Days();
+//         labels = last7Days.map(date => {
+//             const d = adjustToLocalDate(date);
+//             return `${d.getDate()} ${d.toLocaleString('default', { month: 'short' })}`;
+//             // Example: "21 Apr"
+//         });
+
+//         totalHoursData = new Array(7).fill(0);
+//         activeHoursData = new Array(7).fill(0);
+//         breakHoursData = new Array(7).fill(0);
+
+//         last7Days.forEach((day, idx) => {
+//             const dayData = data?.find(d => d.date?.startsWith(day));
+//             if (dayData) {
+//                 totalHoursData[idx] = timeToDecimal(dayData.total_hours);
+//                 activeHoursData[idx] = timeToDecimal(dayData.active_hours);
+//                 breakHoursData[idx] = timeToDecimal(dayData.break_hours);
+//             }
+
+//         });
+//     }
+
+//     const options = {
+//         responsive: true,
+//         maintainAspectRatio: false, // Important for custom height
+//         plugins: {
+//             legend: {
+//                 position: 'top',
+//                 labels: {
+//                     color: '#6b7280',
+//                     font: {
+//                         size: 13,
+//                         family: 'Poppins, sans-serif'
+//                     },
+//                     usePointStyle: true,
+//                 }
+//             },
+//             tooltip: {
+//                 callbacks: {
+//                     label: function (context) {
+//                         const value = context.parsed.y || 0;
+//                         const hours = Math.floor(value);
+//                         const minutes = Math.round((value - hours) * 60);
+//                         return `${context.dataset.label}: ${hours}h ${minutes}m`;
+//                     }
+//                 }
+//             },
+//             title: {
+//                 display: false,
+//             }
+//         },
+//         scales: {
+//             y: {
+//                 ticks: {
+
+//                     color: '#9ca3af',
+//                     font: {
+//                         size: 12
+//                     }
+//                 },
+//                 grid: {
+//                     color: '#f3f4f6'
+//                 },
+//                 title: {
+//                     display: true,
+//                     text: 'Hours',
+//                     color: '#9ca3af',
+//                     font: {
+//                         size: 13,
+//                         weight: 'bold'
+//                     }
+//                 }
+//             },
+//             x: {
+
+//                 ticks: {
+//                     color: '#9ca3af',
+//                     font: {
+//                         size: 12
+//                     }
+//                 },
+//                 grid: {
+//                     color: '#f9fafb'
+//                 }
+//             }
+//         }
+//     };
+
+//     const lineardata = {
+//         labels,
+//         datasets: data ? [
+//             {
+//                 label: "Total Hours",
+//                 data: totalHoursData,
+//                 backgroundColor: "rgba(5, 150, 105, 0.2)", // Strong Blue
+//                 borderColor: "#047857", //
+//                 tension: 0.4,
+//                 fill: true,
+//                 pointRadius: 3,
+//                 pointHoverRadius: 5,
+//                 borderWidth: 2,
+//                 order: 3
+//             },
+//             {
+//                 label: "Active Hours",
+//                 data: activeHoursData,
+//                 backgroundColor: "rgba(29, 78, 216, 0.2)", // Emerald Green
+//                 borderColor: "#1E40AF",
+//                 tension: 0.4,
+//                 fill: true,
+//                 pointRadius: 3,
+//                 pointHoverRadius: 5,
+//                 borderWidth: 2,
+//                 order: 2
+//             },
+//             {
+//                 label: "Break Hours",
+//                 data: breakHoursData,
+//                 backgroundColor: "rgba(252, 211, 77, 0.2)", // Amber
+//                 borderColor: "#FBBF24",
+//                 tension: 0.4,
+//                 fill: true,
+//                 pointRadius: 3,
+//                 pointHoverRadius: 5,
+//                 borderWidth: 2,
+//                 order: 1
+//             }
+//         ] : []
+//     };
+
+//     return (
+//         <div className="bg-white shadow-sm rounded p-6 w-full max-w-5xl mx-auto mt-8">
+//             <div className="flex flex-col items-center justify-center mb-6">
+//                 <h2 className="text-2xl font-bold text-gray-700 mb-2 text-center p-2">
+//                     {selection === 'month' ? 'Monthly Work Hours Overview' : 'Weekly Work Hours Overview'}
+//                 </h2>
+//                 <DropDown />
+//             </div>
+//             <div style={{ height: '500px', padding: '1rem' }}>
+//                 <Line options={options} data={lineardata} />
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default LineChart;
+
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import avgMonth, { weekPerDay } from '../api/queries/avgMonthWeek';
 import DropDown from './DropDown';
-import CustomizeDates from './CustomizeDates';
 import { useAdmin } from '../context/AuthContext';
+import dayjs from 'dayjs';
+
+// For UTC handling
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc);
 
 ChartJS.register(
     CategoryScale,
@@ -13,151 +251,236 @@ ChartJS.register(
     LineElement,
     Title,
     Tooltip,
-    Legend
-)
-
-// const zdate = new Date(date);
-//     const newDate = zdate.toLocaleString("en-GB", { timeZone: "Asia/Kolkata" })
-
-
-
+    Legend,
+    Filler
+);
 
 const LineChart = () => {
-    const [data, setData] = useState(null)
-    const { setdashBoard, selection } = useAdmin()
-    const user = JSON.parse(localStorage.getItem('user'))
+    const [data, setData] = useState(null);
+    const { setdashBoard, selection } = useAdmin();
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const getDayName = (dateStr) => {
-        const date = new Date(dateStr);
-        return weekdays[date.getDay()];
-    };
-    const formatDate = (dateStr) => {
-        const options = { day: '2-digit', month: 'short' }; // like "21 Apr"
-        return new Date(dateStr).toLocaleDateString('en-GB', options);
-    }
 
     useEffect(() => {
-        setdashBoard(false)
+        setdashBoard(false);
 
-        const fetchHors = async () => {
-            if (selection == 'month') {
-                try {
-                    const monthAvg = await avgMonth(user.id);
-
-                    setData(monthAvg)
-                } catch (error) {
-                    console.log(error)
-                }
-            } else {
-                try {
-                    const weekavg = await weekPerDay(user.id);
-
-                    setData(weekavg)
-                } catch (error) {
-                    console.log(error)
-                }
+        const fetchHours = async () => {
+            try {
+                const result = selection === 'month'
+                    ? await avgMonth(user.id)
+                    : await weekPerDay(user.id);
+                setData(result);
+            } catch (error) {
+                console.log(error);
             }
+        };
 
-        }
-        fetchHors()
-    }, [selection])
-
-    let totalHoursData = []
-    let activeHoursData = []
-    let breakHoursData = []
-    let labels = []
+        fetchHours();
+    }, [selection]);
 
     const timeToDecimal = (timeStr) => {
-
-        if (timeStr == null || timeStr == undefined || timeStr == 0) {
-            timeStr = '00:00:00'
-        }
-
+        if (!timeStr) return 0;
         const [h, m, s] = timeStr.split(':').map(Number);
-        return h + m / 60;
+        return h + (m / 60) + (s ? s / 3600 : 0);
+    };
+
+    const getLast7Days = () => {
+        const days = [];
+        const today = new Date();
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date(today);
+            d.setDate(today.getDate() - i);
+
+            // ADJUST to UTC because your backend data is in UTC
+            const year = d.getUTCFullYear();
+            const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(d.getUTCDate()).padStart(2, '0');
+            days.push(`${year}-${month}-${day}`); // "yyyy-mm-dd"
+        }
+        return days;
     };
 
 
 
-    if (selection == 'month') {
-        labels = months,
-            totalHoursData = new Array(12).fill(null);
-        activeHoursData = new Array(12).fill(null);
-        breakHoursData = new Array(12).fill(null);
+    const formatDateLabel = (dateStr) => {
+        const [year, month, day] = dateStr.split('-');
+        const date = new Date(year, month - 1, day);
+        return `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}`;
+    };
+
+    let labels = [];
+    let totalHoursData = [];
+    let activeHoursData = [];
+    let breakHoursData = [];
+
+    if (selection === 'month') {
+        labels = months;
+        totalHoursData = new Array(12).fill(0);
+        activeHoursData = new Array(12).fill(0);
+        breakHoursData = new Array(12).fill(0);
+
         data?.forEach(({ month, avg_total_hours, avg_active_hours, avg_break_hours }) => {
-            const monthIndex = parseInt(month?.split("-")[1], 10) - 1; // Extract month index from 'YYYY-MM'
-            totalHoursData[monthIndex] = timeToDecimal(avg_total_hours);
-            activeHoursData[monthIndex] = timeToDecimal(avg_active_hours);
-            breakHoursData[monthIndex] = timeToDecimal(avg_break_hours);
+            const monthIndex = parseInt(month.split("-")[1], 10) - 1;
+            if (monthIndex >= 0 && monthIndex <= 11) {
+                totalHoursData[monthIndex] = timeToDecimal(avg_total_hours);
+                activeHoursData[monthIndex] = timeToDecimal(avg_active_hours);
+                breakHoursData[monthIndex] = timeToDecimal(avg_break_hours);
+            }
+        });
+    } else {
+        const last7Days = getLast7Days();
+        labels = last7Days.map(formatDateLabel);
+
+        totalHoursData = new Array(7).fill(0);
+        activeHoursData = new Array(7).fill(0);
+        breakHoursData = new Array(7).fill(0);
+
+        last7Days.forEach((day, idx) => {
+            const dayData = data?.find(d => {
+                if (!d.date) return false;
+
+                // Normalize the backend date to just the date part (without time)
+                const backendDate = dayjs(d.date).format('YYYY-MM-DD'); // Get the date without time
+
+                // Get the local date and format it similarly
+                const localDate = dayjs(day).format('YYYY-MM-DD'); // Format local date similarly
+
+                console.log(`Backend Date: ${d.date}`);
+                console.log(`Formatted Backend Date: ${backendDate}`);
+                console.log(`Comparing to: ${localDate}`);
+
+                // Compare the date part only
+                return backendDate === localDate;
+            });
+
+            if (dayData) {
+                totalHoursData[idx] = timeToDecimal(dayData.total_hours || '00:00:00');
+                activeHoursData[idx] = timeToDecimal(dayData.active_hours || '00:00:00');
+                breakHoursData[idx] = timeToDecimal(dayData.break_hours || '00:00:00');
+            }
         });
 
-    } else if (selection === "week") {
 
-        labels = weekdays;
-
-
-        totalHoursData = new Array(6).fill(0);
-        activeHoursData = new Array(6).fill(0);
-        breakHoursData = new Array(6).fill(0);
-
-
-        data?.forEach(({ date, total_hours, active_hours, break_hours }) => {
-            const dayIndex = new Date(date).getDay();
-
-
-            totalHoursData[dayIndex] = timeToDecimal(total_hours);
-            activeHoursData[dayIndex] = timeToDecimal(active_hours);
-            breakHoursData[dayIndex] = timeToDecimal(break_hours);
-        });
     }
-
-
-
 
     const options = {
         responsive: true,
-
-
-    }
-
-
-
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    color: '#6b7280',
+                    font: {
+                        size: 13,
+                        family: 'Poppins, sans-serif',
+                    },
+                    usePointStyle: true,
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        const value = context.parsed.y || 0;
+                        const hours = Math.floor(value);
+                        const minutes = Math.round((value - hours) * 60);
+                        return `${context.dataset.label}: ${hours}h ${minutes}m`;
+                    }
+                }
+            },
+            title: {
+                display: false,
+            }
+        },
+        scales: {
+            y: {
+                ticks: {
+                    color: '#9ca3af',
+                    font: { size: 12 }
+                },
+                grid: {
+                    color: '#f3f4f6'
+                },
+                title: {
+                    display: true,
+                    text: 'Hours',
+                    color: '#9ca3af',
+                    font: {
+                        size: 13,
+                        weight: 'bold'
+                    }
+                }
+            },
+            x: {
+                ticks: {
+                    color: '#9ca3af',
+                    font: { size: 12 }
+                },
+                grid: {
+                    color: '#f9fafb'
+                }
+            }
+        }
+    };
 
     const lineardata = {
-        labels: labels,
+        labels,
         datasets: data ? [
             {
                 label: "Total Hours",
                 data: totalHoursData,
-                borderColor: "rgb(75, 192, 192)",
-                tension: 0.1
+                backgroundColor: "rgba(5, 150, 105, 0.2)",
+                borderColor: "#047857",
+                tension: 0.4,
+                fill: true,
+                pointRadius: 3,
+                pointHoverRadius: 5,
+                borderWidth: 2,
+                order: 3
             },
             {
                 label: "Active Hours",
                 data: activeHoursData,
-                borderColor: "rgb(30, 123, 123)",
-                tension: 0.1
+                backgroundColor: "rgba(29, 78, 216, 0.2)",
+                borderColor: "#1E40AF",
+                tension: 0.4,
+                fill: true,
+                pointRadius: 3,
+                pointHoverRadius: 5,
+                borderWidth: 2,
+                order: 2
             },
             {
                 label: "Break Hours",
                 data: breakHoursData,
-                borderColor: "rgb(214, 26, 26)",
-                tension: 0.1
+                backgroundColor: "rgba(252, 211, 77, 0.2)",
+                borderColor: "#FBBF24",
+                tension: 0.4,
+                fill: true,
+                pointRadius: 3,
+                pointHoverRadius: 5,
+                borderWidth: 2,
+                order: 1
             }
-
         ] : []
-    }
+    };
+
     return (
-        <div className='w-90 h-70 border rounded text-start p-3'>
-
-            <DropDown className='m-3' />
-            <Line className='bg-light m-2' options={options} data={lineardata} />
-
-
+        <div className="bg-white shadow-sm rounded p-6 w-full max-w-5xl mx-auto mt-8">
+            <div className="flex flex-col items-center justify-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-700 mb-2 text-center p-2">
+                    {selection === 'month' ? 'Monthly Work Hours Overview' : 'Weekly Work Hours Overview'}
+                </h2>
+                <DropDown />
+            </div>
+            <div style={{ height: '500px', padding: '1rem' }}>
+                <Line options={options} data={lineardata} />
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default LineChart
+export default LineChart;
+
 

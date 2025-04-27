@@ -10,6 +10,8 @@ function Calendar() {
   const [calendarDays, setCalendarDays] = useState([]);
   const [viewMode, setViewMode] = useState('date');
   const { date, setDate, setEndDate, setStartDate } = useAdmin();
+
+
   const fetchTodayHours = async () => {
     const formattedDate = currentDate.getFullYear() + "-" + String(currentDate.getMonth() + 1).padStart(2, '0') + "-" + String(currentDate.getDate()).padStart(2, '0');
     try {
@@ -21,10 +23,11 @@ function Calendar() {
       console.error("Failed to fetch today's work hours:", error);
     }
   };
-  
+
 
   useEffect(() => {
     generateCalendar();
+
   }, [currentDate]);
 
   const generateCalendar = () => {
@@ -68,7 +71,7 @@ function Calendar() {
     }
 
     setCalendarDays(days);
-    fetchTodayHours() ;
+    fetchTodayHours();
   };
 
   const handlePrev = () => {

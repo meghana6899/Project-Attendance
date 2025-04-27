@@ -37,23 +37,23 @@ function CustomInput() {
 
     return (
         <div>
-            <span>Custom</span>
+
             <input
-                className='mx-3 border rounded text-secondary'
+                className='border rounded text-secondary py-1 px-1'
                 type='date'
                 value={tempStartDate}
                 onChange={handleStartChange}
             />
             <input
                 type='date'
-                className='border rounded text-secondary'
+                className='border mx-1 rounded text-secondary py-1 px-1'
                 value={tempEndDate}
                 onChange={handleEndChange}
             />
             <input
                 type='button'
-                className='bg-primary border rounded text-white mx-3 px-2'
-                value="Apply"
+                className='bg-primary border rounded text-white mx-1 py-1 px-2'
+                value="Set"
                 onClick={handleResetClick}
             />
         </div>

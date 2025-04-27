@@ -202,7 +202,7 @@ export const AdminProvider = ({ children }) => {
   const [radio, setRadio] = useState(false);
   const [apply, setApply] = useState(true);
   const [dashBoard, setdashBoard] = useState(false);
-  const [selection, setSelection] = useState(null);
+  const [selection, setSelection] = useState('month');
   const [activeHours, setActiveHours] = useState("00:00:00")
   const [breakHours, setBreakHours] = useState('00:00:00')
   const [totalHours, setTotalHours] = useState('00:00:00');

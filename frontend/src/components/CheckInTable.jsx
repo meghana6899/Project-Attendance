@@ -60,24 +60,24 @@ function CheckInTable() {
     const newDate = zdate.toLocaleString("en-GB", { timeZone: "Asia/Kolkata" })
     return (
       <tr key={index} className='px-5 py-5'>
-        <td className='py-3 px-5'>{newDate.split(',')[0]}</td>
-        <td className='py-3 px-5'>{checkin}</td>
-        <td className='py-3 px-5'>{checkout}</td>
+        <td className='py-3 px-5 border'>{newDate.split(',')[0]}</td>
+        <td className='py-3 px-5 border'>{checkin}</td>
+        <td className='py-3 px-5 border'>{checkout}</td>
       </tr>
 
     )
   })
   return (
-    <table className='table text-center w-auto mx-auto my-5'>
-      <thead className='table-light' >
+    <table className='table border text-center w-auto mx-auto my-5' >
+      <thead className='table-light border' >
         <tr  >
-          <th className='py-3 px-5'>Date</th>
-          <th className='py-3 px-5' scope='col' >Check In</th>
-          <th className='py-3 px-5' scope='col'>Check Out</th>
+          <th className='py-3 px-5 border'>Date</th>
+          <th className='py-3 px-5 border' scope='col' >Check In</th>
+          <th className='py-3 px-5 border' scope='col'>Check Out</th>
         </tr>
       </thead>
       <tbody>
-        {renderedData.length > 0 ? renderedData : <div className='bg-white'>Loading...</div>}
+        {renderedData.length > 0 ? renderedData : <div className='bg-white'>No records</div>}
       </tbody>
 
     </table>

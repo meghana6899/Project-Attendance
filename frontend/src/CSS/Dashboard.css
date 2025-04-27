@@ -1,0 +1,55 @@
+/* Smoother background for the whole dashboard */
+body {
+    background-color: #f8f9fa !important;
+    /* light grey */
+}
+
+/* Card styles */
+.dashboard-container {
+    background-color: #f8f9fa;
+    /* Light gray */
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Optional: make cards look more modern */
+.cont {
+    border: none !important;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Card hover effect */
+.cont:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Line Chart, Doughnut Chart, Calendar container */
+.card>div {
+    height: 100%;
+}
+
+/* Modal Overlay (if needed extra styling) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CustomInput section spacing */
+.custom-input-wrapper {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}

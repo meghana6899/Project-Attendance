@@ -75,12 +75,12 @@ function EmployeesTable() {
     return (
       <tr key={index} className='px-5 py-5'>
 
-        <td className='py-3 px-3'>{emp_id}</td>
-        <td className='py-3 px-3'>{first_name}</td>
-        <td className='py-3 px-3'>{last_name}</td>
-        <td className='py-3 px-3'>{email}</td>
-        <td className='py-3 px-3'>{role}  </td>
-        <td className='py-3 px-3'>{join_date ? join_date.split('T')[0] : ""}</td>
+        <td className='py-3 px-3 border'>{emp_id}</td>
+        <td className='py-3 px-3 border'>{first_name}</td>
+        <td className='py-3 px-3 border'>{last_name}</td>
+        <td className='py-3 px-3 border'>{email}</td>
+        <td className='py-3 px-3 border'>{role}  </td>
+        <td className='py-3 px-3 border'>{join_date ? join_date.split('T')[0] : ""}</td>
 
 
       </tr>
@@ -117,14 +117,14 @@ function EmployeesTable() {
     }
 
   </div>
-  <div className="text-end mx-5   ">
-  <input
-      type="button"
-      value="ADD"
-      onClick={handleAdd}
-      className="btn btn-outline-primary fw-semibold px-5 py-2 rounded-3  "
-      style={{ fontSize: "1.1rem" }}
-    />
+    <div className="text-end mx-5   ">
+      <input
+        type="button"
+        value="ADD"
+        onClick={handleAdd}
+        className="btn btn-outline-primary fw-semibold px-5 py-2 rounded-3  "
+        style={{ fontSize: "1.1rem" }}
+      />
     </div>
     {/* AddCard Popup */}
     {add && (
@@ -156,7 +156,7 @@ function EmployeesTable() {
         </div>
       </div>
     )}
- <div className="container d-flex justify-content-center my-4">
+    <div className="container d-flex justify-content-center my-4">
       <div className="table-responsive" style={{ width: "100%" }}>
         <table
           className="table table-borderless table-hover text-center align-middle shadow-sm"
@@ -175,12 +175,12 @@ function EmployeesTable() {
             }}
           >
             <tr>
-              <th>Emp ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Joined Date</th>
+              <th className='border p-3'>Emp ID</th>
+              <th className='border p-3'>First Name</th>
+              <th className='border p-3'>Last Name</th>
+              <th className='border p-3'>Email</th>
+              <th className='border p-3'>Role</th>
+              <th className='border p-3'>Joined Date</th>
             </tr>
           </thead>
           <tbody>
