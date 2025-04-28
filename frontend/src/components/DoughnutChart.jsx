@@ -103,7 +103,8 @@ function DashboardEmployee() {
 
     const tooltipLabels = useMemo(() => (
         isCustomRange
-            ? [avgactiveHours, avgbreakHours, avgtotalHours]
+            ? [avgactiveHours, avgbreakHours, avgtotalHours].map(hour => hour)
+               
             : [hourData.active_hours, hourData.break_hours, hourData.total_hours].map(timeStr =>
                 timeStr ? formatTimeLabel(timeToDecimal(timeStr)) : '0h 0min'
             )

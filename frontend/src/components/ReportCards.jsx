@@ -39,9 +39,12 @@ const ReportCards = () => {
   };
 
 
-  return (
-    <div className="report-cards-container position-relative d-flex flex-column flex-md-row p-4 gap-4 bg-light" style={{ height: '90vh', overflowY: 'auto' }}>
-
+  return (<>
+    {/* Main Popup Content */}
+    <div
+      className="report-cards-container position-relative d-flex flex-column flex-md-row gap-4 p-4 bg-light"
+      style={{ height: '90vh', overflowY: 'auto' }}
+    >
       {/* ❌ Top Right Close Button */}
       <button
         type="button"
@@ -51,71 +54,90 @@ const ReportCards = () => {
         style={{
           top: '20px',
           right: '20px',
-          zIndex: 10
+          zIndex: 10,
         }}
       ></button>
-
+  
       {/* 📅 Left Column: Filters + Averages + Table */}
-      <div className="flex-grow-1 d-flex flex-column align-items-center gap-4 my-5">
+      <div className="flex-grow-1 d-flex flex-column align-items-center gap-4" style={{ minWidth: '300px' }}>
+        
+        {/* Filter Card (Moved inside) */}
+        <div className="card w-100 p-4 shadow-sm d-flex flex-column align-items-center" style={{ width: '1000px' }}>
+  <h5 className="text-center mb-4 text-primary">Filter By Date</h5>
 
-        {/* Date Filters */}
+  {/* 👉 This is the correct row flex container */}
+  <div className="d-flex w-100 align-items-center justify-content-evenly ">
+    {/* CustomizeDates on the left */}
+    <div className="">
+    <DropDown />
+   
+    </div>
+
+    {/* DropDown on the right */}
+    <div>
+     
+      <CustomizeDates />  
+    </div>
+  </div>
+</div>
+
+  
+        {/* Average Hours Card */}
         <div className="card w-100 p-4 shadow-sm">
-          <h5 className="text-center mb-3 text-primary">Filter By Date</h5>
-          <CustomizeDates />
-          <DropDown />
-        </div>
-
-        {/* Averages & Check-in Table */}
-        <div className="card w-100 p-4 shadow-sm">
-          <h5 className="text-center text-success mb-4">Average Hours Summary</h5>
-          <div className="row text-center">
+          <h5 className="text-center text-success ">Average Hours Summary</h5>
+  
+          {/* Averages Row */}
+          {/* <div className="row text-center">
             <div className="col-md-4 mb-3">
-              <h6>Active Hours</h6>
-              <p className="text-info fs-5 fw-bold">{avgactiveHours}</p>
+              <h6 className="text-muted">Active Hours</h6>
+              <p className="text-info fs-4 fw-bold">{avgactiveHours}</p>
             </div>
             <div className="col-md-4 mb-3">
-              <h6>Break Hours</h6>
-              <p className="text-warning fs-5 fw-bold">{avgbreakHours}</p>
+              <h6 className="text-muted">Break Hours</h6>
+              <p className="text-warning fs-4 fw-bold">{avgbreakHours}</p>
             </div>
             <div className="col-md-4 mb-3">
-              <h6>Total Hours</h6>
-              <p className="text-primary fs-5 fw-bold">{avgtotalHours}</p>
+              <h6 className="text-muted">Total Hours</h6>
+              <p className="text-primary fs-4 fw-bold">{avgtotalHours}</p>
             </div>
-          </div>
-
-          <div className="mt-4 ">
+          </div> */}
+  
+          {/* Checkin Table */}
+          <div className="">
             <Checkinuser />
           </div>
         </div>
       </div>
-
-      {/* 📊 Right Column: Doughnut Chart + Fixed Close Button */}
-      <div className="d-flex flex-column align-items-center justify-content-between my-5" style={{ minWidth: '450px' }}>
-        <div className="row text-center bg-shadow py-3 my-2">
-          <div className="col-md-4 mb-3">
-            <h6>Active Hours</h6>
-            <p className="text-info fs-5 fw-bold">{avgactiveHours}</p>
+  
+      {/* 📊 Right Column: Doughnut Chart + Close Button */}
+      <div className="d-flex flex-column align-items-center gap-4 my-5" style={{ minWidth: '450px' }}>
+      <div className="row text-center">
+            <div className="col-md-4 mb-3">
+              <h6 className="text-muted">Active Hours</h6>
+              <p className="text-info fs-4 fw-bold">{avgactiveHours}</p>
+            </div>
+            <div className="col-md-4 mb-3">
+              <h6 className="text-muted">Break Hours</h6>
+              <p className="text-warning fs-4 fw-bold">{avgbreakHours}</p>
+            </div>
+            <div className="col-md-4 mb-3">
+              <h6 className="text-muted">Total Hours</h6>
+              <p className="text-primary fs-4 fw-bold">{avgtotalHours}</p>
+            </div>
           </div>
-          <div className="col-md-4 mb-3">
-            <h6>Break Hours</h6>
-            <p className="text-warning fs-5 fw-bold">{avgbreakHours}</p>
-          </div>
-          <div className="col-md-4 mb-3">
-            <h6>Total Hours</h6>
-            <p className="text-primary fs-5 fw-bold">{avgtotalHours}</p>
-          </div>
-        </div>
-        <div className="card w-100 p-4 shadow-sm">
-          {/* <h5 className="text-center text-dark mb-3">Visual Summary</h5> */}
+        
+        {/* Doughnut Chart Card */}
+        <div className="card w-100 p-4 shadow-sm ">
           <Doughnut />
         </div>
-
+  
+        {/* Fixed Close Button */}
         <button
-          className="btn  text-white mt-4 bg-danger"
+          className="btn btn-danger text-white fw-bold rounded-pill shadow"
           style={{
             position: 'fixed',
-            bottom: 45,
-            right: 180,
+            bottom: '45px',
+            right: '180px',
             width: '130px',
           }}
           onClick={handleClose}
@@ -124,6 +146,9 @@ const ReportCards = () => {
         </button>
       </div>
     </div>
+  </>
+  
+  
 
   )
 }

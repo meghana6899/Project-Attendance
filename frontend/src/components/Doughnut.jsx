@@ -114,7 +114,7 @@ function DashboardAdmin() {
       tooltip: {
         callbacks: {
           label: function (context) {
-            return tooltipLabels[context.dataIndex];
+            return tooltipLabels[context.dataIndex] || '0h 0min';
           }
         }
       }

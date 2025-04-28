@@ -36,7 +36,7 @@ function StudentsTable() {
   const noDelete = async () => {
     setAccept(false)
   }
-  setRadio(true);
+  setRadio(false);
 
 
   useEffect(() => {

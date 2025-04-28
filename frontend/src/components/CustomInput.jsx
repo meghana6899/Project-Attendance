@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { useAdmin } from '../context/AuthContext';
 import avgWorkHours from '../api/queries/avgWorkHours';
 
+
+
 function CustomInput() {
     const {
         setStartDate, setEndDate, startDate,
@@ -10,17 +12,24 @@ function CustomInput() {
 
     const [tempStartDate, setTempStartDate] = useState(startDate);
     const [tempEndDate, setTempEndDate] = useState(endDate);
+
+
+
+
+    // wait for both
+
+
     const handleResetClick = useCallback(async () => {
         setStartDate(tempStartDate);
         setEndDate(tempEndDate);
 
         try {
             const response = await avgWorkHours(tempStartDate, tempEndDate);
-            console.log("Custom Input", response)
-
             setAvgActiveHours(response.activehours);
             setAvgBreakHours(response.breakhours);
             setAvgTotalHours(response.totalhours);
+            // setStartDate(null)
+            // setEndDate(null)
         } catch (error) {
             console.log(error);
         }
@@ -28,12 +37,15 @@ function CustomInput() {
 
 
     const handleStartChange = (event) => {
-        setTempStartDate(event.target.value);
-    };
+        setTempStartDate(event.target.value)
+        // setStartDate(event.target.value)
+    }
 
     const handleEndChange = (event) => {
-        setTempEndDate(event.target.value);
-    };
+        setTempEndDate(event.target.value)
+        // setEndDate(event.target.value)
+        // console.log("enddate", endDate)
+    }
 
     return (
         <div>
@@ -57,7 +69,7 @@ function CustomInput() {
                 onClick={handleResetClick}
             />
         </div>
-    );
+    )
 }
 
 export default CustomInput;

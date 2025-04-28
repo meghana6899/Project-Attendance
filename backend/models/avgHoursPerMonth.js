@@ -1,37 +1,48 @@
-const pool=require('../configdb/db');
+const pool = require('../configdb/db');
 
-const total_hours=async(table,user_id,id)=>{
-    const query=`select SEC_TO_TIME(sum(TIME_TO_SEC(total_hours))) as total
-    from ${table} where ${user_id}=? group by ${user_id} ,MONTH(date)`
-    const [rows]=await pool.execute(query,[id]);
+// Total Hours (across all data for user)
+const total_hours = async (table, user_id, id) => {
+    const query = `
+        SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(total_hours))) AS total
+        FROM ${table}
+        WHERE ${user_id} = ?
+    `;
+    const [rows] = await pool.execute(query, [id]);
     if (!rows || rows.length === 0 || !rows[0].total) {
-        return "00:00:00"; // default if no data
+        return "00:00:00";
     }
-    return rows[0].total
-}
-const active_hours=async(table,user_id,id)=>{
-    console.log('enterd activehours')
-    const query=`select SEC_TO_TIME(sum(TIME_TO_SEC(active_hours))) as active
-    from ${table}  WHERE ${user_id} = ?
+    return rows[0].total;
+};
+
+// Active Hours (for current month only)
+const active_hours = async (table, user_id, id) => {
+    const query = `
+        SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(active_hours))) AS active
+        FROM ${table}
+        WHERE ${user_id} = ?
         AND MONTH(date) = MONTH(CURRENT_DATE())
-        AND YEAR(date) = YEAR(CURRENT_DATE())`
-    const [rows]=await pool.execute(query,[id]);
+        AND YEAR(date) = YEAR(CURRENT_DATE())
+    `;
+    const [rows] = await pool.execute(query, [id]);
     if (!rows || rows.length === 0 || !rows[0].active) {
         return "00:00:00";
     }
-    console.log('ened activehours')
-    return rows[0].active
-}
-const break_hours=async(table,user_id,id)=>{
-    const query=`select SEC_TO_TIME(sum(TIME_TO_SEC(break_hours))) as break
-    from ${table} where ${user_id}=? group by ${user_id} ,MONTH(date);`
-    const [rows]=await pool.execute(query,[id]);
+    return rows[0].active;
+};
+
+// Break Hours (across all data for user)
+const break_hours = async (table, user_id, id) => {
+    const query = `
+        SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(break_hours))) AS break
+        FROM ${table}
+        WHERE ${user_id} = ?
+    `;
+    const [rows] = await pool.execute(query, [id]);
     if (!rows || rows.length === 0 || !rows[0].break) {
-        return "00:00:00"; // default if no data
+        return "00:00:00";
     }
-    console.log(rows[0].break);
-    return rows[0].break
-}
+    return rows[0].break;
+};
 
 
   

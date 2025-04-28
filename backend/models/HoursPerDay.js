@@ -63,7 +63,7 @@ const allInfo = async(table, column, date, user_id) => {
   return rows
 }
 const getCheckInDetails = async(table, column, user_id, startDate, endDate) => {
-  const [rows] = await pool.execute(`SELECT checkin, checkout, date FROM ${table} where \`${column}\` = ? and date between ? and ?` , [user_id, startDate, endDate])
+  const [rows] = await pool.execute(`SELECT checkin, checkout, date FROM ${table} where \`${column}\` = ? and date between ? and ? order by date DESC` , [user_id, startDate, endDate])
   return rows
 }
 

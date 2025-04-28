@@ -56,12 +56,12 @@ function CustomizeDates() {
     }
 
     return (
-        <div className='d-flex justify-content-center align-items-center gap-3'>
-            <div className='d-flex  justify-content-center align-items-center gap-4 mx-3'>
-                <input className='mx-3 border rounded text-secondary p-3' type='date' value={tempStartDate} onChange={handleStartChange} style={{ 'width': '200px', 'height': '36px' }} />
-                <input type='date' className='border rounded text-secondary p-3' value={tempEndDate} onChange={handleEndChange} style={{ 'width': '200px', 'height': '36px' }} />
+        <div className='d-flex justify-content-end align-items-center '>
+            <div className='d-flex  justify-content-end align-items-center  mx-3'>
+                <input className='mx-3 border rounded text-secondary p-3' type='date' value={tempStartDate} onChange={handleStartChange} style={{ 'width': '150px', 'height': '30px' }} />
+                <input type='date' className='border rounded text-secondary p-3' value={tempEndDate} onChange={handleEndChange} style={{ 'width': '150px', 'height': '30px' }} />
             </div>
-            <div className='d-flex justify-content-center align-items-center gap-4 mx-3'>
+            <div className='d-flex justify-content-end align-items-center  mx-3'>
                 <input type='button' value="Apply" className='btn btn-outline-secondary'
                     onClick={handleResetClick} disabled={!tempStartDate || !tempEndDate} />
             </div>

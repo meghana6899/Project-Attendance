@@ -91,8 +91,10 @@ function EmployeesTable() {
   const handleAdd = () => {
     if (add) {
       setAdd(false);
+
     } else {
       setAdd(true);
+     
     }
 
   }
@@ -117,14 +119,14 @@ function EmployeesTable() {
     }
 
   </div>
-    <div className="text-end mx-5   ">
-      <input
-        type="button"
-        value="ADD"
-        onClick={handleAdd}
-        className="btn btn-outline-primary fw-semibold px-5 py-2 rounded-3  "
-        style={{ fontSize: "1.1rem" }}
-      />
+  <div className="text-start mx-5   ">
+  <input
+      type="button"
+      value="ADD"
+      onClick={handleAdd}
+      className="btn btn-outline-primary fw-semibold px-5 py-2 rounded-3  "
+      style={{ fontSize: "1.1rem" }}
+    />
     </div>
     {/* AddCard Popup */}
     {add && (

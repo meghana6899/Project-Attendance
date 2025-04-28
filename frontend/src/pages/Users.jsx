@@ -13,10 +13,10 @@ const Users = () => {
     
       return (
         <>
-          <div className="container d-flex flex-column align-items-start p-4">
+          <div className="container d-flex flex-column align-items-end p-4">
             
             {/* Button Group */}
-            <div className="d-flex gap-3 mb-4 mx-4">
+            <div className="d-flex gap-3  mx-4">
               <button 
                 className={`btn-switch ${e === 'employees' ? 'active' : ''}`}
                 onClick={() => {setE('employees');setAccept(false)}}
