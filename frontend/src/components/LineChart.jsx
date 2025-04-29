@@ -257,7 +257,7 @@ ChartJS.register(
 
 const LineChart = () => {
     const [data, setData] = useState(null);
-    const { setdashBoard, selection } = useAdmin();
+    const { setdashBoard, selectLine } = useAdmin();
     const user = JSON.parse(localStorage.getItem('user'));
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -267,7 +267,7 @@ const LineChart = () => {
 
         const fetchHours = async () => {
             try {
-                const result = selection === 'month'
+                const result = selectLine === 'month'
                     ? await avgMonth(user.id)
                     : await weekPerDay(user.id);
                 setData(result);
@@ -277,7 +277,7 @@ const LineChart = () => {
         };
 
         fetchHours();
-    }, [selection]);
+    }, [selectLine]);
 
     const timeToDecimal = (timeStr) => {
         if (!timeStr) return 0;
@@ -320,7 +320,7 @@ const LineChart = () => {
     let activeHoursData = [];
     let breakHoursData = [];
 
-    if (selection === 'month') {
+    if (selectLine === 'month') {
         labels = months;
         totalHoursData = new Array(12).fill(0);
         activeHoursData = new Array(12).fill(0);
@@ -479,7 +479,7 @@ const LineChart = () => {
         <div className="bg-white shadow-sm rounded p-6 w-full max-w-5xl mx-auto mt-8">
             <div className="flex flex-col items-center justify-center mb-6">
                 <h2 className="text-2xl font-bold text-gray-700 mb-2 text-center p-2">
-                    {selection === 'month' ? 'Monthly Work Hours Overview' : 'Weekly Work Hours Overview'}
+                    {selectLine === 'month' ? 'Monthly Work Hours Overview' : 'Weekly Work Hours Overview'}
                 </h2>
                 <DropDown />
             </div>

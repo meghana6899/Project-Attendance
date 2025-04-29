@@ -249,7 +249,7 @@ const LineChart = () => {
                 <h2 className="text-2xl font-bold text-gray-700 mb-2 text-center p-2">
                     {selection === 'month' ? 'Monthly Work Hours Overview' : 'Weekly Work Hours Overview'}
                 </h2>
-                <DropDownLine />
+                {/* <DropDownLine /> */}
             </div>
             <div style={{ height: '335px', padding: '1rem' }}>
                 <Line options={options} data={lineardata} />
