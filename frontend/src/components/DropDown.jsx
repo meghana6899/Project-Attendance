@@ -92,9 +92,9 @@ const DropDown = () => {
   return (
     <div className='px-4' >
       {/* <h4>Select an Option</h4> */}
-      <select onChange={handleSelectClick} defaultValue={dashBoard ? "" : "month"}>
-        {dashBoard && <option value="" disabled>-- Select Range --</option>}
-        {dashBoard && <option value="day">Daily</option>}
+      <select onChange={handleSelectClick} className='p-1 border rounded btn' defaultValue="">
+        <option value="" disabled>-- Select Range --</option>
+        <option value="day">Daily</option>
         <option value="week">Weekly</option>
         <option value="month">Monthly</option>
       </select>

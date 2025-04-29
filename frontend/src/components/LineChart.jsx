@@ -236,7 +236,7 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import avgMonth, { weekPerDay } from '../api/queries/avgMonthWeek';
-import DropDown from './DropDown';
+import DropDown from './DropDownLine';
 import { useAdmin } from '../context/AuthContext';
 import dayjs from 'dayjs';
 
@@ -281,6 +281,9 @@ const LineChart = () => {
 
     const timeToDecimal = (timeStr) => {
         if (!timeStr) return 0;
+        if (timeStr == null || timeStr == undefined) {
+            timeStr = "00:00:00"
+        }
         const [h, m, s] = timeStr.split(':').map(Number);
         return h + (m / 60) + (s ? s / 3600 : 0);
     };
@@ -304,6 +307,9 @@ const LineChart = () => {
 
 
     const formatDateLabel = (dateStr) => {
+        if (dateStr == null || dateStr == undefined || dateStr == 0) {
+            dateStr = "00:00:00"
+        }
         const [year, month, day] = dateStr.split('-');
         const date = new Date(year, month - 1, day);
         return `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}`;
@@ -321,6 +327,9 @@ const LineChart = () => {
         breakHoursData = new Array(12).fill(0);
 
         data?.forEach(({ month, avg_total_hours, avg_active_hours, avg_break_hours }) => {
+            if (month == null || month == undefined) {
+                month = "0000-00-00"
+            }
             const monthIndex = parseInt(month.split("-")[1], 10) - 1;
             if (monthIndex >= 0 && monthIndex <= 11) {
                 totalHoursData[monthIndex] = timeToDecimal(avg_total_hours);

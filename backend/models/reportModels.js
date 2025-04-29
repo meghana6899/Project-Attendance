@@ -123,7 +123,8 @@ const avgLogoutTimestd = async() => {
         FROM attendance_stu
       WHERE DATE(checkout) BETWEEN CURDATE() - INTERVAL 30 DAY AND NOW()
         GROUP BY stu_id, DATE(checkout)
-    ) AS daily_first_checkout;`);
+    ) AS daily_first_checkout
+    group by stu_id`);
     console.log(response)
       return response
     } catch (error) {

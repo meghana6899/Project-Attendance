@@ -32,7 +32,7 @@ const totalWorkingHoursForRange = async (table, startDate, endDate, user_id, col
       const query = `
         SELECT ${column}, 
   CONCAT(
-    ceil(AVG(TIME_TO_SEC(${tablecolumn})) / 3600), 'hr ',
+    floor(AVG(TIME_TO_SEC(${tablecolumn})) / 3600), 'hr ',
     LPAD(CEIL((AVG(TIME_TO_SEC(${tablecolumn})) % 3600) / 60), 2, '0'), ' min'
   ) AS avg_${tablecolumn}
 FROM ${table}

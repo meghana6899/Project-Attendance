@@ -3,12 +3,34 @@ import reportsAPi from '../api/queries/reportsAPi';
 import { useEffect, useState } from 'react';
 import { useAdmin } from '../context/AuthContext';
 import ReportCards from './ReportCards';
-
+import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
+import { IoSearchOutline } from "react-icons/io5";
 
 function EmployeesTable() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [value, setValue] = useState('')
+  const [allData, setAllData] = useState([])
   const [users, setUsers] = useState({ average_checkout_time: "", avergae_checkin_time: "", avg_active_hours: "", avg_break_hours: "", avg_total_hours: "" })
   const { setEmployee, employee, setShowcard, showcard } = useAdmin();
+  console.log(data)
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 5;
+  const lastIndex = currentPage * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const records = data?.avgTh?.slice(firstIndex, lastIndex) || [];
+  const npage = Math.ceil(data?.avgTh?.length / recordsPerPage);
+  const nextPage = () => {
+    if (currentPage !== lastIndex) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+  const prePage = () => {
+    if (currentPage !== firstIndex) {
+      setCurrentPage(currentPage - 1)
+    }
+
+  }
 
 
   var response;
@@ -53,11 +75,44 @@ function EmployeesTable() {
 
   };
 
+  const handleChange = (e) => {
+    const input = e.target.value.toLowerCase();
+    setValue(input);
+
+    if (!input) {
+      // Reset to original data
+      setData(allData);
+      setCurrentPage(1);
+      return;
+    }
+
+    // Filter avgTh and find matching indexes
+    const filteredTh = allData?.avgTh?.filter(emp =>
+      emp.full_name.toLowerCase().startsWith(input)
+    );
+
+    // Get corresponding indexes of filtered avgTh
+    const indexes = filteredTh.map(emp => allData.avgTh.indexOf(emp));
+
+    // Map indexes to filter avglt and avgLoT
+    const filteredLt = indexes.map(i => allData.avglt?.[i] || {});
+    const filteredLoT = indexes.map(i => allData.avgLoT?.[i] || {});
+
+    // Construct the new filtered object
+    const filteredData = {
+      avgTh: filteredTh,
+      avglt: filteredLt,
+      avgLoT: filteredLoT
+    };
+
+    setData(filteredData);
+    setCurrentPage(1);
+  };
 
 
 
-  const renderedData = data?.avgTh?.length > 0
-    ? data.avgTh.map((item, i) => (
+  const renderedData = records.length > 0
+    ? records.map((item, i) => (
       <tr key={i} className='px-6 py-5 border'>
         <td className='py-3 px-3 border'>{item.emp_id}</td>
         <td className='py-3 px-3 border'>{item.full_name}</td>
@@ -83,7 +138,12 @@ function EmployeesTable() {
 
 
   return (<>
-    <div className=" d-flex justify-content-center my-4">
+    <form className='form m-3 w-25 d-flex text-center bg-white align-items-center border rounded p-1'  >
+
+      <IoSearchOutline className='align-items-center justify-content-center text-secondary' />
+      <input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`Search Employee`} />
+    </form>
+    <div className="container d-flex justify-content-center my-4">
       <div className="table-responsive" style={{ width: "100%" }}>
         <table
           className="table table-borderless table-hover text-center align-middle shadow-sm"
@@ -144,6 +204,20 @@ function EmployeesTable() {
         )}
       </div>
     </div>
+    <nav>
+      <ul className='d-flex text-center'>
+        <li className={`page-item list-group-item ${currentPage == 1 ? 'disabled text-secondary' : 'text-black'}`}>
+          <a href='#' className='page-link' onClick={prePage}><SlArrowLeft /></a>
+        </li>
+        <li className='page-item mx-2 my-auto list-group-item text-center align-items-center'>
+          {currentPage}/{npage}
+        </li>
+        <li className={`page-item list-group-item ${currentPage == npage ? 'disabled text-secondary' : 'text-black'}`}>
+          <a href='#' className='page-link' onClick={nextPage}><SlArrowRight /></a>
+        </li>
+
+      </ul>
+    </nav >
   </>
   )
 }
