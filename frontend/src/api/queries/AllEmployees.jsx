@@ -10,6 +10,7 @@ const AllEmployees = async () => {
 
         }
     });
+    console.log('all employees',response.data)
 
     return response.data
 

@@ -55,7 +55,9 @@ function CheckIncheckOut() {
                 user_id: formData.username,
                 password: formData.password
             })
-            if (response) {
+            console.log(response);
+            console.log('aprtition beyabsjgkasg');
+            if (response.data.success) {
 
                 setFormData({ ...formData, password: "", username: "" })
                 setToast("Checkin Successful")
@@ -64,12 +66,19 @@ function CheckIncheckOut() {
                     setToaster(false)
                 }, 1000)
             }
+            else{
+
+                
+                setFormData({ ...formData, password: "", username: "" })
+                setMessage('checkin is already Done')
+            }
         }else if(type==='checkout'){
             const response = await axios.post('http://localhost:3000/api/checkout', {
                 user_id: formData.username,
                 password: formData.password
             })
-            if (response) {
+            console.log(response.data.success);
+            if (response.data.success) {
 
                 setFormData({ ...formData, password: "", username: "" })
                 setToast("Checkout Successful")
@@ -78,6 +87,11 @@ function CheckIncheckOut() {
                     setToaster(false)
                 }, 1000)
             }
+            else{
+                setFormData({ ...formData, password: "", username: "" })
+                setMessage("Checkout is already Done")
+            }
+            
 
         }
 

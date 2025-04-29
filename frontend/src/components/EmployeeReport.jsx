@@ -58,7 +58,7 @@ function EmployeesTable() {
 
   const renderedData = data?.avgTh?.length > 0
     ? data.avgTh.map((item, i) => (
-      <tr key={i} className='px-6 py-5 border'>
+      <tr key={i} className='px-6 py-5 border' style={{cursor:'pointer'}}>
         <td className='py-3 px-3 border'>{item.emp_id}</td>
         <td className='py-3 px-3 border'>{item.full_name}</td>
         <td className='py-3 px-3 border'>{data?.avglt?.[i]?.average_checkin_time || '-'}</td>

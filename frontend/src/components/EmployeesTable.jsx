@@ -35,7 +35,7 @@ function EmployeesTable() {
 
 
   var response;
-  useEffect(() => {
+
     const fetchdetails = async () => {
 
       try {
@@ -54,6 +54,8 @@ function EmployeesTable() {
         console.log(err)
       }
     }
+    useEffect(() => {
+
     fetchdetails()
   }, [employee, add])
 
@@ -71,16 +73,19 @@ function EmployeesTable() {
 
 
 
-  const renderedData = data.map(({ emp_id, first_name, last_name, email, role, join_date }, index) => {
+  const renderedData = data.map(({ emp_id, first_name, last_name, email, role, join_date,disabled }, index) => {
+    console.log(disabled===1);
+    console.log('here is the console.log')
     return (
-      <tr key={index} className='px-5 py-5'>
+      <tr key={index} className='py-3 px-3' style={{cursor:'pointer'}}>
 
-        <td className='py-3 px-3 border'>{emp_id}</td>
-        <td className='py-3 px-3 border'>{first_name}</td>
-        <td className='py-3 px-3 border'>{last_name}</td>
-        <td className='py-3 px-3 border'>{email}</td>
-        <td className='py-3 px-3 border'>{role}  </td>
-        <td className='py-3 px-3 border'>{join_date ? join_date.split('T')[0] : ""}</td>
+
+        <td className={disabled===0 ? 'bg-secondary text-white py-3 px-3 border': 'bg-white py-3 px-3 border'}>{emp_id}</td>
+        <td className={disabled===0 ? 'bg-secondary text-white py-3 px-3 border': 'bg-white py-3 px-3 border'}>{first_name}</td>
+        <td className={disabled===0 ? 'bg-secondary  text-white py-3 px-3 border': 'bg-white py-3 px-3 border'}>{last_name}</td>
+        <td className={disabled===0 ? 'bg-secondary text-white py-3 px-3 border': 'bg-white py-3 px-3 border'}>{email}</td>
+        <td className={disabled===0 ? 'bg-secondary text-white py-3 px-3 border': 'bg-white py-3 px-3 border'}>{role}  </td>
+        <td className={disabled===0 ? 'bg-secondary text-white py-3 px-3 border': 'bg-white py-3 px-3 border'}>{join_date ? join_date.split('T')[0] : ""}</td>
 
 
       </tr>
@@ -223,7 +228,7 @@ function EmployeesTable() {
                 minWidth: "300px",
               }}
             >
-              <Card />
+              <Card refreshData={fetchdetails} />
             </div>
           </div>
         )}

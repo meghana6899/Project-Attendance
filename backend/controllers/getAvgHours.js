@@ -5,7 +5,7 @@ const express = require('express');
 const calculateAvgHoursOnRange = async (req, res) => {
     console.log("entrerd ")
     const id = req.params.id;
-    console.log('hiiiiiiiii')
+   
     //Change after testing
     const { startDate, endDate } = req.body;
    
