@@ -51,7 +51,7 @@ function EmployeesTable() {
         // else {
         //   setData([response.data])
         // }
-
+        setAllData(response.data)
         setData(response.data);
 
 
@@ -88,7 +88,7 @@ function EmployeesTable() {
 
     // Filter avgTh and find matching indexes
     const filteredTh = allData?.avgTh?.filter(emp =>
-      emp.full_name.toLowerCase().startsWith(input)
+      emp.full_name.toLowerCase().startsWith(input) || emp.full_name.toLowerCase().includes(input)
     );
 
     // Get corresponding indexes of filtered avgTh
@@ -139,9 +139,9 @@ function EmployeesTable() {
 
   return (<>
     <form className='form m-3 w-25 d-flex text-center bg-white align-items-center border rounded p-1'  >
-
-      <IoSearchOutline className='align-items-center justify-content-center text-secondary' />
-      <input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`Search Employee`} />
+      {/* 
+      <IoSearchOutline className='align-items-center justify-content-center text-secondary' /> */}
+      <input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`🔍Search Employee`} />
     </form>
     <div className="container d-flex justify-content-center my-4">
       <div className="table-responsive" style={{ width: "100%" }}>

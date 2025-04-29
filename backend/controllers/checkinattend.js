@@ -40,6 +40,12 @@ const checkin = async (req, res) => {
                     message: "Checkin time of employee is updated",
                 });
             } 
+            else{
+                return res.json({
+                    success:false,
+                    message:"Already Checkin is done",
+                })
+            }
     // else if (record.checkin !== null && record.checkout === null) {
     //             const date=record.date;
     //             console.log("Updating checkout for employee...");
@@ -99,6 +105,12 @@ const checkin = async (req, res) => {
                     message: "Checkin time of student is updated",
                 });
             } 
+            else{
+                return res.json({
+                    success:false,
+                    message:"Already Checkin is done",
+                })
+            }
     //         else if (record.checkin !== null && record.checkout === null) {
     //             console.log("Updating checkout for student...");
     //             const date=record.date;
@@ -186,6 +198,12 @@ const checkout=async(req,res)=>{
                     message: "Checkout time of employee is updated",
                 });
             }
+            else{
+                return res.json({
+                    success:false,
+                    message:"Already Checkout is done",
+                })
+            }
         } catch (err) {
             console.error("Error in employee checkin:", err);
             return res.status(500).json({
@@ -226,6 +244,12 @@ LIMIT 1`,
             success: true,
             message: "Checkout time of student is updated",
         });
+    }
+    else{
+        return res.json({
+            success:false,
+            message:"Already Checkout is done",
+        })
     }
 } catch (err) {
     console.error("Error in student checkin:", err);

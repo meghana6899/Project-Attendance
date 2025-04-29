@@ -39,10 +39,31 @@ const setResetPassword = async(email,  callback) => {
 const findUserById=async(table,user_id,id)=>{
 
     const query=`select * from ${table} where ${user_id}=?`;
-    const [row]=pool.execute(query,[id])
+    const [row]=db.execute(query,[id])
+}
+
+const candidateDisable=async(table,user_id,id)=>{
+    const query=`UPDATE ${table}
+SET disabled = 0
+WHERE ${user_id}=?;`
+const [rows]=await db.execute(query,[id]);
+console.log("Rows", rows)
+return rows;
+
+
+}
+const candidateEnable=async(table,user_id,id)=>{
+    const query=`UPDATE ${table}
+SET disabled = 1
+WHERE ${user_id}=?;`
+const [rows]=await db.execute(query,[id]);
+console.log("Rows", rows)
+return rows;
+
+
 }
 
   
 
 
-module.exports = {findUser,findUserById, setResetPassword};
+module.exports = {findUser,findUserById, setResetPassword,candidateDisable,candidateEnable};

@@ -87,7 +87,7 @@ function StudentsTable() {
 
     // Filter avgTh and find matching indexes
     const filteredTh = allData?.avgTh?.filter(emp =>
-      emp.full_name.toLowerCase().startsWith(input)
+      emp.full_name.toLowerCase().startsWith(input) || emp.full_name.toLowerCase().includes(input)
     );
 
     // Get corresponding indexes of filtered avgTh
@@ -141,8 +141,8 @@ function StudentsTable() {
   return (<>
     <form className='form m-3 w-25 d-flex text-center bg-white align-items-center border rounded p-1'  >
 
-      <IoSearchOutline className='align-items-center justify-content-center text-secondary' />
-      <input className='text-secondary border-0 px-1 w-100 form-control' value={value} onChange={handleChange} placeholder={`Search Student`} />
+      {/* <IoSearchOutline className='align-items-center justify-content-center text-secondary' /> */}
+      <input className='text-secondary border-0 px-1 w-100 form-control' value={value} onChange={handleChange} placeholder={`🔍Search Student`} />
     </form>
     <div className="container d-flex justify-content-center my-4">
       <div className="table-responsive" style={{ width: "100%" }}>

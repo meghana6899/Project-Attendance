@@ -11,7 +11,9 @@ const createTables = async () => {
         email VARCHAR(100),
         password VARCHAR(255),
         join_date DATE,
-        role VARCHAR(50)
+        role VARCHAR(50),
+        first_login TINYINT NULL DEFAULT 1,
+        disabled TINYINT NULL DEFAULT 1 AFTER first_login
       )
     `);
 
@@ -24,7 +26,9 @@ const createTables = async () => {
         email VARCHAR(100),
         password VARCHAR(255),
         join_date Date,
-        role VARCHAR(50)
+        role VARCHAR(50),
+        first_login TINYINT NULL DEFAULT 1,
+        disabled TINYINT NULL DEFAULT 1 AFTER first_login
       )
     `);
 
@@ -36,7 +40,8 @@ const createTables = async () => {
         checkin TIME,
         checkout TIME,
         date DATE,
-        FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
+        FOREIGN KEY (emp_id) REFERENCES employees(emp_id),
+        
       )
     `);
 

@@ -4,15 +4,17 @@ const updateUser=require('../models/updateUsers');
 const deleteaUser=require('../models/DeleteUser');
 const CreateNewUser=require('../models/CreateNewUser');
 const bcrypt = require('bcrypt');
+const {candidateDisable,candidateEnable}=require('../models/userModel');
 
 
 const AllEmployees=async(req,res)=>{
-    const [row]=await pool.execute('select emp_id,first_name,last_name,email,join_date,role from employees',[]);
+    const [row]=await pool.execute('select emp_id,first_name,last_name,email,join_date,role,disabled from employees',[]);
+    console.log(row);
     res.send(row);
     
 }
 const AllStudents=async(req,res)=>{
-    const [row]=await pool.execute('select stu_id,first_name,last_name,email,join_date,role from students',[]);
+    const [row]=await pool.execute('select stu_id,first_name,last_name,email,join_date,role,disabled from students',[]);
     res.send(row);
     
     
@@ -90,6 +92,50 @@ const Delete_user_info = async (req, res) => {
       res.status(500).send({ error: "Email or ID already Exists" });
     }
   };
+  const disable_user=async(req,res)=>{
+    const id = req.params.id;
+  
+    try {
+      const isEmp = id.charAt(0) === 'E';
+      const table = isEmp ? 'employees' : 'students';
+      const column = isEmp ? 'emp_id' : 'stu_id';
+  
+      const update = await candidateDisable(table, column, id);
+      if (update.affectedRows > 0) {
+          console.log('------success-----')
+          res.status(200).json({ message: 'Disabled successful',status:200 });
+        } else {
+          res.status(404).json({ message: 'No record found to disable',status:404 });
+        }
+  
+    } catch (err) {
+      console.error("Update failed:", err);
+      res.status(500).send({ error: "Diabled failed" });
+    }
+
+  }
+  const enable_user=async(req,res)=>{
+    const id = req.params.id;
+  
+    try {
+      const isEmp = id.charAt(0) === 'E';
+      const table = isEmp ? 'employees' : 'students';
+      const column = isEmp ? 'emp_id' : 'stu_id';
+  
+      const update = await candidateEnable(table, column, id);
+      if (update.affectedRows > 0) {
+          console.log('------success-----')
+          res.status(200).json({ message: 'Enabled successful',status:200 });
+        } else {
+          res.status(404).json({ message: 'No record found to enable',status:404 });
+        }
+  
+    } catch (err) {
+      console.error("Update failed:", err);
+      res.status(500).send({ error: "enable failed" });
+    }
+
+  }
 
 
 
@@ -105,7 +151,9 @@ module.exports={
     AllStudents,
     Update_user_info,
     Delete_user_info,
-    Create_New_User
+    Create_New_User,
+    disable_user,
+    enable_user
     
 
 };

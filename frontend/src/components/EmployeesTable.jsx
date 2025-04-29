@@ -49,28 +49,30 @@ function EmployeesTable() {
 
 
   var response;
-  useEffect(() => {
-    const fetchdetails = async () => {
 
-      try {
-        response = await AllEmployees();
+  const fetchdetails = async () => {
 
-
-        if (Array.isArray(response)) {
-          setAllData(response)
-          setData(response)
-        } else if (typeof response === 'object') {
-          console.log("Its an object")
-        } else {
-          setAllData([response])
-          setData([response])
-        }
+    try {
+      response = await AllEmployees();
 
 
-      } catch (err) {
-        console.log(err)
+      if (Array.isArray(response)) {
+        setAllData(response)
+        setData(response)
+      } else if (typeof response === 'object') {
+        console.log("Its an object")
+      } else {
+        setAllData([response])
+        setData([response])
       }
+
+
+    } catch (err) {
+      console.log(err)
     }
+  }
+  useEffect(() => {
+
     fetchdetails()
   }, [employee, add])
 
@@ -116,16 +118,17 @@ function EmployeesTable() {
 
 
 
-  const renderedData = records?.map(({ emp_id, first_name, last_name, email, role, join_date }, index) => {
+  const renderedData = records?.map(({ emp_id, first_name, last_name, email, role, join_date, disabled }, index) => {
     return (
-      <tr key={index} className='px-5 py-5'>
+      <tr key={index} className='py-3 px-3' style={{ cursor: 'pointer' }}>
 
-        <td className='py-3 px-3 border'>{emp_id}</td>
-        <td className='py-3 px-3 border'>{first_name}</td>
-        <td className='py-3 px-3 border'>{last_name}</td>
-        <td className='py-3 px-3 border'>{email}</td>
-        <td className='py-3 px-3 border'>{role}  </td>
-        <td className='py-3 px-3 border'>{join_date ? join_date.split('T')[0] : ""}</td>
+
+        <td className={disabled === 0 ? 'bg-secondary text-white py-3 px-3 border' : 'bg-white py-3 px-3 border'}>{emp_id}</td>
+        <td className={disabled === 0 ? 'bg-secondary text-white py-3 px-3 border' : 'bg-white py-3 px-3 border'}>{first_name}</td>
+        <td className={disabled === 0 ? 'bg-secondary  text-white py-3 px-3 border' : 'bg-white py-3 px-3 border'}>{last_name}</td>
+        <td className={disabled === 0 ? 'bg-secondary text-white py-3 px-3 border' : 'bg-white py-3 px-3 border'}>{email}</td>
+        <td className={disabled === 0 ? 'bg-secondary text-white py-3 px-3 border' : 'bg-white py-3 px-3 border'}>{role}  </td>
+        <td className={disabled === 0 ? 'bg-secondary text-white py-3 px-3 border' : 'bg-white py-3 px-3 border'}>{join_date ? join_date.split('T')[0] : ""}</td>
 
 
       </tr>
@@ -225,8 +228,8 @@ function EmployeesTable() {
 
     <form className='form m-3 w-25 d-flex text-center bg-white align-items-center border rounded p-1'  >
 
-      <IoSearchOutline className='align-items-center justify-content-center text-secondary' />
-      <input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`Search Employee`} />
+      {/* <IoSearchOutline className='align-items-center justify-content-center text-secondary' /> */}
+      <input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`🔍Search Employee`} />
     </form>
     <div className="container d-flex justify-content-center my-4">
 
@@ -294,7 +297,7 @@ function EmployeesTable() {
                 minWidth: "300px",
               }}
             >
-              <Card />
+              <Card refreshData={fetchdetails} />
             </div>
           </div>
         )}

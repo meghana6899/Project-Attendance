@@ -4,19 +4,23 @@ import { useState, useEffect } from "react";
 import { useAdmin } from "../context/AuthContext";
 import updateDetails from "../api/queries/updateDetails";
 import DeleteUser from "../api/queries/DeleteUser";
+import axios from 'axios';
 
 
 
 
-const Card = () => {
+
+const Card = ({refreshData}) => {
   const [data, setData] = useState();
   // const [id,setId]=useState();
   const [userDelete, setuserDelete] = useState(false);
 
-  const { employee, setEmployee, setShowcard, setAccept } = useAdmin();
+
+  const { employee, setEmployee, setShowcard, showcard,setAccept } = useAdmin();
   const [save, setSave] = useState(false);
   const user_id = employee && 'stu_id' in employee ? 'stu_id' : 'emp_id';
   const userValue = employee?.[user_id];
+  const [disable,setDisable]=useState(employee.disabled)
 
   const [edit, setEdit] = useState({ first_name: true, last_name: true, email: true, role: true });
   const [editData, setEditData] = useState({ user_id: '', first_name: '', last_name: '', email: '', role: '' });
@@ -27,10 +31,11 @@ const Card = () => {
         first_name: employee.first_name || '',
         last_name: employee.last_name || '',
         role: employee.role || '',
-        email: employee.email || ''
+        email: employee.email || '',
+        
       });
     }
-  }, [employee, userValue]);
+  }, [employee, userValue,showcard]);
 
 
   useEffect(() => {
@@ -73,6 +78,29 @@ const Card = () => {
     setAccept(true);
   }
 
+  
+  
+  const handleDisable=async()=>{
+    
+    const response=await axios.put(`http://localhost:3000/api/details/${userValue}`);
+    console.log(response);
+    setDisable(0);
+    setShowcard(false);
+    refreshData();
+
+
+    }
+  
+    const handleEnable=async()=>{
+    
+      const response=await axios.put(`http://localhost:3000/api/details/enable/${userValue}`);
+      console.log(response);
+      setDisable(1)
+      setShowcard(false)
+      refreshData();
+  
+  
+      }
 
 
   const handleSave = async () => {
@@ -295,6 +323,21 @@ const Card = () => {
         >
           Delete
         </button>
+       {disable===1 && <button
+          className="btn btn-outline-danger"
+          id="disable"
+          onClick={handleDisable}
+        >
+          Disable
+        </button>}
+        {disable===0 && <button
+          className="btn btn-outline-success"
+          id="enable"
+          onClick={handleEnable}
+        >
+          enable
+        </button>}
+        
         <button
           className="btn btn-outline-secondary"
           id="close"

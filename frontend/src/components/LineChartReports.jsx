@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import avgMonth, { weekPerDay } from '../api/queries/avgMonthWeek';
-import DropDown from './DropDownLine';
+import DropDownLine from './DropDownLine';
 import { useAdmin } from '../context/AuthContext';
 import dayjs from 'dayjs';
 
@@ -249,7 +249,7 @@ const LineChart = () => {
                 <h2 className="text-2xl font-bold text-gray-700 mb-2 text-center p-2">
                     {selection === 'month' ? 'Monthly Work Hours Overview' : 'Weekly Work Hours Overview'}
                 </h2>
-                <DropDown />
+                <DropDownLine />
             </div>
             <div style={{ height: '335px', padding: '1rem' }}>
                 <Line options={options} data={lineardata} />

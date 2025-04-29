@@ -3,7 +3,7 @@ import { useAdmin } from '../context/AuthContext';
 
 
 function ForgotPassword() {
-    const { setFirstLogin, firstLogin } = useAdmin
+    const { setFirstLogin, firstLogin } = useAdmin();
     const handleSubmit = async (event) => {
         event.preventDefault();
         localStorage.getItem('email')

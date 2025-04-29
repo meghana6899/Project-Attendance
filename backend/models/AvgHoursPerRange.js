@@ -33,7 +33,7 @@ const totalWorkingHoursForRange = async (table, startDate, endDate, user_id, col
         SELECT ${column}, 
   CONCAT(
     floor(AVG(TIME_TO_SEC(${tablecolumn})) / 3600), 'hr ',
-    LPAD(CEIL((AVG(TIME_TO_SEC(${tablecolumn})) % 3600) / 60), 2, '0'), ' min'
+    LPAD(Floor((AVG(TIME_TO_SEC(${tablecolumn})) % 3600) / 60), 2, '0'), ' min'
   ) AS avg_${tablecolumn}
 FROM ${table}
 WHERE ${column} = ? AND date BETWEEN ? AND ?
