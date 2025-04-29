@@ -166,7 +166,7 @@ function EmployeesTable() {
   }
 
 
-  return (<><div className="text-end  mx-5">
+  return (<><div className="  mx-5">
     {accept && <div className="shadow-lg mx-auto rounded p-3 border-0 text-start" style={{
       position: "fixed",
       top: "10%",
@@ -185,7 +185,7 @@ function EmployeesTable() {
     }
 
   </div>
-    <div className="text-start mx-5   ">
+    <div className="text-start mx-5   " style={{width:'200px',position:'relative' ,top:'-25px'}}>
       <input
         type="button"
         value="ADD"
@@ -225,12 +225,17 @@ function EmployeesTable() {
         </div>
       </div>
     )}
+    <div className='d-flex justify-content-center align-items-center' style={{marginTop:'-72px',width:'500px',position:'relative',left:'350px'}}>
+    <form className='form w-100 d-flex text-center bg-white align-items-center justify-content-center border rounded p-1'  >
 
-    <form className='form m-3 w-25 d-flex text-center bg-white align-items-center border rounded p-1'  >
+{/* <IoSearchOutline className='align-items-center justify-content-center text-secondary' /> */}
+<input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`🔍Search Employee`} />
+</form>
+      
 
-      {/* <IoSearchOutline className='align-items-center justify-content-center text-secondary' /> */}
-      <input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`🔍Search Employee`} />
-    </form>
+    </div>
+
+  
     <div className="container d-flex justify-content-center my-4">
 
       <div className="table-responsive" style={{ width: "100%" }}>

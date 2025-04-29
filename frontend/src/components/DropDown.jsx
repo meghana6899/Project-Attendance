@@ -63,6 +63,8 @@ const DropDown = () => {
 
     if (selectedValue === 'day') {
       startDate.setDate(currentDate.getDate() - 1);
+     
+   
 
     } else if (selectedValue === 'week') {
       startDate.setDate(currentDate.getDate() - 7);

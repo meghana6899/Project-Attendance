@@ -1,19 +1,46 @@
-const pool = require('../configdb/db'); //  MySQL config
+const mysql = require('mysql2/promise');
 
 const createTables = async () => {
   try {
+    // Step 1: Connect without specifying a DB to create it
+    const rootPool = await mysql.createPool({
+      host: 'localhost',
+      user: 'root',
+      password: 'Deva_9603',
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+    });
+
+    // Create the database
+    await rootPool.query('CREATE DATABASE IF NOT EXISTS attendance_management_system');
+    console.log("Database created or already exists.");
+
+    // Close the first pool
+    await rootPool.end();
+
+    // Step 2: Create a new pool that *uses* the new database
+    const pool = await mysql.createPool({
+      host: 'localhost',
+      user: 'root',
+      password: 'Deva_9603',
+      database: 'attendance_management_system',
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+    });
     // 1. Employees table
     await pool.execute(`
       CREATE TABLE IF NOT EXISTS employees (
         emp_id VARCHAR(10) PRIMARY KEY,
         first_name VARCHAR(100),
         last_name VARCHAR(100),
-        email VARCHAR(100),
+        email VARCHAR(100) UNIQUE,
         password VARCHAR(255),
         join_date DATE,
         role VARCHAR(50),
         first_login TINYINT NULL DEFAULT 1,
-        disabled TINYINT NULL DEFAULT 1 AFTER first_login
+        disabled TINYINT NULL  DEFAULT 1 
       )
     `);
 
@@ -23,12 +50,12 @@ const createTables = async () => {
          stu_id VARCHAR(10) PRIMARY KEY,
         first_name VARCHAR(100),
         last_name VARCHAR(100),
-        email VARCHAR(100),
+        email VARCHAR(100) UNIQUE,
         password VARCHAR(255),
         join_date Date,
         role VARCHAR(50),
         first_login TINYINT NULL DEFAULT 1,
-        disabled TINYINT NULL DEFAULT 1 AFTER first_login
+        disabled TINYINT NULL DEFAULT 1
       )
     `);
 
@@ -40,7 +67,7 @@ const createTables = async () => {
         checkin TIME,
         checkout TIME,
         date DATE,
-        FOREIGN KEY (emp_id) REFERENCES employees(emp_id),
+        FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
         
       )
     `);

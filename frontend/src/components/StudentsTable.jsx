@@ -154,7 +154,7 @@ function StudentsTable() {
       }
 
     </div>
-    <div className="text-start mx-5   ">
+    <div className="text-start mx-5   " style={{width:'200px',position:'relative' ,top:'-25px'}}>
       <input
         type="button"
         value="ADD"
@@ -179,6 +179,7 @@ function StudentsTable() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          
         }}
       >
         <div
@@ -194,11 +195,15 @@ function StudentsTable() {
         </div>
       </div>
     )}
-    <form className='form m-3 w-25 d-flex text-center bg-white align-items-center border rounded p-1'  >
+     <div className='d-flex justify-content-center align-items-center' style={{marginTop:'-72px',width:'500px',position:'relative',left:'350px'}}>
+    <form className='form w-100 d-flex text-center bg-white align-items-center justify-content-center border rounded p-1'  >
 
-      {/* <IoSearchOutline className='align-items-center justify-content-center text-secondary' /> */}
-      <input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`🔍Search Student`} />
-    </form>
+{/* <IoSearchOutline className='align-items-center justify-content-center text-secondary' /> */}
+<input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`🔍Search Employee`} />
+</form>
+      
+
+    </div>
 
     <div className="container d-flex justify-content-center my-4">
       <div className="table-responsive" style={{ width: "100%" }}>

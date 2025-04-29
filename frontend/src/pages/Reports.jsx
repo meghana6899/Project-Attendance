@@ -12,24 +12,26 @@ const Reports = () => {
   return (
 
     <>
-      <div className="container d-flex flex-column align-items-end p-4">
+    <div className="container d-flex flex-column align-items-end p-4">
+      
+      {/* Button Group */}
+      <div className="d-flex gap-3 mb-4" >
+        <input type='button'
+          className={`btn-switch ${e === 'employees' ? 'active' : ''}`}
+          onClick={() => setE('employees')}
+          value='👨‍💼 Employees'
+        />
+          
+     
 
-        {/* Button Group */}
-        <div className="d-flex gap-3 mb-4">
-          <button
-            className={`btn-switch ${e === 'employees' ? 'active' : ''}`}
-            onClick={() => setE('employees')}
-          >
-            👨‍💼 Employees
-          </button>
-
-          <button
-            className={`btn-switch ${e === 'students' ? 'active' : ''}`}
-            onClick={() => setE('students')}
-          >
-            🎓 Students
-          </button>
-        </div>
+         <input type='button'
+          className={`btn-switch ${e === 'students' ? 'active' : ''}`}
+          onClick={() => setE('students')}
+          value='🎓 Students '
+       />
+          
+        
+      </div>
 
         {/* Table Section */}
         <div className="w-100">
