@@ -42,14 +42,15 @@ function CheckIncheckOut() {
     };
 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (type) => {
+     
 
         setFormData({});
         if (!validate()) return;
 
 
         try {
+            if(type==='checkin'){
             const response = await axios.post('http://localhost:3000/api/checkin', {
                 user_id: formData.username,
                 password: formData.password
@@ -57,13 +58,28 @@ function CheckIncheckOut() {
             if (response) {
 
                 setFormData({ ...formData, password: "", username: "" })
-                setToast("Submitted Successfully")
+                setToast("Checkin Successful")
+                setToaster(true)
+                setTimeout(() => {
+                    setToaster(false)
+                }, 1000)
+            }
+        }else if(type==='checkout'){
+            const response = await axios.post('http://localhost:3000/api/checkout', {
+                user_id: formData.username,
+                password: formData.password
+            })
+            if (response) {
+
+                setFormData({ ...formData, password: "", username: "" })
+                setToast("Checkout Successful")
                 setToaster(true)
                 setTimeout(() => {
                     setToaster(false)
                 }, 1000)
             }
 
+        }
 
 
         } catch (error) {
@@ -72,10 +88,12 @@ function CheckIncheckOut() {
             console.log("Catch", error)
             setMessage(error.response?.data?.message || error.response?.data?.msg)
             setFormData({ ...formData, password: "" })
+           
 
         }
 
     };
+   
 
 
     return (
@@ -89,7 +107,7 @@ function CheckIncheckOut() {
             <div div className="d-flex justify-content-center vh-90 m-5" >
                 <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "400px" }}>
                     <h3 className="text-center mb-4">Check-In/Check-Out</h3>
-                    <form onSubmit={handleSubmit}>
+                    
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Your ID</label>
                             <input
@@ -115,9 +133,13 @@ function CheckIncheckOut() {
                             />
                             {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                         </div>
+                        <div className='d-flex gap-3 mt-3'>
+                        <input type="submit" className="btn btn-primary w-100" value="Checkin" onClick={()=>handleSubmit('checkin')}/>
+                        <input type="submit" className="btn btn-danger w-100" value="Checkout" onClick={()=>handleSubmit('checkout')}/>
+                        </div>
 
-                        <input type="submit" className="btn btn-primary w-100" value="Submit" />
-                    </form>
+                       
+                    
 
                     {message && <p className="text-center mt-3 text-danger">{message}</p>}
 

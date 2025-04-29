@@ -2,7 +2,7 @@ const express=require('express');
 
 const {createUser}=require('../controllers/loginsignup');
 
-const {checkin}=require('../controllers/checkinattend');
+const {checkin,checkout}=require('../controllers/checkinattend');
 
 const { DataFilled,DataPresent,validateInfo}=require('../middleware/validate');
 
@@ -18,6 +18,7 @@ const router=express.Router();
 router.post('/signup',DataFilled,DataPresent,validateInfo,createUser);
 
 router.post('/checkin',DataCheck,validatetable,CheckingUserPresentOrNot,validatePassword,checkin);
+router.post('/checkout',DataCheck,validatetable,CheckingUserPresentOrNot,validatePassword,checkout);
 router.get('/sendmail', sendMail);
 
 
