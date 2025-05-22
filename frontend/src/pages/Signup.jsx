@@ -57,7 +57,7 @@ function Signup() {
     try{
         console.log("Sending formData:", formData);
 
-        const response=await axios.post('http://localhost:3000/api/signup',formData);
+        const response=await axios.post('/api/signup',formData);
         console.log(response);
         setMessage('Signup successful!');
 

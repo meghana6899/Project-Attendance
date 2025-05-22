@@ -171,6 +171,8 @@ import Checkinuser from './Checkinuser';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ReportCards = () => {
+  console.log("ReportCards");
+  
   const {
     setShowcard, setStartDate, setEndDate, setDate, date,
     setEmployee, setAvgActiveHours, setAvgBreakHours, setAvgTotalHours,
@@ -178,6 +180,7 @@ const ReportCards = () => {
   } = useAdmin();
 
   useEffect(() => {
+    console.log("useEffect in ReportCards");
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');

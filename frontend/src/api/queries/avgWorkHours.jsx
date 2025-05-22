@@ -15,7 +15,7 @@ async function avgWorkHours(startDate, endDate) {
     else {
         users = 'student'
     }
-    const response = await axios.post(`http://localhost:3000/api/details/avgHours/${users}/${user.id}`, {
+    const response = await axios.post(`/api/details/avgHours/${users}/${user.id}`, {
         startDate,
         endDate
     }, {

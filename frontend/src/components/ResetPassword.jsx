@@ -49,12 +49,12 @@ const ResetPassword = () => {
         }
         try {
 
-            const response = await axios.post(`http://localhost:3000/api/resetpassword`, { token: resetToken, password: formData.password });
+            const response = await axios.post(`/api/resetpassword`, { token: resetToken, password: formData.password });
 
             if (response.data.success) {
 
                 // Redirect to login or show success message
-                const resset = await axios.post(`http://localhost:3000/api/auth/reset-flag`, {
+                const resset = await axios.post(`/api/auth/reset-flag`, {
                     email: response.data.email,
 
                 });

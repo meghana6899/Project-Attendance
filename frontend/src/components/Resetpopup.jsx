@@ -18,7 +18,7 @@ const Resetpopup = () => {
     const user1 = JSON.parse(user);
 
     try {
-      const response = await axios.post(`http://localhost:3000/api/forgetpassword`, {
+      const response = await axios.post(`/api/forgetpassword`, {
         email: email,
         user_id: user1.id,
       });

@@ -229,7 +229,7 @@ function EmployeesTable() {
     <form className='form w-100 d-flex text-center bg-white align-items-center justify-content-center border rounded p-1'  >
 
 {/* <IoSearchOutline className='align-items-center justify-content-center text-secondary' /> */}
-<input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`🔍Search Employee`} />
+<input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`🔍Search `} />
 </form>
       
 

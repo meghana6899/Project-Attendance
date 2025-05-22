@@ -34,7 +34,7 @@ function EmployeesTable() {
 
 
   var response;
-  var response2;
+
   useEffect(() => {
     const fetchdetails = async () => {
 
@@ -64,12 +64,13 @@ function EmployeesTable() {
   }, [employee])
 
   const handleClick = (e) => {
+    console.log("Row clicked");
     const row = e.target.closest('tr');
     if (!row || row.rowIndex === 0) return;
 
     const rowIndex = row.rowIndex - 1;
 
-    setEmployee(data.avgTh[rowIndex]);
+    setEmployee(data?.avgTh[rowIndex]);
 
     setShowcard(true)
 
@@ -92,11 +93,11 @@ function EmployeesTable() {
     );
 
     // Get corresponding indexes of filtered avgTh
-    const indexes = filteredTh.map(emp => allData.avgTh.indexOf(emp));
+    const indexes = filteredTh?.map(emp => allData.avgTh.indexOf(emp));
 
     // Map indexes to filter avglt and avgLoT
-    const filteredLt = indexes.map(i => allData.avglt?.[i] || {});
-    const filteredLoT = indexes.map(i => allData.avgLoT?.[i] || {});
+    const filteredLt = indexes?.map(i => allData.avglt?.[i] || {});
+    const filteredLoT = indexes?.map(i => allData.avgLoT?.[i] || {});
 
     // Construct the new filtered object
     const filteredData = {
@@ -111,7 +112,7 @@ function EmployeesTable() {
 
 
 
-  const renderedData = records.length > 0
+  const renderedData = records?.length > 0
     ? records.map((item, i) => (
       <tr key={i} className='px-6 py-5 border'>
         <td className='py-3 px-3 border'>{item.emp_id}</td>
@@ -143,7 +144,7 @@ function EmployeesTable() {
     <form className='form w-100 d-flex text-center bg-white align-items-center justify-content-center border rounded p-1'  >
 
 {/* <IoSearchOutline className='align-items-center justify-content-center text-secondary' /> */}
-<input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`🔍Search Employee`} />
+<input className='text-secondary border-0 px-1 form-control w-100' value={value} onChange={handleChange} placeholder={`🔍Search `} />
 </form>
       
 

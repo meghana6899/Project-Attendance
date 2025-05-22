@@ -10,7 +10,7 @@ const FetchAverageHours = async ({
   setAvgTotalHours
 }) => {
   try {
-    const response = await axios.post(`http://localhost:3000/api/details/AvgHours/info/${userValue}`, {
+    const response = await axios.post(`/api/details/AvgHours/info/${userValue}`, {
       startDate,
       endDate,
     }, {

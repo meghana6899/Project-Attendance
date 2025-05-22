@@ -22,7 +22,8 @@ ChartJS.register(
 );
 
 const LineChart = () => {
-    const [data, setData] = useState(null);
+    console.log("LineChart")
+    const [data, setData] = useState([]);
     const { setdashBoard, selection, employee } = useAdmin();
     //const user = JSON.parse(localStorage.getItem('user'));
 
@@ -40,6 +41,7 @@ const LineChart = () => {
                     : await weekPerDay(userValue);
                 setData(result);
             } catch (error) {
+                console.log("Error fetching data:", error);
                 console.log(error);
             }
         };
@@ -48,6 +50,7 @@ const LineChart = () => {
     }, [selection]);
 
     const timeToDecimal = (timeStr) => {
+        console.log("timeStr", timeStr)
         if (!timeStr) return 0;
         if (timeStr == null || timeStr == undefined) {
             timeStr = "00:00:00"
@@ -203,7 +206,7 @@ const LineChart = () => {
 
     const lineardata = {
         labels,
-        datasets: data ? [
+        datasets: data && [
             {
                 label: "Total Hours",
                 data: totalHoursData,
@@ -240,7 +243,7 @@ const LineChart = () => {
                 borderWidth: 2,
                 order: 1
             }
-        ] : []
+        ] 
     };
 
     return (

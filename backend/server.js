@@ -22,14 +22,18 @@ const forgotPasswordRoute = require('./routes/forgetpassword.js');
 const Monthlyroute=require('./routes/EveryMonthAvg.js');
 
 
+
+
 const cors = require('cors');
 
 app.use(cors());
 
 
 app.use(express.json());
+ 
 
-app.use(express.static(path.join(__dirname, 'public'))); 
+
+
 
 app.use('/api', forgotPasswordRoute);
 app.use('/api',signUpUser)
@@ -46,7 +50,13 @@ app.use('/api/hours', workingHoursRoute)
 
 app.use('/api/avg',Monthlyroute);
 
+app.use(express.static(path.join(__dirname,'dist')));
 
+const routes=['/login','/signup','/resetpassword','/confirmmail','/dashboard','/admin-dashboard','/employee-dashbaord','/stundent-dashboard','/reports','/Users','/checkin']
+
+app.get(routes, (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist','index.html'));
+  });
 
 
 pool.query('SELECT 1').then(() => {

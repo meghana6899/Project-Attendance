@@ -3,6 +3,7 @@ import { useAdmin } from '../context/AuthContext'
 import FetchAverageHours from '../api/queries/FetchAverageHours';
 
 function CustomizeDates() {
+    console.log("CustomizeDates")
 
     // const { setStartDate, setEndDate, startDate, setDate, date, endDate, activeHours, setAvgActiveHours, breakHours, setAvgBreakHours, totalHours, setAvgTotalHours, employee, setShowcard } = useAdmin();
 

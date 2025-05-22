@@ -13,7 +13,7 @@ async function workHours(date) {
     else {
         users = 'student'
     }
-    const response = await axios.post(`http://localhost:3000/api/hours/${users}/${user.id}`, {
+    const response = await axios.post(`/api/hours/${users}/${user.id}`, {
         date,
     }, {
         headers: {

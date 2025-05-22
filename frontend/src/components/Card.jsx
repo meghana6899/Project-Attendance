@@ -82,7 +82,7 @@ const Card = ({refreshData}) => {
   
   const handleDisable=async()=>{
     
-    const response=await axios.put(`http://localhost:3000/api/details/${userValue}`);
+    const response=await axios.put(`/api/details/${userValue}`);
     console.log(response);
     setDisable(0);
     setShowcard(false);
@@ -93,7 +93,7 @@ const Card = ({refreshData}) => {
   
     const handleEnable=async()=>{
     
-      const response=await axios.put(`http://localhost:3000/api/details/enable/${userValue}`);
+      const response=await axios.put(`/api/details/enable/${userValue}`);
       console.log(response);
       setDisable(1)
       setShowcard(false)

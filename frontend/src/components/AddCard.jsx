@@ -20,7 +20,7 @@ const AddCard = ({ closecard }) => {
     try {
 
       e.preventDefault();
-      const response = await axios.post("http://localhost:3000/api/details/create/newusers/user", {
+      const response = await axios.post("/api/details/create/newusers/user", {
         user_id: candidate.user_id,
         email: candidate.email,
         role: candidate.role,

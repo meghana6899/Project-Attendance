@@ -15,6 +15,7 @@ import axios from 'axios';
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
 
 function DashboardAdmin() {
+  console.log("DashboardAdmin");
   const {
     date,
     startDate,
@@ -37,7 +38,7 @@ function DashboardAdmin() {
         try {
           setHourData({});
           const response = await axios.post(
-            `http://localhost:3000/api/hours/${user}/${userValue}`,
+            `/api/hours/${user}/${userValue}`,
             { date },
             {
               headers: {
@@ -48,6 +49,7 @@ function DashboardAdmin() {
           );
           setHourData(response.data);
         } catch (error) {
+          console.log("Error fetching data:", error);
           console.log(error);
         }
       }

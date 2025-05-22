@@ -7,7 +7,7 @@ async function CheckInDetails() {
     const token = localStorage.getItem('token')
 
 
-    const response = await axios.get(`http://localhost:3000/api/details/${user.role}/${user.id}`, {
+    const response = await axios.get(`/api/details/${user.role}/${user.id}`, {
         headers: {
             authorization: token,
         }

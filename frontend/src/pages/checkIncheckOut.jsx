@@ -51,7 +51,7 @@ function CheckIncheckOut() {
 
         try {
             if(type==='checkin'){
-            const response = await axios.post('http://localhost:3000/api/checkin', {
+            const response = await axios.post('/api/checkin', {
                 user_id: formData.username,
                 password: formData.password
             })
@@ -73,7 +73,7 @@ function CheckIncheckOut() {
                 setMessage('checkin is already Done')
             }
         }else if(type==='checkout'){
-            const response = await axios.post('http://localhost:3000/api/checkout', {
+            const response = await axios.post('/api/checkout', {
                 user_id: formData.username,
                 password: formData.password
             })

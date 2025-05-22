@@ -12,29 +12,33 @@ import axios from 'axios';
 
 
 function Checkinuser() {
+  console.log("Checkinuser")
   const token = localStorage.getItem('token');
   const { checkIn, checkOut, setCheckIn, setCheckOut, isCheckedIn, startDate, endDate, employee } = useAdmin();
   const [data, setData] = useState([])
-
+  console.log("Checkinuser", checkIn, checkOut)
+  console.log("Checkinuser", employee)
 
   useEffect(() => {
     const fetchdetails = async () => {
       //console.log('Fetch')
       try {
-        const user_id = employee.emp_id || employee.stu_id;
+        const user_id = employee?.emp_id || employee?.stu_id;
+        console.log("User ID", user_id) 
         let table;
-        if (employee.emp_id) {
+        if (employee?.emp_id) {
           table = 'employee';
 
         }
         else {
           table = 'students';
         }
+        console.log("Table", table)
         if (startDate && endDate) {
          
 
 
-          const response = await axios.post(`http://localhost:3000/api/details/${table}/${user_id}`, {
+          const response = await axios.post(`/api/details/${table}/${user_id}`, {
             startDate,
             endDate
           }, {
@@ -42,10 +46,12 @@ function Checkinuser() {
               authorization: token,
             }
           })
+          console.log("Response", response)
 
 
           if (Array.isArray(response.data)) {
             setData(response.data)
+            console.log("Data", response.data)
           } else if (typeof response.data === 'object') {
             console.log("Its an object")
           } else {
@@ -77,6 +83,7 @@ function Checkinuser() {
         }
 
       } catch (err) {
+        console.log("Error in fetching details")
         console.log(err)
       }
     }
@@ -86,9 +93,11 @@ function Checkinuser() {
 
 
   //console.log(response)
+  console.log("Data", data)
   const renderedData = data.map(({ checkin, checkout, date }, index) => {
     // setCheckIn(checkin)
     // setCheckOut(checkout)
+    console.log("Checkinuser", checkin, checkout)
     const zdate = new Date(date);
     const newDate = zdate.toLocaleString("en-GB", { timeZone: "Asia/Kolkata" })
     return (
